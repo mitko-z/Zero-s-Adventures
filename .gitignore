@@ -62,3 +62,5 @@ Data/Images/~$art screen image.docx
 Debug/vc140.pdb
 Debug/Zero.log
 *.tlog
+Zero.vcxproj
+Zero.vcxproj.filters

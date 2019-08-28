@@ -1,54 +1,31 @@
 #pragma once
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <iostream>		// std::cerr
+#include <memory>		// unique_ptr-s for game objects
+#include <vector>		// vector of game objects
 
 #include "SFML\Graphics.hpp"
 
 #include "Definitions.h"
-
+#include "GameObject.h"
+#include "ZeroCharacter.h"
 
 class Game
 {
 public:
 
-	/// <variables>
-
-	// windows
-	sf::RenderWindow window;
-	sf::Texture backgroundTexture;
-	sf::RectangleShape backgroundRectangle;
-
-	// display text on screen variables
-	sf::Font font;
-	std::vector<std::string> finishedLevelStrings;
-
-	// states
-	Mode mode;
-	RunningGameStates runningGameState;
-	RunningMenuStates runningMenuState;
-	RunningMenuStates previousRunningMenuState;
-
-	// time management
-	// difne how many miliseconds to show the screen between the levels before to advance to the next level
-	// the pause is necessary to avoid any keys pressed in the previous level
-	const int timePauseBetweenLevels;
-	// how miliseconds left before checking whether any key is pressed to advance to the next level
-	int timeElapsedBetweenLevels;
-
-	// events
-	sf::Event event;
-
-	// Zero's variables
-	std::map<sf::Keyboard::Key, bool> controllingKeysForZero;
-
-	/// </variables>
-
-	/// <constructor(s)>
+#pragma region constructor(s)
 	Game();
+#pragma endregion
 
-	/// <methods>
+#pragma region methods
+	/// <summary>
+	/// run() - start & handle the game loop
+	/// </summary>
+	void run();
 
+private:
 	/// <summary>
 	/// initialize() - allows the game to perform any initialization it needs to before starting to run.
 	/// This is where it can query for any required services and load any non-graphic
@@ -76,13 +53,42 @@ public:
 	/// This is called when the game should draw itself.
 	/// </summary>
 	void draw();
+#pragma endregion
 
-	/// <summary>
-	/// run() - start & handle the game loop
-	/// </summary>
-	void run();
+#pragma region members
+	// windows
+	sf::RenderWindow window;
+	sf::Texture backgroundTexture;
+	sf::RectangleShape backgroundRectangle;
 
-	/// </methods>
+	// display text on screen variables
+	sf::Font font;
+	std::vector<std::string> finishedLevelStrings;
+
+	// states
+	Mode mode;
+	RunningGameStates runningGameState;
+	RunningMenuStates runningMenuState;
+	RunningMenuStates previousRunningMenuState;
+
+	// time management
+	// difne how many miliseconds to show the screen between the levels before to advance to the next level
+	// the pause is necessary to avoid any keys pressed in the previous level
+	const int timePauseBetweenLevels;
+	// how miliseconds left before checking whether any key is pressed to advance to the next level
+	int timeElapsedBetweenLevels;
+
+	// events
+	sf::Event event;
+
+	// game objects
+	std::vector<GameObject *> gameObjects;
+
+	// Zero's variables
+	std::unordered_map<sf::Keyboard::Key, bool> controllingKeysForZero;
+
+#pragma endregion
+
 };
 /*     public class Game1 : Microsoft.Xna.Framework.Game
     {

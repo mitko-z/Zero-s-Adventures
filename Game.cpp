@@ -26,29 +26,12 @@ void Game::initialize()
 	mode = Mode::menuMode;
 	runningMenuState = RunningMenuStates::MainMenu;
 
-	// define the pressedKeysFromKeyboard which control Zero.
-	// they must be defined in pairs in strict order; one pair controls one action:
-	// 0 and 1 - move up
-	// 2, 3 - move down
-	// 4, 5 - left
-	// 6, 7 - right
-	// 8, 9 - fire
-	// 10, 11 - take item from the ground (which is not owned by anyone)
-	// 12, 13 - leaves the item
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::W, false));		// move up
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::Up, false));		// move up
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::S, false));		// move down
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::Down, false));	// move down
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::A, false));		// move left
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::Left, false));	// move left
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::D, false));		// move right
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::Right, false));	// move right
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::Space, false));	// fire
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::LControl, false));// fire
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::F, false));		// take weapon/item
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::Return, false));	// take weapon/item
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::R, false));		// drop weapon
-	controllingKeysForZero.insert(std::make_pair(sf::Keyboard::BackSpace, false));// drop weapon
+	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10));
+
+	for (auto gameObject : gameObjects)
+	{
+		gameObject->initialize();
+	}
 }
 
 void Game::loadContent()
@@ -81,6 +64,11 @@ void Game::loadContent()
 	backgroundRectangle.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
 	backgroundRectangle.setPosition(0, 0);
 	backgroundRectangle.setTexture(&backgroundTexture);
+
+	for (auto gameObject : gameObjects)
+	{
+		gameObject->loadContent();
+	}
 }
 
 void Game::eventsCapture()
@@ -123,6 +111,10 @@ void Game::draw()
 	window.clear();
 
 	window.draw(backgroundRectangle);
+	for (auto gameObject : gameObjects)
+	{
+		gameObject->draw(window);
+	}
 
 	window.display();
 }

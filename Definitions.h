@@ -35,10 +35,3 @@ enum RunningMenuStates
 	LoadGameMenu,
 	OptionsMenu
 };
-
-
-enum Exceptions
-{
-	ErrorLoadingFont,
-	ErrorLoadingImage,
-};
