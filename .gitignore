@@ -64,3 +64,6 @@ Debug/Zero.log
 *.tlog
 Zero.vcxproj
 Zero.vcxproj.filters
+*.bak
+Zero.vcxproj
+*.filters
