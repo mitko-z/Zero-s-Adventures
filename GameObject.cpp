@@ -7,18 +7,23 @@ GameObject::GameObject(GameObject &other) :
 	drawingObject(other.drawingObject),
 	controllingKeys(other.controllingKeys)
 {
-	drawingObject.setTexture(other.drawingObject.getTexture());
+	drawingObject.rectangleShape.setTexture(other.drawingObject.rectangleShape.getTexture());
 }
 
 void GameObject::initialize() {}
 
 void GameObject::loadContent() {}
 
-void GameObject::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &controllingKeys)
+LoadResourcesCommands GameObject::getLoadResourcesCommand()
+{
+	return LoadResourcesCommands::NONE;
+}
+
+void GameObject::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &keysPressed)
 {
 	if (this->controllingKeys.size() > 0)
 	{
-		for (auto key : controllingKeys)
+		for (auto key : keysPressed)
 		{
 			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
 			{
@@ -31,3 +36,8 @@ void GameObject::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> 
 void GameObject::update() {}
 
 void GameObject::draw(sf::RenderWindow &window) {}
+
+void GameObject::updateDrawingObject()
+{
+	this->drawingObject.rectangleShape.setPosition(sf::Vector2f(rect.x, rect.y));
+}

@@ -1,0 +1,72 @@
+#include "ResourcesManager.h"
+
+ResourcesManager* ResourcesManager::instance = nullptr;
+
+ResourcesManager* ResourcesManager::getInstance()
+{
+	if (!instance)
+	{
+		instance = new ResourcesManager;
+	}
+	return instance;
+}
+
+ResourcesManager::~ResourcesManager()
+{
+	delete instance;
+}
+
+void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands, int level)
+{
+	std::string loadPath("Data/info.dat");
+	std::ifstream levelsReader(loadPath);
+
+	if (!levelsReader)
+	{
+		std::string throwMessage = "Cannot load image " + loadPath;
+		throw throwMessage;
+	}
+
+	std::string lineRead;
+	std::vector<std::string> rawData;
+	std::getline(levelsReader, lineRead);	// read "; name of Zero's texture.."
+	std::getline(levelsReader, lineRead);	// read the name of the texture
+	rawData.push_back(lineRead + ".png");
+	std::getline(levelsReader, lineRead);	// read "; number of levels"
+	std::getline(levelsReader, lineRead);	// read the number of levels
+	std::getline(levelsReader, lineRead);	// read "; level no."
+	std::getline(levelsReader, lineRead);	// read 1
+	std::getline(levelsReader, lineRead);	// read "; name for the texture of the background"
+	std::getline(levelsReader, lineRead);	// read the name for the texture of the background
+	rawData.push_back(lineRead + ".png");
+
+	levelsReader.close();
+
+	for (auto command : commands)
+	{
+		sf::Texture texture;
+		std::string loadPath("Data/Images/");
+		switch (command)
+		{
+			case LoadResourcesCommands::ZERO:
+				loadPath += rawData[0];
+			break;
+			case LoadResourcesCommands::BACKGROUND:
+				loadPath += rawData[1];
+			break;
+			default:
+			break;
+		}
+		if (!texture.loadFromFile(loadPath))
+		{
+			std::string throwMessage = "Cannot load image " + loadPath;
+			throw throwMessage;
+		}
+		textures[command] = texture;
+	} // end for each command
+}
+
+sf::Texture ResourcesManager::getTexture(LoadResourcesCommands command)
+{
+	return textures[command];
+}

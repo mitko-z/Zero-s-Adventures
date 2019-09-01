@@ -35,3 +35,10 @@ enum RunningMenuStates
 	LoadGameMenu,
 	OptionsMenu
 };
+
+enum LoadResourcesCommands
+{
+	NONE		= 0,
+	BACKGROUND,
+	ZERO
+};

@@ -8,14 +8,7 @@ Game::Game() :
 	runningMenuState(RunningMenuStates::MainMenu)
 {
 	initialize();
-	try
-	{
-		loadContent();
-	}
-	catch (std::string ex)
-	{
-		std::cerr << ex;
-	}
+	loadContent();
 }
 
 void Game::initialize()
@@ -65,6 +58,18 @@ void Game::loadContent()
 	backgroundRectangle.setPosition(0, 0);
 	backgroundRectangle.setTexture(&backgroundTexture);
 
+	std::vector<LoadResourcesCommands> resCommands;
+	for (auto gameObject : gameObjects)
+	{
+		LoadResourcesCommands resCommand = gameObject->getLoadResourcesCommand();
+		if (resCommand != LoadResourcesCommands::NONE)
+		{
+			resCommands.push_back(resCommand);
+		}
+	}
+	extern ResourcesManager *resMan;
+	resMan->loadResources(resCommands, 1);
+
 	for (auto gameObject : gameObjects)
 	{
 		gameObject->loadContent();
@@ -79,30 +84,33 @@ void Game::eventsCapture()
 		{
 			mode = Mode::exitMode;
 		}
-
-		switch (event.type)
+		else
 		{
-			case sf::Event::KeyPressed:
-				if (controllingKeysForZero.find(event.key.code) != controllingKeysForZero.end())
-				{
-					controllingKeysForZero[event.key.code] = true;
-				}
-			break;
-			case sf::Event::KeyReleased:
-				if (controllingKeysForZero.find(event.key.code) != controllingKeysForZero.end())
-				{
-					controllingKeysForZero[event.key.code] = false;
-				}
-			break;
-			default:
-			break;
+			switch (event.type)
+			{
+				case sf::Event::KeyPressed:
+					keysPressed[event.key.code] = true;
+				break;
+				case sf::Event::KeyReleased:
+					keysPressed[event.key.code] = false;
+				break;
+				default:
+				break;
+			}
 		}
+	}
+	for (auto gameObject : gameObjects)
+	{
+		gameObject->updateEvents(keysPressed);
 	}
 }
 
 void Game::update()
 {
-
+	for (auto gameObject : gameObjects)
+	{
+		gameObject->update();
+	}
 }
 
 void Game::draw()
@@ -110,6 +118,7 @@ void Game::draw()
 
 	window.clear();
 
+	extern ResourcesManager *resMan;
 	window.draw(backgroundRectangle);
 	for (auto gameObject : gameObjects)
 	{

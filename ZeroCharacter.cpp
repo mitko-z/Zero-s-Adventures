@@ -1,22 +1,22 @@
 #include "ZeroCharacter.h"
 
-ZeroCharacter::ZeroCharacter(int x, int y, int w, int h) : GameObject(x, y, w, h)
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h) : GameObject(x, y, w, h)
 {
 
 }
 
 void ZeroCharacter::loadContent()
 {
-	std::string loadPath = "Data/Images/ZeroSingleImage.png";
-	if (!texture.loadFromFile(loadPath))
-	{
-		std::string throwMessage = "Cannot load image " + loadPath;
-		throw throwMessage;
-	}
+	extern ResourcesManager *resMan;
+	drawingObject.texture = resMan->getTexture(this->getLoadResourcesCommand());
+	drawingObject.rectangleShape.setPosition(this->rect.x, this->rect.y);
+	drawingObject.rectangleShape.setSize(sf::Vector2f(drawingObject.texture.getSize()));
+	drawingObject.rectangleShape.setTexture(&drawingObject.texture);
+}
 
-	drawingObject.setPosition(this->rect.x, this->rect.y);
-	drawingObject.setSize(sf::Vector2f(texture.getSize()));
-	drawingObject.setTexture(&texture);
+LoadResourcesCommands ZeroCharacter::getLoadResourcesCommand()
+{
+	return LoadResourcesCommands::ZERO;
 }
 
 void ZeroCharacter::initialize()
@@ -53,20 +53,41 @@ void ZeroCharacter::initialize()
 	this->rect.y = 10;
 	this->rect.h = 10;
 	this->rect.w = 10;
+	this->speed = 10;
 #pragma endregion
 
 }
-void ZeroCharacter::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &controllingKeys)
-{
-	// TODO
-}
+
+// disabled - the base functionality works for now fine for this
+//void ZeroCharacter::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &keysPressed)
+//{
+//	
+//}
 
 void ZeroCharacter::update()
 {
-	// TODO
+	if (this->controllingKeys[sf::Keyboard::S] || this->controllingKeys[sf::Keyboard::Down])
+	{
+		this->rect.y += this->speed;
+	}
+	if (this->controllingKeys[sf::Keyboard::W] || this->controllingKeys[sf::Keyboard::Up])
+	{
+		this->rect.y -= this->speed;
+	}
+	if (this->controllingKeys[sf::Keyboard::A] || this->controllingKeys[sf::Keyboard::Left])
+	{
+		this->rect.x -= this->speed;
+	}
+	if (this->controllingKeys[sf::Keyboard::D] || this->controllingKeys[sf::Keyboard::Right])
+	{
+		this->rect.x += this->speed;
+	}
+
+	updateDrawingObject();
 }
 
 void ZeroCharacter::draw(sf::RenderWindow &window)
 {
-	window.draw(drawingObject);
+	extern ResourcesManager *resMan;
+	window.draw(drawingObject.rectangleShape);
 }
