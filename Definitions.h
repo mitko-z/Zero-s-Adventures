@@ -42,3 +42,27 @@ enum LoadResourcesCommands
 	BACKGROUND,
 	ZERO
 };
+
+
+struct Rectangle
+{
+	double x, y, w, h;
+	Rectangle() = default;
+	Rectangle(double x, double y, double w, double h) : x(x), y(y), w(w), h(h) {}
+};
+
+
+struct DrawingObject
+{
+	sf::Texture texture;
+	//sf::RectangleShape rectangleShape;
+	sf::Sprite sprite;
+};
+
+
+struct Animation
+{
+public:
+	int framesAlongX;
+	int framesAlongY;
+};

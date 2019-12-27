@@ -1,17 +1,14 @@
 #include "ZeroCharacter.h"
 
-ZeroCharacter::ZeroCharacter(double x, double y, double w, double h) : GameObject(x, y, w, h)
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, bool isAnimating) : 
+	GameObject(x, y, w, h, isAnimating)
 {
 
 }
 
 void ZeroCharacter::loadContent()
 {
-	extern ResourcesManager *resMan;
-	drawingObject.texture = resMan->getTexture(this->getLoadResourcesCommand());
-	drawingObject.rectangleShape.setPosition(this->rect.x, this->rect.y);
-	drawingObject.rectangleShape.setSize(sf::Vector2f(drawingObject.texture.getSize()));
-	drawingObject.rectangleShape.setTexture(&drawingObject.texture);
+	GameObject::loadContent();
 }
 
 LoadResourcesCommands ZeroCharacter::getLoadResourcesCommand()
@@ -66,28 +63,34 @@ void ZeroCharacter::initialize()
 
 void ZeroCharacter::update()
 {
+	bool shouldAnimate = false;
 	if (this->controllingKeys[sf::Keyboard::S] || this->controllingKeys[sf::Keyboard::Down])
 	{
 		this->rect.y += this->speed;
+		shouldAnimate = true;
 	}
 	if (this->controllingKeys[sf::Keyboard::W] || this->controllingKeys[sf::Keyboard::Up])
 	{
 		this->rect.y -= this->speed;
+		shouldAnimate = true;
 	}
 	if (this->controllingKeys[sf::Keyboard::A] || this->controllingKeys[sf::Keyboard::Left])
 	{
 		this->rect.x -= this->speed;
+		shouldAnimate = true;
 	}
 	if (this->controllingKeys[sf::Keyboard::D] || this->controllingKeys[sf::Keyboard::Right])
 	{
 		this->rect.x += this->speed;
+		shouldAnimate = true;
 	}
-
+	if (shouldAnimate)	isAnimating = true;
+	else				isAnimating = false;
 	updateDrawingObject();
 }
 
 void ZeroCharacter::draw(sf::RenderWindow &window)
 {
 	extern ResourcesManager *resMan;
-	window.draw(drawingObject.rectangleShape);
+	window.draw(drawingObject.sprite);
 }

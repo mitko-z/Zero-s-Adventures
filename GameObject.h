@@ -13,7 +13,10 @@ class GameObject
 {
 public :
 	GameObject() = default;
-	GameObject(double x, double y, double w, double h) : rect(x, y, w, y) {}
+	GameObject(double x, double y, double w, double h, bool isAnimating) : 
+		rect(x, y, w, y),
+		isAnimating(isAnimating)
+	{}
 	GameObject(GameObject &other);
 	virtual void initialize();
 	virtual void loadContent();
@@ -23,21 +26,14 @@ public :
 	virtual void draw(sf::RenderWindow &window);
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
 protected :
-	struct Rectangle
-	{
-		double x, y, w, h;
-		Rectangle() = default;
-		Rectangle(double x, double y, double w, double h) : x(x), y(y), w(w), h(h) {}
-	};
 	Rectangle rect;
-
-	struct DrawingObject
-	{
-		sf::Texture texture;
-		sf::RectangleShape rectangleShape;
-	};
 	DrawingObject drawingObject;
-	void updateDrawingObject();
-
 	std::map<sf::Keyboard::Key, bool> controllingKeys;
+	Animation frames;
+	bool isAnimating;
+	static int animationFrame;
+
+	void updateDrawingObject();
+private:
+	void updateAnimFrame();
 };

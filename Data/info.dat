@@ -1,5 +1,7 @@
 ; name of Zero's texture (without the extension of the file)
-ZeroSingleImage
+SmileyWalkTighter
+; Zero texture frames x, y
+4	4
 ; number of levels
 4
 ; level no.

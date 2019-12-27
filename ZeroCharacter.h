@@ -9,12 +9,11 @@ class ZeroCharacter : public GameObject
 {
 public:
 	ZeroCharacter() = default;
-	ZeroCharacter(double x, double y, double w, double h);
+	ZeroCharacter(double x, double y, double w, double h, bool isAnimating);
 
 	void loadContent() override;
 	LoadResourcesCommands getLoadResourcesCommand() override;
 	void initialize() override;
-	//void updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &controllingKeys) override;
 	void update() override;
 	void draw(sf::RenderWindow &window) override;
 private:

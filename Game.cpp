@@ -19,7 +19,7 @@ void Game::initialize()
 	mode = Mode::menuMode;
 	runningMenuState = RunningMenuStates::MainMenu;
 
-	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10));
+	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10, false));
 
 	for (auto gameObject : gameObjects)
 	{

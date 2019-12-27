@@ -5,14 +5,29 @@ GameObject::~GameObject() {}
 GameObject::GameObject(GameObject &other) : 
 	rect(other.rect), 
 	drawingObject(other.drawingObject),
-	controllingKeys(other.controllingKeys)
+	controllingKeys(other.controllingKeys),
+	isAnimating(other.isAnimating)
 {
-	drawingObject.rectangleShape.setTexture(other.drawingObject.rectangleShape.getTexture());
+	drawingObject.sprite.setTexture(*other.drawingObject.sprite.getTexture());
 }
 
 void GameObject::initialize() {}
 
-void GameObject::loadContent() {}
+void GameObject::loadContent()
+{
+	extern ResourcesManager *resMan;
+	LoadResourcesCommands loadCommand = getLoadResourcesCommand();
+	frames = resMan->getAnimation(loadCommand);
+	drawingObject.texture = resMan->getTexture(loadCommand);
+	drawingObject.sprite.setPosition(rect.x, rect.y);
+	drawingObject.sprite.setTexture(drawingObject.texture);
+	drawingObject.sprite.setTextureRect(sf::IntRect{
+		0,
+		0,
+		static_cast<int>(drawingObject.texture.getSize().x / frames.framesAlongX),
+		static_cast<int>(drawingObject.texture.getSize().y / frames.framesAlongY)
+	});
+}
 
 LoadResourcesCommands GameObject::getLoadResourcesCommand()
 {
@@ -39,5 +54,34 @@ void GameObject::draw(sf::RenderWindow &window) {}
 
 void GameObject::updateDrawingObject()
 {
-	this->drawingObject.rectangleShape.setPosition(sf::Vector2f(rect.x, rect.y));
+	drawingObject.sprite.setPosition(rect.x, rect.y);
+	updateAnimFrame();
 }
+
+void GameObject::updateAnimFrame()
+{
+	if (!isAnimating)
+	{
+		animationFrame = 0;
+	}
+	else
+	{
+		if (++animationFrame > ((frames.framesAlongX * frames.framesAlongY) - 1))
+		{
+			animationFrame = 0;
+		}
+	}
+
+	int width = drawingObject.texture.getSize().x / frames.framesAlongX;
+	int height = drawingObject.texture.getSize().y / frames.framesAlongY;
+	int x = (animationFrame % frames.framesAlongX) * width;
+	int y = (animationFrame / frames.framesAlongX) * height;
+	drawingObject.sprite.setTextureRect(sf::IntRect{
+		x,
+		y,
+		width,
+		height
+	});
+}
+
+int GameObject::animationFrame = 0;

@@ -28,17 +28,20 @@ void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands
 	}
 
 	std::string lineRead;
-	std::vector<std::string> rawData;
+	std::vector<std::string> imagesNames;
 	std::getline(levelsReader, lineRead);	// read "; name of Zero's texture.."
 	std::getline(levelsReader, lineRead);	// read the name of the texture
-	rawData.push_back(lineRead + ".png");
+	imagesNames.push_back(lineRead + ".png");
+	std::getline(levelsReader, lineRead);	// read "; Zero texture frames x, y"
+	std::getline(levelsReader, lineRead);	// read the frames upon x and y
+	animations[LoadResourcesCommands::ZERO] = getAnimationFromString(lineRead);
 	std::getline(levelsReader, lineRead);	// read "; number of levels"
 	std::getline(levelsReader, lineRead);	// read the number of levels
 	std::getline(levelsReader, lineRead);	// read "; level no."
 	std::getline(levelsReader, lineRead);	// read 1
 	std::getline(levelsReader, lineRead);	// read "; name for the texture of the background"
 	std::getline(levelsReader, lineRead);	// read the name for the texture of the background
-	rawData.push_back(lineRead + ".png");
+	imagesNames.push_back(lineRead + ".png");
 
 	levelsReader.close();
 
@@ -49,10 +52,10 @@ void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands
 		switch (command)
 		{
 			case LoadResourcesCommands::ZERO:
-				loadPath += rawData[0];
+				loadPath += imagesNames[0];
 			break;
 			case LoadResourcesCommands::BACKGROUND:
-				loadPath += rawData[1];
+				loadPath += imagesNames[1];
 			break;
 			default:
 			break;
@@ -66,7 +69,26 @@ void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands
 	} // end for each command
 }
 
+Animation ResourcesManager::getAnimationFromString(std::string strData)
+{
+	int x, y;
+	std::stringstream ss;
+	ss << strData;
+	std::string temp;
+	ss >> temp;
+	std::stringstream(temp) >> x;
+	ss >> temp;
+	std::stringstream(temp) >> y;
+
+	return Animation{ x,y };
+}
+
 sf::Texture ResourcesManager::getTexture(LoadResourcesCommands command)
 {
 	return textures[command];
+}
+
+Animation ResourcesManager::getAnimation(LoadResourcesCommands command)
+{
+	return animations[command];
 }
