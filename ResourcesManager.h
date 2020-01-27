@@ -15,7 +15,7 @@ public:
 	static ResourcesManager* getInstance();
 	void		loadResources(std::vector<LoadResourcesCommands> commands, int level);
 	sf::Texture getTexture(LoadResourcesCommands command);
-	Animation	getAnimation(LoadResourcesCommands command);
+	bool        getAnimation(LoadResourcesCommands command, Animation& animation);
 	void		releaseResources();
 	~ResourcesManager();
 private:

@@ -91,6 +91,5 @@ void ZeroCharacter::update()
 
 void ZeroCharacter::draw(sf::RenderWindow &window)
 {
-	extern ResourcesManager *resMan;
-	window.draw(drawingObject.sprite);
+	GameObject::draw(window);
 }

@@ -10,6 +10,7 @@
 #include "ResourcesManager.h"
 #include "Definitions.h"
 #include "GameObject.h"
+#include "Background.h"
 #include "ZeroCharacter.h"
 
 class Game
@@ -59,8 +60,6 @@ private:
 #pragma region members
 	// windows
 	sf::RenderWindow window;
-	sf::Texture backgroundTexture;
-	sf::RectangleShape backgroundRectangle;
 
 	// display text on screen variables
 	sf::Font font;

@@ -80,7 +80,7 @@ Animation ResourcesManager::getAnimationFromString(std::string strData)
 	ss >> temp;
 	std::stringstream(temp) >> y;
 
-	return Animation{ x,y };
+	return Animation( x,y );
 }
 
 sf::Texture ResourcesManager::getTexture(LoadResourcesCommands command)
@@ -88,7 +88,18 @@ sf::Texture ResourcesManager::getTexture(LoadResourcesCommands command)
 	return textures[command];
 }
 
-Animation ResourcesManager::getAnimation(LoadResourcesCommands command)
+bool ResourcesManager::getAnimation(LoadResourcesCommands command, Animation& animation)
 {
-	return animations[command];
+	bool rc = false;
+	for(auto it = animations.begin(); it != animations.end(); ++it)
+	{
+		if (it->first == command)
+		{
+			animation = animations[command];
+			rc = true;
+			break;
+		}
+	}
+
+	return rc;
 }

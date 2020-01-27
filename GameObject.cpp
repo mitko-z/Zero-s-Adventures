@@ -17,16 +17,10 @@ void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
 	LoadResourcesCommands loadCommand = getLoadResourcesCommand();
-	frames = resMan->getAnimation(loadCommand);
+	resMan->getAnimation(loadCommand, frames);
 	drawingObject.texture = resMan->getTexture(loadCommand);
 	drawingObject.sprite.setPosition(rect.x, rect.y);
 	drawingObject.sprite.setTexture(drawingObject.texture);
-	drawingObject.sprite.setTextureRect(sf::IntRect{
-		0,
-		0,
-		static_cast<int>(drawingObject.texture.getSize().x / frames.framesAlongX),
-		static_cast<int>(drawingObject.texture.getSize().y / frames.framesAlongY)
-	});
 }
 
 LoadResourcesCommands GameObject::getLoadResourcesCommand()
@@ -50,7 +44,11 @@ void GameObject::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> 
 
 void GameObject::update() {}
 
-void GameObject::draw(sf::RenderWindow &window) {}
+void GameObject::draw(sf::RenderWindow &window) 
+{
+	extern ResourcesManager *resMan;
+	window.draw(drawingObject.sprite);
+}
 
 void GameObject::updateDrawingObject()
 {

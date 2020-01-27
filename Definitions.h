@@ -63,6 +63,8 @@ struct DrawingObject
 struct Animation
 {
 public:
+	Animation() : framesAlongX(1), framesAlongY(1) {}
+	Animation(int x, int y) : framesAlongX(x), framesAlongY(y) {}
 	int framesAlongX;
 	int framesAlongY;
 };

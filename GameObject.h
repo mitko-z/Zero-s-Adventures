@@ -14,7 +14,7 @@ class GameObject
 public :
 	GameObject() = default;
 	GameObject(double x, double y, double w, double h, bool isAnimating) : 
-		rect(x, y, w, y),
+		rect(x, y, w, h),
 		isAnimating(isAnimating)
 	{}
 	GameObject(GameObject &other);

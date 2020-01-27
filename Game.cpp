@@ -19,6 +19,7 @@ void Game::initialize()
 	mode = Mode::menuMode;
 	runningMenuState = RunningMenuStates::MainMenu;
 
+	gameObjects.push_back(new Background(0, 0, window.getSize().x, window.getSize().y, false));
 	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10, false));
 
 	for (auto gameObject : gameObjects)
@@ -44,19 +45,6 @@ void Game::loadContent()
 	aText.setCharacterSize(window.getSize().y*0.1);
 	aText.setPosition(10, 10);
 	aText.setString("hgdj");
-
-	// images
-	loadPath = "Data/Images/Background.png";
-	if (!backgroundTexture.loadFromFile(loadPath))
-	{
-		std::string throwMessage = "Cannot load image " + loadPath;
-		throw throwMessage;
-	}
-
-	// rendering shapes
-	backgroundRectangle.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
-	backgroundRectangle.setPosition(0, 0);
-	backgroundRectangle.setTexture(&backgroundTexture);
 
 	std::vector<LoadResourcesCommands> resCommands;
 	for (auto gameObject : gameObjects)
@@ -119,7 +107,6 @@ void Game::draw()
 	window.clear();
 
 	extern ResourcesManager *resMan;
-	window.draw(backgroundRectangle);
 	for (auto gameObject : gameObjects)
 	{
 		gameObject->draw(window);
