@@ -6,14 +6,9 @@ ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, bool isAnim
 
 }
 
-void ZeroCharacter::loadContent()
+Definitions::LoadResourcesCommands ZeroCharacter::getLoadResourcesCommand()
 {
-	GameObject::loadContent();
-}
-
-LoadResourcesCommands ZeroCharacter::getLoadResourcesCommand()
-{
-	return LoadResourcesCommands::ZERO;
+	return Definitions::LoadResourcesCommands::ZERO;
 }
 
 void ZeroCharacter::initialize()

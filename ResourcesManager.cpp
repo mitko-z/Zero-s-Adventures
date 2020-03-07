@@ -16,7 +16,7 @@ ResourcesManager::~ResourcesManager()
 	delete instance;
 }
 
-void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands, int level)
+void ResourcesManager::loadResources(std::vector<LOAD_RES_COMMAND> commands, int level)
 {
 	std::string loadPath("Data/info.dat");
 	std::ifstream levelsReader(loadPath);
@@ -28,20 +28,25 @@ void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands
 	}
 
 	std::string lineRead;
-	std::vector<std::string> imagesNames;
+	UMAP<LOAD_RES_COMMAND, std::string> imagesNames;
 	std::getline(levelsReader, lineRead);	// read "; name of Zero's texture.."
 	std::getline(levelsReader, lineRead);	// read the name of the texture
-	imagesNames.push_back(lineRead + ".png");
+	imagesNames[LOAD_RES_COMMAND::ZERO] = lineRead + ".png";
 	std::getline(levelsReader, lineRead);	// read "; Zero texture frames x, y"
 	std::getline(levelsReader, lineRead);	// read the frames upon x and y
-	animations[LoadResourcesCommands::ZERO] = getAnimationFromString(lineRead);
+	animations[LOAD_RES_COMMAND::ZERO] = getAnimationFromString(lineRead);
 	std::getline(levelsReader, lineRead);	// read "; number of levels"
 	std::getline(levelsReader, lineRead);	// read the number of levels
 	std::getline(levelsReader, lineRead);	// read "; level no."
 	std::getline(levelsReader, lineRead);	// read 1
 	std::getline(levelsReader, lineRead);	// read "; name for the texture of the background"
 	std::getline(levelsReader, lineRead);	// read the name for the texture of the background
-	imagesNames.push_back(lineRead + ".png");
+	imagesNames[LOAD_RES_COMMAND::BACKGROUND] = lineRead + ".png";
+
+	// Menu load
+	imagesNames[LOAD_RES_COMMAND::MENU_BUTTON] = "MenuButtonEmptyWide.png";
+	imagesNames[LOAD_RES_COMMAND::BUTTON_HIGHLIGHTER] = "frame-transparent.png";
+	imagesNames[LOAD_RES_COMMAND::MAIN_MENU] = "MenuBackgroundRectangle.png";
 
 	levelsReader.close();
 
@@ -49,17 +54,7 @@ void ResourcesManager::loadResources(std::vector<LoadResourcesCommands> commands
 	{
 		sf::Texture texture;
 		std::string loadPath("Data/Images/");
-		switch (command)
-		{
-			case LoadResourcesCommands::ZERO:
-				loadPath += imagesNames[0];
-			break;
-			case LoadResourcesCommands::BACKGROUND:
-				loadPath += imagesNames[1];
-			break;
-			default:
-			break;
-		}
+		loadPath += imagesNames[command];
 		if (!texture.loadFromFile(loadPath))
 		{
 			std::string throwMessage = "Cannot load image " + loadPath;
@@ -83,12 +78,12 @@ Animation ResourcesManager::getAnimationFromString(std::string strData)
 	return Animation( x,y );
 }
 
-sf::Texture ResourcesManager::getTexture(LoadResourcesCommands command)
+sf::Texture ResourcesManager::getTexture(Definitions::LoadResourcesCommands command)
 {
 	return textures[command];
 }
 
-bool ResourcesManager::getAnimation(LoadResourcesCommands command, Animation& animation)
+bool ResourcesManager::getAnimation(Definitions::LoadResourcesCommands command, Animation& animation)
 {
 	bool rc = false;
 	for(auto it = animations.begin(); it != animations.end(); ++it)

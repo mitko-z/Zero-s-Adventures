@@ -9,7 +9,7 @@ void Background::loadContent()
 	drawingObject.sprite.scale(factor);
 }
 
-LoadResourcesCommands Background::getLoadResourcesCommand()
+Definitions::LoadResourcesCommands Background::getLoadResourcesCommand()
 {
-	return LoadResourcesCommands::BACKGROUND;
+	return Definitions::LoadResourcesCommands::BACKGROUND;
 }

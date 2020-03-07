@@ -8,5 +8,5 @@ public:
 	Background(double x, double y, double w, double h, bool animating) : GameObject(x, y, w, h, animating) {}
 
 	void loadContent() override;
-	LoadResourcesCommands getLoadResourcesCommand() override;
+	Definitions::LoadResourcesCommands getLoadResourcesCommand() override;
 };

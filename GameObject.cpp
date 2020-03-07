@@ -16,23 +16,30 @@ void GameObject::initialize() {}
 void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
-	LoadResourcesCommands loadCommand = getLoadResourcesCommand();
+	Definitions::LoadResourcesCommands loadCommand = getLoadResourcesCommand();
 	resMan->getAnimation(loadCommand, frames);
 	drawingObject.texture = resMan->getTexture(loadCommand);
 	drawingObject.sprite.setPosition(rect.x, rect.y);
 	drawingObject.sprite.setTexture(drawingObject.texture);
 }
 
-LoadResourcesCommands GameObject::getLoadResourcesCommand()
+Definitions::LoadResourcesCommands GameObject::getLoadResourcesCommand()
 {
-	return LoadResourcesCommands::NONE;
+	return Definitions::LoadResourcesCommands::NONE;
 }
 
-void GameObject::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &keysPressed)
+void GameObject::updateEvents(
+	const UMAP<sf::Keyboard::Key, bool>& keysPressed, 
+	const UMAP<sf::Keyboard::Key, bool>& keysReleased)
+{
+	updateKeys(keysPressed); // by default detect on pressed key, might be overriden if needed
+}
+
+void GameObject::updateKeys(const UMAP<sf::Keyboard::Key, bool>& keys)
 {
 	if (this->controllingKeys.size() > 0)
 	{
-		for (auto key : keysPressed)
+		for (auto key : keys)
 		{
 			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
 			{
@@ -42,7 +49,10 @@ void GameObject::updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> 
 	}
 }
 
-void GameObject::update() {}
+void GameObject::update() 
+{
+	updateDrawingObject();
+}
 
 void GameObject::draw(sf::RenderWindow &window) 
 {
@@ -80,6 +90,14 @@ void GameObject::updateAnimFrame()
 		width,
 		height
 	});
+}
+
+void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite)
+{
+	sf::Vector2f factor{
+		static_cast<float>(w / texture.getSize().x),
+		static_cast<float>(h / texture.getSize().y) };
+	sprite.scale(factor);
 }
 
 int GameObject::animationFrame = 0;

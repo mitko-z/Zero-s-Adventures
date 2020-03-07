@@ -9,9 +9,11 @@
 
 #include "ResourcesManager.h"
 #include "Definitions.h"
+#include "EventsHolder.h"
 #include "GameObject.h"
 #include "Background.h"
 #include "ZeroCharacter.h"
+#include "MainMenu.h"
 
 class Game
 {
@@ -22,12 +24,7 @@ public:
 #pragma endregion
 
 #pragma region methods
-	/// <summary>
-	/// run() - start & handle the game loop
-	/// </summary>
-	void run();
 
-private:
 	/// <summary>
 	/// initialize() - allows the game to perform any initialization it needs to before starting to run.
 	/// This is where it can query for any required services and load any non-graphic
@@ -39,6 +36,13 @@ private:
 	/// loadContent() - load data
 	/// </summary>
 	void loadContent();
+
+	/// <summary>
+	/// run() - start & handle the game loop
+	/// </summary>
+	void run();
+
+private:
 
 	/// <summary>
 	/// eventsCapture() - get events from outside world
@@ -66,10 +70,10 @@ private:
 	std::vector<std::string> finishedLevelStrings;
 
 	// states
-	Mode mode;
-	RunningGameStates runningGameState;
-	RunningMenuStates runningMenuState;
-	RunningMenuStates previousRunningMenuState;
+	Definitions::Mode mode;
+	Definitions::RunningGameStates runningGameState;
+	Definitions::RunningMenuStates runningMenuState;
+	Definitions::RunningMenuStates previousRunningMenuState;
 
 	// time management
 	// difne how many miliseconds to show the screen between the levels before to advance to the next level
@@ -80,7 +84,7 @@ private:
 
 	// events
 	sf::Event event;
-	std::unordered_map<sf::Keyboard::Key, bool> keysPressed;
+	EventsHolder eventsHolder;
 
 	// game objects
 	std::vector<GameObject *> gameObjects;

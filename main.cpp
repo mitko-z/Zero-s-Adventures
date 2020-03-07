@@ -8,6 +8,8 @@ int main()
 	try
 	{
 		Game game;
+		game.initialize();
+		game.loadContent();
 		game.run();
 	}
 	catch (std::string ex)

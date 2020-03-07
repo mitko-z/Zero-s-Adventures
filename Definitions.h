@@ -1,48 +1,57 @@
 #pragma once
 
+#include <SFML\Graphics.hpp>
 
-/// <summary>
-/// define two modes of this game
-/// GameMode - the game plays and shows screens between levels
-/// MenuMode - the game is paused and menus are managed
-/// </summary>
-enum Mode
+#define LOAD_RES_COMMAND Definitions::LoadResourcesCommands
+#define UMAP std::unordered_map
+
+namespace Definitions
 {
-	gameMode,
-	menuMode,
-	exitMode
-};
+	/// <summary>
+	/// define two modes of this game
+	/// GameMode - the game plays and shows screens between levels
+	/// MenuMode - the game is paused and menus are managed
+	/// </summary>
+	enum Mode
+	{
+		gameMode,
+		menuMode,
+		exitMode
+	};
 
-/// <summary>
-/// Define the states of the game in game mode
-/// </summary>
-enum RunningGameStates
-{
-	StartScreen,
-	Playing,
-	FinishedLevelScreen,
-	GameFinished,
-	GameOver
-};
+	/// <summary>
+	/// Define the states of the game in game mode
+	/// </summary>
+	enum RunningGameStates
+	{
+		StartScreen,
+		Playing,
+		FinishedLevelScreen,
+		GameFinished,
+		GameOver
+	};
 
-/// <summary>
-/// Define the states of the game in menu mode
-/// </summary>
-enum RunningMenuStates
-{
-	MainMenu,
-	SaveGameMenu,
-	LoadGameMenu,
-	OptionsMenu
-};
+	/// <summary>
+	/// Define the states of the game in menu mode
+	/// </summary>
+	enum RunningMenuStates
+	{
+		Menu,
+		SaveGameMenu,
+		LoadGameMenu,
+		OptionsMenu
+	};
 
-enum LoadResourcesCommands
-{
-	NONE		= 0,
-	BACKGROUND,
-	ZERO
-};
-
+	enum LoadResourcesCommands
+	{
+		NONE = 0,
+		BACKGROUND,
+		ZERO,
+		MENU_BUTTON,
+		MAIN_MENU,
+		BUTTON_HIGHLIGHTER
+	};
+}
 
 struct Rectangle
 {

@@ -4,11 +4,9 @@ Game::Game() :
 	window(sf::VideoMode(800, 600), "Zero's Adventures"),
 	timePauseBetweenLevels(1000),
 	timeElapsedBetweenLevels(0),
-	mode(Mode::gameMode),
-	runningMenuState(RunningMenuStates::MainMenu)
+	mode(Definitions::Mode::gameMode),
+	runningMenuState(Definitions::RunningMenuStates::Menu)
 {
-	initialize();
-	loadContent();
 }
 
 void Game::initialize()
@@ -16,11 +14,9 @@ void Game::initialize()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	mode = Mode::menuMode;
-	runningMenuState = RunningMenuStates::MainMenu;
-
 	gameObjects.push_back(new Background(0, 0, window.getSize().x, window.getSize().y, false));
 	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10, false));
+	gameObjects.push_back(new MainMenu(0, 0, window.getSize().x, window.getSize().y, false));
 
 	for (auto gameObject : gameObjects)
 	{
@@ -46,11 +42,14 @@ void Game::loadContent()
 	aText.setPosition(10, 10);
 	aText.setString("hgdj");
 
-	std::vector<LoadResourcesCommands> resCommands;
-	for (auto gameObject : gameObjects)
+	std::vector<Definitions::LoadResourcesCommands> resCommands;
+	std::vector<GameObject *> allGameObjects(gameObjects);
+	allGameObjects.push_back(new MenuButton());
+	allGameObjects.push_back(new ButtonHighlighter());
+	for (auto gameObject : allGameObjects)
 	{
-		LoadResourcesCommands resCommand = gameObject->getLoadResourcesCommand();
-		if (resCommand != LoadResourcesCommands::NONE)
+		Definitions::LoadResourcesCommands resCommand = gameObject->getLoadResourcesCommand();
+		if (resCommand != Definitions::LoadResourcesCommands::NONE)
 		{
 			resCommands.push_back(resCommand);
 		}
@@ -70,35 +69,40 @@ void Game::eventsCapture()
 	{
 		if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) || (event.type == sf::Event::Closed))
 		{
-			mode = Mode::exitMode;
+			mode = Definitions::Mode::exitMode;
 		}
 		else
 		{
 			switch (event.type)
 			{
 				case sf::Event::KeyPressed:
-					keysPressed[event.key.code] = true;
+					eventsHolder.addPressedKey(event.key.code);
 				break;
 				case sf::Event::KeyReleased:
-					keysPressed[event.key.code] = false;
+					eventsHolder.addReleasedKey(event.key.code);
 				break;
 				default:
 				break;
 			}
 		}
 	}
-	for (auto gameObject : gameObjects)
+	/*for (auto gameObject : gameObjects)
 	{
-		gameObject->updateEvents(keysPressed);
-	}
+		gameObject->updateEvents(eventsHolder.getPressedKeys(), eventsHolder.getReleasedKeys());
+	}*/
+	gameObjects[2]->updateEvents(eventsHolder.getPressedKeys(), eventsHolder.getReleasedKeys());
+
+	// clear the events
+	eventsHolder.nullEvents();
 }
 
 void Game::update()
 {
-	for (auto gameObject : gameObjects)
+	/*for (auto gameObject : gameObjects)
 	{
 		gameObject->update();
-	}
+	}*/
+	gameObjects[2]->update();
 }
 
 void Game::draw()
@@ -107,17 +111,17 @@ void Game::draw()
 	window.clear();
 
 	extern ResourcesManager *resMan;
-	for (auto gameObject : gameObjects)
+	/*for (auto gameObject : gameObjects)
 	{
 		gameObject->draw(window);
-	}
-
+	}*/
+	gameObjects[2]->draw(window);
 	window.display();
 }
 
 void Game::run()
 {
-	while (mode != Mode::exitMode)
+	while (mode != Definitions::Mode::exitMode)
 	{
 		eventsCapture();
 		update();

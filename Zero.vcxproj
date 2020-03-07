@@ -119,17 +119,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="ButtonHighlighter.cpp" />
+    <ClCompile Include="EventsHolder.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="ResourcesManager.cpp" />
     <ClCompile Include="ZeroCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="ButtonHighlighter.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="EventsHolder.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuButton.h" />
     <ClInclude Include="ResourcesManager.h" />
     <ClInclude Include="ZeroCharacter.h" />
   </ItemGroup>

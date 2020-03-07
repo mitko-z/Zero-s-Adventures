@@ -20,8 +20,12 @@ public :
 	GameObject(GameObject &other);
 	virtual void initialize();
 	virtual void loadContent();
-	virtual LoadResourcesCommands getLoadResourcesCommand();
-	virtual void updateEvents(const std::unordered_map<sf::Keyboard::Key, bool> &keysPressed);
+	virtual Definitions::LoadResourcesCommands getLoadResourcesCommand();
+	virtual void updateEvents(
+		const UMAP<sf::Keyboard::Key, bool> &keysPressed, 
+		const UMAP<sf::Keyboard::Key, bool> &keysReleased);
+	virtual void setRect(Rectangle rect) { this->rect = rect; }
+	virtual const Rectangle getRect() const { return this->rect; }
 	virtual void update();
 	virtual void draw(sf::RenderWindow &window);
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
@@ -34,6 +38,8 @@ protected :
 	static int animationFrame;
 
 	void updateDrawingObject();
+	void updateKeys(const UMAP<sf::Keyboard::Key, bool>& keys);
+	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
 private:
 	void updateAnimFrame();
 };

@@ -13,9 +13,9 @@ class ResourcesManager
 {
 public:
 	static ResourcesManager* getInstance();
-	void		loadResources(std::vector<LoadResourcesCommands> commands, int level);
-	sf::Texture getTexture(LoadResourcesCommands command);
-	bool        getAnimation(LoadResourcesCommands command, Animation& animation);
+	void		loadResources(std::vector<Definitions::LoadResourcesCommands> commands, int level);
+	sf::Texture getTexture(Definitions::LoadResourcesCommands command);
+	bool        getAnimation(Definitions::LoadResourcesCommands command, Animation& animation);
 	void		releaseResources();
 	~ResourcesManager();
 private:
@@ -23,7 +23,7 @@ private:
 	ResourcesManager(ResourcesManager const&);
 	void operator= (ResourcesManager const&);
 	static ResourcesManager* instance;
-	std::unordered_map<LoadResourcesCommands, sf::Texture> textures;
-	std::unordered_map<LoadResourcesCommands, Animation> animations;
+	UMAP<LOAD_RES_COMMAND, sf::Texture> textures;
+	UMAP<LOAD_RES_COMMAND, Animation> animations;
 	Animation getAnimationFromString(std::string strData);
 };
