@@ -17,9 +17,8 @@ public:
 
 	virtual void initialize() override;
 	virtual void loadContent() override;
-	Definitions::LoadResourcesCommands getLoadResourcesCommand() override;
-	virtual void updateEvents(const UMAP<sf::Keyboard::Key, bool> &keysPressed,
-		const UMAP<sf::Keyboard::Key, bool> &keysReleased) override;
+	Definitions::LoadResourcesCommand getLoadResourcesCommand() override;
+	virtual void updateEvents() override;
 	virtual void update() override;
 	virtual void draw(sf::RenderWindow &window) override;
 
@@ -29,7 +28,7 @@ protected:
 	std::vector<MenuButton*> buttons;
 	ButtonHighlighter highlighter;
 	int activeButtonIndex;
-	void setAndInsertButtons(const std::vector<std::string>& texts);
+	void setAndInsertButtons(const std::vector<Definitions::ButtonType>& buttonTypes);
 private:
 	void setHighlighter(size_t buttonIndex);
 };

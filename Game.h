@@ -69,12 +69,6 @@ private:
 	sf::Font font;
 	std::vector<std::string> finishedLevelStrings;
 
-	// states
-	Definitions::Mode mode;
-	Definitions::RunningGameStates runningGameState;
-	Definitions::RunningMenuStates runningMenuState;
-	Definitions::RunningMenuStates previousRunningMenuState;
-
 	// time management
 	// difne how many miliseconds to show the screen between the levels before to advance to the next level
 	// the pause is necessary to avoid any keys pressed in the previous level
@@ -84,10 +78,10 @@ private:
 
 	// events
 	sf::Event event;
-	EventsHolder eventsHolder;
 
 	// game objects
 	std::vector<GameObject *> gameObjects;
+	UMAP<Definitions::RunningMenuState, Menu*> menus;
 
 #pragma endregion
 

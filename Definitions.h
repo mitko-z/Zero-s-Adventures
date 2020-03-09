@@ -2,7 +2,7 @@
 
 #include <SFML\Graphics.hpp>
 
-#define LOAD_RES_COMMAND Definitions::LoadResourcesCommands
+#define LOAD_RES_COMMAND Definitions::LoadResourcesCommand
 #define UMAP std::unordered_map
 
 namespace Definitions
@@ -22,34 +22,48 @@ namespace Definitions
 	/// <summary>
 	/// Define the states of the game in game mode
 	/// </summary>
-	enum RunningGameStates
+	enum RunningGameState
 	{
-		StartScreen,
-		Playing,
-		FinishedLevelScreen,
-		GameFinished,
-		GameOver
+		StartScreenState,
+		PlayingState,
+		FinishedLevelScreenState,
+		GameFinishedState,
+		GameOverState
 	};
 
 	/// <summary>
 	/// Define the states of the game in menu mode
 	/// </summary>
-	enum RunningMenuStates
+	enum RunningMenuState
 	{
-		Menu,
-		SaveGameMenu,
-		LoadGameMenu,
-		OptionsMenu
+		MainMenuState,
+		ResumeMenuState,
+		SaveGameMenuState,
+		LoadGameMenuState,
+		OptionsMenuState
 	};
 
-	enum LoadResourcesCommands
+	enum LoadResourcesCommand
 	{
 		NONE = 0,
 		BACKGROUND,
 		ZERO,
 		MENU_BUTTON,
-		MAIN_MENU,
+		MENU,
 		BUTTON_HIGHLIGHTER
+	};
+
+	enum ButtonType
+	{
+		StartGame,
+		ExitGame
+	};
+
+	enum GameCommand
+	{
+		MainMenuCommand,
+		GameModeCommand,
+		ExitCommand,
 	};
 }
 

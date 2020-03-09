@@ -6,9 +6,9 @@ ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, bool isAnim
 
 }
 
-Definitions::LoadResourcesCommands ZeroCharacter::getLoadResourcesCommand()
+Definitions::LoadResourcesCommand ZeroCharacter::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommands::ZERO;
+	return Definitions::LoadResourcesCommand::ZERO;
 }
 
 void ZeroCharacter::initialize()

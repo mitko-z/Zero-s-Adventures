@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "EventsHolder.h"
 
 void Menu::initialize()
 {
@@ -14,9 +15,9 @@ void Menu::initialize()
 	setHighlighter(0);
 }
 
-Definitions::LoadResourcesCommands Menu::getLoadResourcesCommand()
+Definitions::LoadResourcesCommand Menu::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommands::MAIN_MENU;
+	return Definitions::LoadResourcesCommand::MENU;
 }
 
 void Menu::update()
@@ -96,27 +97,39 @@ void Menu::loadContent()
 	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
 }
 
-void Menu::updateEvents(
-	const UMAP<sf::Keyboard::Key, bool>& keysPressed,
-	const UMAP<sf::Keyboard::Key, bool>& keysReleased)
+void Menu::updateEvents()
 {
+	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	UMAP<sf::Keyboard::Key, bool> keysReleased = eventsHolder->getReleasedKeys();
 	updateKeys(keysReleased); 
 }
 
-void Menu::setAndInsertButtons(const std::vector<std::string>& texts)
+void Menu::setAndInsertButtons(const std::vector<Definitions::ButtonType>& buttonTypes)
 {
-	if (texts.size() > 0)
+	if (buttonTypes.size() > 0)
 	{
 		const double scale = 0.7;
 		const double w = rect.w * scale;
 		const double x = (rect.w - w) / 2;
-		const size_t buttonsNum = texts.size();
+		const size_t buttonsNum = buttonTypes.size();
 		const int allSpaces = 2 * buttonsNum + 1;
 		const double h = rect.h / allSpaces;
 		for (size_t i = 0; i < buttonsNum; ++i)
 		{
+			std::string text;
+			switch (buttonTypes[i])
+			{
+				case Definitions::ButtonType::StartGame:
+					text = "START GAME";
+				break;
+				case Definitions::ButtonType::ExitGame:
+					text = "EXIT GAME";
+				break;
+				default:
+				break;
+			}
 			double y = (2 * i + 1) * h;
-			buttons.push_back(new MenuButton(x, y, w, h, false, texts[i]));
+			buttons.push_back(new MenuButton(x, y, w, h, false, buttonTypes[i], text));
 		}
 	}
 }

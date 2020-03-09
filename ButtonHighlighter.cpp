@@ -1,9 +1,9 @@
 #include "ButtonHighlighter.h"
 
 
-Definitions::LoadResourcesCommands ButtonHighlighter::getLoadResourcesCommand()
+Definitions::LoadResourcesCommand ButtonHighlighter::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommands::BUTTON_HIGHLIGHTER;
+	return Definitions::LoadResourcesCommand::BUTTON_HIGHLIGHTER;
 }
 
 void ButtonHighlighter::loadContent()

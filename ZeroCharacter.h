@@ -11,7 +11,7 @@ public:
 	ZeroCharacter() = default;
 	ZeroCharacter(double x, double y, double w, double h, bool isAnimating);
 
-	Definitions::LoadResourcesCommands getLoadResourcesCommand() override;
+	Definitions::LoadResourcesCommand getLoadResourcesCommand() override;
 	void initialize() override;
 	void update() override;
 	void draw(sf::RenderWindow &window) override;

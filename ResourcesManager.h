@@ -7,15 +7,15 @@
 
 #include <SFML\Graphics.hpp>	// sf::Texture, sf::Sprite
 
-#include "Definitions.h"		// LoadResourcesCommands, Animations
+#include "Definitions.h"		// LoadResourcesCommand, Animations
 
 class ResourcesManager
 {
 public:
 	static ResourcesManager* getInstance();
-	void		loadResources(std::vector<Definitions::LoadResourcesCommands> commands, int level);
-	sf::Texture getTexture(Definitions::LoadResourcesCommands command);
-	bool        getAnimation(Definitions::LoadResourcesCommands command, Animation& animation);
+	void		loadResources(std::vector<Definitions::LoadResourcesCommand> commands, int level);
+	sf::Texture getTexture(Definitions::LoadResourcesCommand command);
+	bool        getAnimation(Definitions::LoadResourcesCommand command, Animation& animation);
 	void		releaseResources();
 	~ResourcesManager();
 private:

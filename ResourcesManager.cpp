@@ -46,7 +46,7 @@ void ResourcesManager::loadResources(std::vector<LOAD_RES_COMMAND> commands, int
 	// Menu load
 	imagesNames[LOAD_RES_COMMAND::MENU_BUTTON] = "MenuButtonEmptyWide.png";
 	imagesNames[LOAD_RES_COMMAND::BUTTON_HIGHLIGHTER] = "frame-transparent.png";
-	imagesNames[LOAD_RES_COMMAND::MAIN_MENU] = "MenuBackgroundRectangle.png";
+	imagesNames[LOAD_RES_COMMAND::MENU] = "MenuBackgroundRectangle.png";
 
 	levelsReader.close();
 
@@ -78,12 +78,12 @@ Animation ResourcesManager::getAnimationFromString(std::string strData)
 	return Animation( x,y );
 }
 
-sf::Texture ResourcesManager::getTexture(Definitions::LoadResourcesCommands command)
+sf::Texture ResourcesManager::getTexture(Definitions::LoadResourcesCommand command)
 {
 	return textures[command];
 }
 
-bool ResourcesManager::getAnimation(Definitions::LoadResourcesCommands command, Animation& animation)
+bool ResourcesManager::getAnimation(Definitions::LoadResourcesCommand command, Animation& animation)
 {
 	bool rc = false;
 	for(auto it = animations.begin(); it != animations.end(); ++it)

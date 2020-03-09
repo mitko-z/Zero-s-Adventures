@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+#include "EventsHolder.h"
+
 GameObject::~GameObject() {}
 
 GameObject::GameObject(GameObject &other) : 
@@ -16,22 +18,22 @@ void GameObject::initialize() {}
 void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
-	Definitions::LoadResourcesCommands loadCommand = getLoadResourcesCommand();
+	Definitions::LoadResourcesCommand loadCommand = getLoadResourcesCommand();
 	resMan->getAnimation(loadCommand, frames);
 	drawingObject.texture = resMan->getTexture(loadCommand);
 	drawingObject.sprite.setPosition(rect.x, rect.y);
 	drawingObject.sprite.setTexture(drawingObject.texture);
 }
 
-Definitions::LoadResourcesCommands GameObject::getLoadResourcesCommand()
+Definitions::LoadResourcesCommand GameObject::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommands::NONE;
+	return Definitions::LoadResourcesCommand::NONE;
 }
 
-void GameObject::updateEvents(
-	const UMAP<sf::Keyboard::Key, bool>& keysPressed, 
-	const UMAP<sf::Keyboard::Key, bool>& keysReleased)
+void GameObject::updateEvents()
 {
+	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	UMAP<sf::Keyboard::Key, bool> keysPressed = eventsHolder->getPressedKeys();
 	updateKeys(keysPressed); // by default detect on pressed key, might be overriden if needed
 }
 

@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>	// Keyboard::Key type
 
-#include "Definitions.h"		// LoadResourcesCommands
+#include "Definitions.h"		// LoadResourcesCommand
 #include "ResourcesManager.h"	// get textures from the resources manager
 
 
@@ -20,10 +20,8 @@ public :
 	GameObject(GameObject &other);
 	virtual void initialize();
 	virtual void loadContent();
-	virtual Definitions::LoadResourcesCommands getLoadResourcesCommand();
-	virtual void updateEvents(
-		const UMAP<sf::Keyboard::Key, bool> &keysPressed, 
-		const UMAP<sf::Keyboard::Key, bool> &keysReleased);
+	virtual Definitions::LoadResourcesCommand getLoadResourcesCommand();
+	virtual void updateEvents();
 	virtual void setRect(Rectangle rect) { this->rect = rect; }
 	virtual const Rectangle getRect() const { return this->rect; }
 	virtual void update();

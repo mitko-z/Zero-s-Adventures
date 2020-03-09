@@ -2,12 +2,11 @@
 
 void MainMenu::initialize()
 {
-	std::vector<std::string> texts
+	std::vector<Definitions::ButtonType> buttonTypes
 	{
-		"START GAME",
-		"EXIT GAME"
+		Definitions::ButtonType::StartGame,
+		Definitions::ButtonType::ExitGame
 	};
-	setAndInsertButtons(texts);
-	// highlighter.setRect(Rectangle(10, 10, 10, 10));
+	setAndInsertButtons(buttonTypes);
 	Menu::initialize();
 }

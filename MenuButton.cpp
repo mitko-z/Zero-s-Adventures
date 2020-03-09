@@ -1,13 +1,17 @@
 #include "MenuButton.h"
 
+#include "EventsHolder.h"
+
 MenuButton::MenuButton(	double x, 
 						double y, 
 						double w, 
 						double h, 
 						bool isAnimating, 
+						Definitions::ButtonType type,
 						std::string text) :
 	GameObject(x, y, w, h, isAnimating), 
 	isPressed_(false), 
+	type(type),
 	textToDisplay(text)
 {
 }
@@ -41,20 +45,18 @@ void MenuButton::loadContent()
 	text.setPosition(posX, posY);
 }
 
-Definitions::LoadResourcesCommands MenuButton::getLoadResourcesCommand()
+Definitions::LoadResourcesCommand MenuButton::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommands::MENU_BUTTON;
+	return Definitions::LoadResourcesCommand::MENU_BUTTON;
 }
 
 void MenuButton::update()
 {
-	isPressed_ = false;
-	if (isActive_)
+	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
+	if (isPressed_)
 	{
-		if (controllingKeys[sf::Keyboard::Space] || controllingKeys[sf::Keyboard::Return])
-		{
-			isPressed_ = true;
-		}
+		eventHolder->setEventByButton(type);
+		isPressed_ = false;
 	}
 }
 
@@ -68,5 +70,4 @@ void MenuButton::draw(sf::RenderWindow &window)
 void MenuButton::press()
 {
 	isPressed_ = true;
-	// TO DO move the states menu variables in Game.h as singeltons and set them from here
 }

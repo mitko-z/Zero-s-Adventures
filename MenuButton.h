@@ -13,10 +13,11 @@ public:
 		double w,
 		double h,
 		bool isAnimating,
+		Definitions::ButtonType type,
 		std::string text);
 
 	void loadContent() override;
-	Definitions::LoadResourcesCommands getLoadResourcesCommand() override;
+	Definitions::LoadResourcesCommand getLoadResourcesCommand() override;
 	void update() override;
 	void draw(sf::RenderWindow &window) override;
 
@@ -28,8 +29,9 @@ public:
 private:
 	bool isPressed_;
 	bool isActive_;
-	Definitions::RunningGameStates runningGameState_;
+	Definitions::RunningGameState runningGameState_;
 	std::string textToDisplay;
 	sf::Font font;
 	sf::Text text;
+	Definitions::ButtonType type;
 };
