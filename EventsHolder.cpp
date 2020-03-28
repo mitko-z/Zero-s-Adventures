@@ -26,14 +26,8 @@ void EventsHolder::addReleasedKey(sf::Keyboard::Key key)
 
 void EventsHolder::nullEvents()
 {
-	for (auto it = keysPressed.begin(); it != keysPressed.end(); ++it)
-	{
-		it->second = false;
-	}
-	for (auto it = keysReleased.begin(); it != keysReleased.end(); ++it)
-	{
-		it->second = false;
-	}
+	keysPressed.clear();
+	keysReleased.clear();
 }
 
 void EventsHolder::setEventByButton(Definitions::ButtonType buttonType)

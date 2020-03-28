@@ -56,6 +56,31 @@ void ZeroCharacter::initialize()
 //	
 //}
 
+void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
+{
+	if (controllingKeys.size() > 0)
+	{
+		for (const auto& key : keysPressed)
+		{
+			if (controllingKeys.find(key.first) != this->controllingKeys.end())
+			{
+				controllingKeys[key.first] = true;
+			}
+		}
+	}
+
+	if (this->controllingKeys.size() > 0)
+	{
+		for (const auto& key : keysReleased)
+		{
+			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
+			{
+				this->controllingKeys[key.first] = false;
+			}
+		}
+	}
+}
+
 void ZeroCharacter::update()
 {
 	bool shouldAnimate = false;
@@ -81,6 +106,7 @@ void ZeroCharacter::update()
 	}
 	if (shouldAnimate)	isAnimating = true;
 	else				isAnimating = false;
+
 	updateDrawingObject();
 }
 

@@ -97,11 +97,18 @@ void Menu::loadContent()
 	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
 }
 
-void Menu::updateEvents()
+void Menu::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	UMAP<sf::Keyboard::Key, bool> keysReleased = eventsHolder->getReleasedKeys();
-	updateKeys(keysReleased); 
+	if (this->controllingKeys.size() > 0)
+	{
+		for (const auto& key : keysReleased)
+		{
+			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
+			{
+				this->controllingKeys[key.first] = key.second;
+			}
+		}
+	}
 }
 
 void Menu::setAndInsertButtons(const std::vector<Definitions::ButtonType>& buttonTypes)

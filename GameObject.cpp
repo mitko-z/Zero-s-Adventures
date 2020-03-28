@@ -33,19 +33,21 @@ Definitions::LoadResourcesCommand GameObject::getLoadResourcesCommand()
 void GameObject::updateEvents()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	UMAP<sf::Keyboard::Key, bool> keysPressed = eventsHolder->getPressedKeys();
-	updateKeys(keysPressed); // by default detect on pressed key, might be overriden if needed
+	MAP_KEYS keysPressed = eventsHolder->getPressedKeys();
+	MAP_KEYS keysReleased = eventsHolder->getReleasedKeys();
+	updateKeys(keysPressed, keysReleased);
 }
 
-void GameObject::updateKeys(const UMAP<sf::Keyboard::Key, bool>& keys)
+// by default detect on pressed key; might be overriden if needed
+void GameObject::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 {
 	if (this->controllingKeys.size() > 0)
 	{
-		for (auto key : keys)
+		for (const auto& key : keysPressed)
 		{
 			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
 			{
-				this->controllingKeys[key.first] = key.second;
+				this->controllingKeys[key.first] = true;
 			}
 		}
 	}
@@ -101,5 +103,3 @@ void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, s
 		static_cast<float>(h / texture.getSize().y) };
 	sprite.scale(factor);
 }
-
-int GameObject::animationFrame = 0;

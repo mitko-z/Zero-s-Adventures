@@ -8,6 +8,7 @@
 #include "Definitions.h"		// LoadResourcesCommand
 #include "ResourcesManager.h"	// get textures from the resources manager
 
+#define MAP_KEYS UMAP<sf::Keyboard::Key, bool>
 
 class GameObject
 {
@@ -33,10 +34,10 @@ protected :
 	std::map<sf::Keyboard::Key, bool> controllingKeys;
 	Animation frames;
 	bool isAnimating;
-	static int animationFrame;
+	int animationFrame;
 
-	void updateDrawingObject();
-	void updateKeys(const UMAP<sf::Keyboard::Key, bool>& keys);
+	virtual void updateDrawingObject();
+	virtual void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased);
 	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
 private:
 	void updateAnimFrame();
