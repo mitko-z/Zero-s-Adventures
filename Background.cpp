@@ -3,13 +3,10 @@
 void Background::loadContent()
 {
 	GameObject::loadContent();
-	sf::Vector2f factor{
-		static_cast<float>(rect.w / drawingObject.texture.getSize().x),
-		static_cast<float>(rect.h / drawingObject.texture.getSize().y)};
-	drawingObject.sprite.scale(factor);
+	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
 }
 
 Definitions::LoadResourcesCommand Background::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::BACKGROUND;
+	return Definitions::LoadResourcesCommand::BACKGROUND_RES;
 }

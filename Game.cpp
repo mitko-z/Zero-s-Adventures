@@ -1,6 +1,15 @@
 #include <memory>
 #include "Game.h"
 
+
+#include "ResourcesManager.h"
+#include "Definitions.h"
+#include "EventsHolder.h"
+#include "Background.h"
+#include "ZeroCharacter.h"
+#include "MainMenu.h"
+#include "StartScreen.h"
+
 Game::Game() :
 	window(sf::VideoMode(800, 600), "Zero's Adventures"),
 	timePauseBetweenLevels(1000),
@@ -18,8 +27,10 @@ void Game::initialize()
 
 	gameObjects.push_back(new Background(0, 0, window.getSize().x, window.getSize().y, false));
 	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10, false));
-	menus[Definitions::RunningMenuState::MainMenuState] = 
+	menus[Definitions::RunningMenuState::MAIN_MENU_STATE] = 
 		new MainMenu(0, 0, window.getSize().x, window.getSize().y, false);
+	menus[Definitions::RunningMenuState::START_SCREEN_STATE] =
+		new StartScreen(0, 0, window.getSize().x, window.getSize().y, false);
 
 	for (auto gameObject : gameObjects)
 	{
@@ -38,6 +49,7 @@ void Game::loadContent()
 	allGameObjects.push_back(new Menu());
 	allGameObjects.push_back(new MenuButton());
 	allGameObjects.push_back(new ButtonHighlighter());
+	allGameObjects.push_back(new StartScreen());
 	for (auto gameObject : allGameObjects)
 	{
 		Definitions::LoadResourcesCommand resCommand = gameObject->getLoadResourcesCommand();
@@ -66,18 +78,18 @@ void Game::eventsCapture()
 	{
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		{
-			if (eventsHolder->getMode() == Definitions::Mode::gameMode)
+			if (eventsHolder->getMode() == Definitions::Mode::GAME_MODE)
 			{
-				eventsHolder->setEventByGameCommand(Definitions::GameCommand::MainMenuCommand);
+				eventsHolder->setEventByGameCommand(Definitions::GameCommand::MENU_COMMAND);
 			}
 			else
 			{
-				eventsHolder->setEventByGameCommand(Definitions::GameCommand::GameModeCommand);
+				eventsHolder->setEventByGameCommand(Definitions::GameCommand::GAME_COMMAND);
 			}
 		}
 		else if (event.type == sf::Event::Closed)
 		{
-			eventsHolder->setEventByGameCommand(Definitions::GameCommand::ExitCommand);
+			eventsHolder->setEventByGameCommand(Definitions::GameCommand::EXIT_COMMAND);
 		}
 		else
 		{
@@ -96,13 +108,13 @@ void Game::eventsCapture()
 	}
 	switch (eventsHolder->getMode())
 	{
-		case Definitions::Mode::gameMode:
+		case Definitions::Mode::GAME_MODE:
 			for (auto gameObject : gameObjects)
 			{
 				gameObject->updateEvents();
 			}
 		break;
-		case Definitions::Mode::menuMode:
+		case Definitions::Mode::MENU_MODE:
 			menus[eventsHolder->getRunningMenuState()]->updateEvents();
 		break;
 		default:
@@ -118,13 +130,13 @@ void Game::update()
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 	switch (eventsHolder->getMode())
 	{
-	case Definitions::Mode::gameMode:
+	case Definitions::Mode::GAME_MODE:
 		for (auto gameObject : gameObjects)
 		{
 			gameObject->update();
 		}
 		break;
-	case Definitions::Mode::menuMode:
+	case Definitions::Mode::MENU_MODE:
 		menus[eventsHolder->getRunningMenuState()]->update();
 		break;
 	default:
@@ -140,13 +152,13 @@ void Game::draw()
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 	switch (eventsHolder->getMode())
 	{
-	case Definitions::Mode::gameMode:
+	case Definitions::Mode::GAME_MODE:
 		for (auto gameObject : gameObjects)
 		{
 			gameObject->draw(window);
 		}
 		break;
-	case Definitions::Mode::menuMode:
+	case Definitions::Mode::MENU_MODE:
 		menus[eventsHolder->getRunningMenuState()]->draw(window);
 		break;
 	default:
@@ -158,7 +170,7 @@ void Game::draw()
 void Game::run()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	while (eventsHolder->getMode() != Definitions::Mode::exitMode)
+	while (eventsHolder->getMode() != Definitions::Mode::EXIT_MODE)
 	{
 		eventsCapture();
 		update();

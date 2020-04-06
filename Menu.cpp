@@ -17,7 +17,7 @@ void Menu::initialize()
 
 Definitions::LoadResourcesCommand Menu::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::MENU;
+	return Definitions::LoadResourcesCommand::MENU_RES;
 }
 
 void Menu::update()
@@ -126,10 +126,10 @@ void Menu::setAndInsertButtons(const std::vector<Definitions::ButtonType>& butto
 			std::string text;
 			switch (buttonTypes[i])
 			{
-				case Definitions::ButtonType::StartGame:
+				case Definitions::ButtonType::START_GAME_BUTTON:
 					text = "START GAME";
 				break;
-				case Definitions::ButtonType::ExitGame:
+				case Definitions::ButtonType::EXIT_GAME_BUTTON:
 					text = "EXIT GAME";
 				break;
 				default:

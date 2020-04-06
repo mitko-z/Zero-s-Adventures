@@ -3,7 +3,7 @@
 
 Definitions::LoadResourcesCommand ButtonHighlighter::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::BUTTON_HIGHLIGHTER;
+	return Definitions::LoadResourcesCommand::BUTTON_HIGHLIGHTER_RES;
 }
 
 void ButtonHighlighter::loadContent()

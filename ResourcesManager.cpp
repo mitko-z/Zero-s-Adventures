@@ -31,22 +31,24 @@ void ResourcesManager::loadResources(std::vector<LOAD_RES_COMMAND> commands, int
 	UMAP<LOAD_RES_COMMAND, std::string> imagesNames;
 	std::getline(levelsReader, lineRead);	// read "; name of Zero's texture.."
 	std::getline(levelsReader, lineRead);	// read the name of the texture
-	imagesNames[LOAD_RES_COMMAND::ZERO] = lineRead + ".png";
+	imagesNames[LOAD_RES_COMMAND::ZERO_RES] = lineRead + ".png";
 	std::getline(levelsReader, lineRead);	// read "; Zero texture frames x, y"
 	std::getline(levelsReader, lineRead);	// read the frames upon x and y
-	animations[LOAD_RES_COMMAND::ZERO] = getAnimationFromString(lineRead);
+	animations[LOAD_RES_COMMAND::ZERO_RES] = getAnimationFromString(lineRead);
 	std::getline(levelsReader, lineRead);	// read "; number of levels"
 	std::getline(levelsReader, lineRead);	// read the number of levels
 	std::getline(levelsReader, lineRead);	// read "; level no."
 	std::getline(levelsReader, lineRead);	// read 1
 	std::getline(levelsReader, lineRead);	// read "; name for the texture of the background"
 	std::getline(levelsReader, lineRead);	// read the name for the texture of the background
-	imagesNames[LOAD_RES_COMMAND::BACKGROUND] = lineRead + ".png";
+	imagesNames[LOAD_RES_COMMAND::BACKGROUND_RES] = lineRead + ".png";
 
 	// Menu load
-	imagesNames[LOAD_RES_COMMAND::MENU_BUTTON] = "MenuButtonEmptyWide.png";
-	imagesNames[LOAD_RES_COMMAND::BUTTON_HIGHLIGHTER] = "frame-transparent.png";
-	imagesNames[LOAD_RES_COMMAND::MENU] = "MenuBackgroundRectangle.png";
+	imagesNames[LOAD_RES_COMMAND::MENU_BUTTON_RES] = "MenuButtonEmptyWide.png";
+	imagesNames[LOAD_RES_COMMAND::BUTTON_HIGHLIGHTER_RES] = "frame-transparent.png";
+	imagesNames[LOAD_RES_COMMAND::MENU_RES] = "MenuBackgroundRectangle.png";
+
+	imagesNames[LOAD_RES_COMMAND::START_SCREEN_RES] = "StartScreen.png";
 
 	levelsReader.close();
 

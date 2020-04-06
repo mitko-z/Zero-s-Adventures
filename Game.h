@@ -7,13 +7,8 @@
 
 #include "SFML\Graphics.hpp"
 
-#include "ResourcesManager.h"
-#include "Definitions.h"
-#include "EventsHolder.h"
 #include "GameObject.h"
-#include "Background.h"
-#include "ZeroCharacter.h"
-#include "MainMenu.h"
+#include "Menu.h"
 
 class Game
 {

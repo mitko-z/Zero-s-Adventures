@@ -47,7 +47,7 @@ void MenuButton::loadContent()
 
 Definitions::LoadResourcesCommand MenuButton::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::MENU_BUTTON;
+	return Definitions::LoadResourcesCommand::MENU_BUTTON_RES;
 }
 
 void MenuButton::update()

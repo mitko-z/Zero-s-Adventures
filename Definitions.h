@@ -14,9 +14,9 @@ namespace Definitions
 	/// </summary>
 	enum Mode
 	{
-		gameMode,
-		menuMode,
-		exitMode
+		GAME_MODE,
+		MENU_MODE,
+		EXIT_MODE
 	};
 
 	/// <summary>
@@ -24,11 +24,10 @@ namespace Definitions
 	/// </summary>
 	enum RunningGameState
 	{
-		StartScreenState,
-		PlayingState,
-		FinishedLevelScreenState,
-		GameFinishedState,
-		GameOverState
+		PLAYING_STATE,
+		FINISHED_LEVEL_SCREEN_STATE,
+		GAME_FINISHED_SCREEN_STATE,
+		GAME_OVER_SCRREN_STATE
 	};
 
 	/// <summary>
@@ -36,34 +35,37 @@ namespace Definitions
 	/// </summary>
 	enum RunningMenuState
 	{
-		MainMenuState,
-		ResumeMenuState,
-		SaveGameMenuState,
-		LoadGameMenuState,
-		OptionsMenuState
+		MAIN_MENU_STATE,
+		RESUME_MENU_STATE,
+		SAVE_GAME_STATE,
+		LOAD_GAME_STATE,
+		OPTIONS_STATE,
+		START_SCREEN_STATE,
 	};
 
 	enum LoadResourcesCommand
 	{
 		NONE = 0,
-		BACKGROUND,
-		ZERO,
-		MENU_BUTTON,
-		MENU,
-		BUTTON_HIGHLIGHTER
+		BACKGROUND_RES,
+		ZERO_RES,
+		MENU_BUTTON_RES,
+		MENU_RES,
+		BUTTON_HIGHLIGHTER_RES,
+		START_SCREEN_RES
 	};
 
 	enum ButtonType
 	{
-		StartGame,
-		ExitGame
+		START_GAME_BUTTON,
+		EXIT_GAME_BUTTON
 	};
 
 	enum GameCommand
 	{
-		MainMenuCommand,
-		GameModeCommand,
-		ExitCommand,
+		GAME_COMMAND,
+		MENU_COMMAND,
+		EXIT_COMMAND,
+		MIAN_MENU_COMMAND
 	};
 }
 

@@ -8,10 +8,10 @@ std::shared_ptr<EventsHolder> EventsHolder::getInstnce()
 
 void EventsHolder::initialize()
 {
-	mode = Definitions::Mode::menuMode;
-	runningGameState = Definitions::RunningGameState::StartScreenState;
-	runningMenuState = Definitions::RunningMenuState::MainMenuState;
-	previousRunningMenuState = Definitions::RunningMenuState::MainMenuState;
+	mode = Definitions::Mode::MENU_MODE;
+	runningGameState = Definitions::RunningGameState::PLAYING_STATE;
+	runningMenuState = Definitions::RunningMenuState::START_SCREEN_STATE;
+	previousRunningMenuState = Definitions::RunningMenuState::MAIN_MENU_STATE;
 }
 
 void EventsHolder::addPressedKey(sf::Keyboard::Key key)
@@ -34,11 +34,11 @@ void EventsHolder::setEventByButton(Definitions::ButtonType buttonType)
 {
 	switch (buttonType)
 	{
-		case Definitions::StartGame:
-			mode = Definitions::Mode::gameMode;
+		case Definitions::START_GAME_BUTTON:
+			mode = Definitions::Mode::GAME_MODE;
 		break;
-		case Definitions::ExitGame:
-			mode = Definitions::Mode::exitMode;
+		case Definitions::EXIT_GAME_BUTTON:
+			mode = Definitions::Mode::EXIT_MODE;
 		break;
 		default:
 		break;
@@ -49,14 +49,17 @@ void EventsHolder::setEventByGameCommand(Definitions::GameCommand command)
 {
 	switch (command)
 	{
-		case Definitions::GameCommand::ExitCommand:
-			mode = Definitions::Mode::exitMode;
+		case Definitions::GameCommand::EXIT_COMMAND:
+			mode = Definitions::Mode::EXIT_MODE;
 		break;
-		case Definitions::GameCommand::MainMenuCommand:
-			mode = Definitions::Mode::menuMode;
+		case Definitions::GameCommand::MENU_COMMAND:
+			mode = Definitions::Mode::MENU_MODE;
 		break;
-		case Definitions::GameCommand::GameModeCommand:
-			mode = Definitions::Mode::gameMode;
+		case Definitions::GameCommand::GAME_COMMAND:
+			mode = Definitions::Mode::GAME_MODE;
+		break;
+		case Definitions::GameCommand::MIAN_MENU_COMMAND:
+			runningMenuState = Definitions::RunningMenuState::MAIN_MENU_STATE;
 		break;
 		default:
 		break;
