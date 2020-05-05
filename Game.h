@@ -1,3 +1,6 @@
+#ifndef GAME_H
+#define GAME_H
+
 #pragma once
 #include <string>
 #include <unordered_map>
@@ -18,7 +21,7 @@ public:
 	Game();
 #pragma endregion
 
-#pragma region methods
+#pragma region public methods
 
 	/// <summary>
 	/// initialize() - allows the game to perform any initialization it needs to before starting to run.
@@ -36,22 +39,27 @@ public:
 	/// run() - start & handle the game loop
 	/// </summary>
 	void run();
+#pragma endregion
 
 private:
 
+#pragma region public methods
 	/// <summary>
-	/// eventsCapture() - get events from outside world
+	/// eventsCapture() - capture and process events such as keyboard 
+	/// pressed, collisions between objects, timers, etc.
 	/// </summary>
 	void eventsCapture();
 
+	void processColisions();
+	bool twoObjsColide(const GameObject& obj1, const GameObject& obj2);
+
 	/// <summary>
-	/// update() Allows the game to run logic such as updating the world,
-	/// checking for collisions, gathering input, and playing audio.
+	/// update() Allows the game to run logic
 	/// </summary>
 	void update();
 
 	/// <summary>
-	/// This is called when the game should draw itself.
+	/// This is called when the game should draw on screen objects (also playing sounds)
 	/// </summary>
 	void draw();
 #pragma endregion
@@ -74,10 +82,8 @@ private:
 	// events
 	sf::Event event;
 
-	// game objects
-	std::vector<GameObject *> gameObjects;
-	UMAP<Definitions::RunningMenuState, Menu*> menus;
-
 #pragma endregion
 
 };
+
+#endif

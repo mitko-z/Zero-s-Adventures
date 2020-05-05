@@ -127,8 +127,10 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="MovingCharacter.cpp" />
     <ClCompile Include="ResourcesManager.cpp" />
     <ClCompile Include="StartScreen.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="ZeroCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,8 +143,10 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="MovingCharacter.h" />
     <ClInclude Include="ResourcesManager.h" />
     <ClInclude Include="StartScreen.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="ZeroCharacter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

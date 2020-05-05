@@ -8,8 +8,7 @@ public:
 	StartScreen() : Menu(), keyIsPressed(false) {}
 	StartScreen(double x, double y, double w, double h, bool animating) : Menu(x, y, w, h, animating) {}
 
-	void loadContent() override;
-	LOAD_RES_COMMAND getLoadResourcesCommand() override;
+	OBJ_TYPE getLoadResourcesCommand() override;
 	void initialize() override;
 	void update() override;
 protected:

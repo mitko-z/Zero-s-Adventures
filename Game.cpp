@@ -5,10 +5,6 @@
 #include "ResourcesManager.h"
 #include "Definitions.h"
 #include "EventsHolder.h"
-#include "Background.h"
-#include "ZeroCharacter.h"
-#include "MainMenu.h"
-#include "StartScreen.h"
 
 Game::Game() :
 	window(sf::VideoMode(800, 600), "Zero's Adventures"),
@@ -25,54 +21,33 @@ void Game::initialize()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	gameObjects.push_back(new Background(0, 0, window.getSize().x, window.getSize().y, false));
-	gameObjects.push_back(new ZeroCharacter(10, 10, 10, 10, false));
-	menus[Definitions::RunningMenuState::MAIN_MENU_STATE] = 
-		new MainMenu(0, 0, window.getSize().x, window.getSize().y, false);
-	menus[Definitions::RunningMenuState::START_SCREEN_STATE] =
-		new StartScreen(0, 0, window.getSize().x, window.getSize().y, false);
-
-	for (auto gameObject : gameObjects)
-	{
-		gameObject->initialize();
-	}
-	for (auto it = menus.begin(); it != menus.end(); ++it)
-	{
-		it->second->initialize();
-	}
+	extern ResourcesManager* resMan;
+	resMan->setWindowDimensions(window.getSize().x, window.getSize().y);
 }
 
 void Game::loadContent()
 {
-	std::vector<Definitions::LoadResourcesCommand> resCommands;
-	std::vector<GameObject *> allGameObjects(gameObjects);
-	allGameObjects.push_back(new Menu());
-	allGameObjects.push_back(new MenuButton());
-	allGameObjects.push_back(new ButtonHighlighter());
-	allGameObjects.push_back(new StartScreen());
-	for (auto gameObject : allGameObjects)
-	{
-		Definitions::LoadResourcesCommand resCommand = gameObject->getLoadResourcesCommand();
-		if (resCommand != Definitions::LoadResourcesCommand::NONE)
-		{
-			resCommands.push_back(resCommand);
-		}
-	}
 	extern ResourcesManager *resMan;
-	resMan->loadResources(resCommands, 1);
+	resMan->loadResources(1);
 
+	std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 	for (auto gameObject : gameObjects)
 	{
+		gameObject->initialize();
 		gameObject->loadContent();
 	}
+
+	UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
 	for (auto it = menus.begin(); it != menus.end(); ++it)
 	{
+		it->second->initialize();
 		it->second->loadContent();
 	}
 }
 
 void Game::eventsCapture()
 {
+#pragma region capture gameplay events
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 	while (window.pollEvent(event))
 	{
@@ -80,16 +55,16 @@ void Game::eventsCapture()
 		{
 			if (eventsHolder->getMode() == Definitions::Mode::GAME_MODE)
 			{
-				eventsHolder->setEventByGameCommand(Definitions::GameCommand::MENU_COMMAND);
+				eventsHolder->setEventByGameCommand(Definitions::Command::MENU_COMMAND);
 			}
 			else
 			{
-				eventsHolder->setEventByGameCommand(Definitions::GameCommand::GAME_COMMAND);
+				eventsHolder->setEventByGameCommand(Definitions::Command::GAME_COMMAND);
 			}
 		}
 		else if (event.type == sf::Event::Closed)
 		{
-			eventsHolder->setEventByGameCommand(Definitions::GameCommand::EXIT_COMMAND);
+			eventsHolder->setEventByGameCommand(Definitions::Command::EXIT_COMMAND);
 		}
 		else
 		{
@@ -106,40 +81,116 @@ void Game::eventsCapture()
 			}
 		}
 	}
+#pragma endregion
+
+#pragma region update events of game objects
+	extern ResourcesManager *resMan;
 	switch (eventsHolder->getMode())
 	{
 		case Definitions::Mode::GAME_MODE:
+		{
+			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 			for (auto gameObject : gameObjects)
 			{
 				gameObject->updateEvents();
 			}
+		}
 		break;
 		case Definitions::Mode::MENU_MODE:
+		{
+			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
 			menus[eventsHolder->getRunningMenuState()]->updateEvents();
+		}
 		break;
 		default:
 		break;
 	}
+#pragma endregion
 
 	// clear the events
 	eventsHolder->nullEvents();
 }
 
-void Game::update()
+void Game::processColisions()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	extern ResourcesManager *resMan;
 	switch (eventsHolder->getMode())
 	{
 	case Definitions::Mode::GAME_MODE:
+	{
+		std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 		for (auto gameObject : gameObjects)
 		{
-			gameObject->update();
+			gameObject->nullCollisions();
+		}
+		size_t numOfGameObjs = gameObjects.size();
+		for (size_t i = 1; i < numOfGameObjs - 1; ++i) // 0 is the background - not interacting with the other game objs
+		{
+			for (size_t j = i + 1; j < numOfGameObjs; ++j)
+			{
+				if (twoObjsColide(*gameObjects[i], *gameObjects[j]))
+				{
+					gameObjects[i]->setCollisionWith(*gameObjects[j]);
+					gameObjects[j]->setCollisionWith(*gameObjects[i]);
+				}
+			}
+		}
+		for (auto gameObject : gameObjects)
+		{
+			gameObject->processCollisions();
+		}
+	}
+	break;
+	case Definitions::Mode::MENU_MODE:
+	{
+		// TODO
+	}
+	break;
+	default:
+		break;
+	}
+}
+
+bool Game::twoObjsColide(const GameObject & obj1, const GameObject & obj2)
+{
+	Rectangle rect1 = obj1.getRect();
+	Rectangle rect2 = obj2.getRect();
+	double x1 = rect1.x; double y1 = rect1.y;
+	double xw1 = x1 + rect1.w; double yh1 = y1 + rect1.h;
+	double x2 = rect2.x; double y2 = rect2.y;
+	double xw2 = x2 + rect2.w; double yh2 = y2 + rect2.h;
+	
+	if ((yh1 < y2) || (y1 > yh2))
+		return false;
+	if ((xw1 < x2) || (x1 > xw2))
+		return false;
+
+	return true;
+}
+
+void Game::update()
+{
+	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	extern ResourcesManager *resMan;
+	switch (eventsHolder->getMode())
+	{
+		case Definitions::Mode::GAME_MODE:
+		{
+			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
+			for (auto gameObject : gameObjects)
+			{
+				gameObject->update();
+			}
 		}
 		break;
-	case Definitions::Mode::MENU_MODE:
-		menus[eventsHolder->getRunningMenuState()]->update();
+		case Definitions::Mode::MENU_MODE:
+		{
+			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
+			menus[eventsHolder->getRunningMenuState()]->update();
+		}
 		break;
-	default:
+		default:
 		break;
 	}
 }
@@ -152,16 +203,22 @@ void Game::draw()
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 	switch (eventsHolder->getMode())
 	{
-	case Definitions::Mode::GAME_MODE:
-		for (auto gameObject : gameObjects)
+		case Definitions::Mode::GAME_MODE:
 		{
-			gameObject->draw(window);
+			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
+			for (auto gameObject : gameObjects)
+			{
+				gameObject->draw(window);
+			}
 		}
 		break;
-	case Definitions::Mode::MENU_MODE:
-		menus[eventsHolder->getRunningMenuState()]->draw(window);
+		case Definitions::Mode::MENU_MODE:
+		{
+			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
+			menus[eventsHolder->getRunningMenuState()]->draw(window);
+		}
 		break;
-	default:
+		default:
 		break;
 	}
 	window.display();
@@ -174,6 +231,7 @@ void Game::run()
 	{
 		eventsCapture();
 		update();
+		processColisions();
 		draw();
 	}
 }

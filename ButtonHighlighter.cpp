@@ -1,13 +1,7 @@
 #include "ButtonHighlighter.h"
 
 
-Definitions::LoadResourcesCommand ButtonHighlighter::getLoadResourcesCommand()
+Definitions::ObjectType ButtonHighlighter::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::BUTTON_HIGHLIGHTER_RES;
-}
-
-void ButtonHighlighter::loadContent()
-{
-	GameObject::loadContent();
-	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
+	return Definitions::ObjectType::BUTTON_HIGHLIGHTER_TYPE;
 }

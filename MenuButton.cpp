@@ -21,8 +21,6 @@ void MenuButton::loadContent()
 
 	GameObject::loadContent();
 
-	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
-
 	std::string loadPath;
 	// fonts
 	loadPath = "Data/Fonts/SMARC___.TTF";
@@ -45,9 +43,9 @@ void MenuButton::loadContent()
 	text.setPosition(posX, posY);
 }
 
-Definitions::LoadResourcesCommand MenuButton::getLoadResourcesCommand()
+Definitions::ObjectType MenuButton::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::MENU_BUTTON_RES;
+	return Definitions::ObjectType::MENU_BUTTON_TYPE;
 }
 
 void MenuButton::update()

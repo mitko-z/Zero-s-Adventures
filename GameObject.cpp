@@ -18,16 +18,17 @@ void GameObject::initialize() {}
 void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
-	Definitions::LoadResourcesCommand loadCommand = getLoadResourcesCommand();
+	Definitions::ObjectType loadCommand = getLoadResourcesCommand();
 	resMan->getAnimation(loadCommand, frames);
 	drawingObject.texture = resMan->getTexture(loadCommand);
 	drawingObject.sprite.setPosition(rect.x, rect.y);
 	drawingObject.sprite.setTexture(drawingObject.texture);
+	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
 }
 
-Definitions::LoadResourcesCommand GameObject::getLoadResourcesCommand()
+Definitions::ObjectType GameObject::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::NONE;
+	return Definitions::ObjectType::NONE;
 }
 
 void GameObject::updateEvents()
@@ -36,6 +37,18 @@ void GameObject::updateEvents()
 	MAP_KEYS keysPressed = eventsHolder->getPressedKeys();
 	MAP_KEYS keysReleased = eventsHolder->getReleasedKeys();
 	updateKeys(keysPressed, keysReleased);
+}
+
+void GameObject::nullCollisions()
+{
+	hasCollisions = false;
+	objsColideWith.clear();
+}
+
+void GameObject::setCollisionWith(GameObject& other)
+{
+	hasCollisions = true;
+	objsColideWith.push_back(&other);
 }
 
 // by default detect on pressed key; might be overriden if needed
@@ -99,7 +112,8 @@ void GameObject::updateAnimFrame()
 void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite)
 {
 	sf::Vector2f factor{
-		static_cast<float>(w / texture.getSize().x),
-		static_cast<float>(h / texture.getSize().y) };
+		static_cast<float>(w * frames.framesAlongX / texture.getSize().x),
+		static_cast<float>(h * frames.framesAlongY / texture.getSize().y) };
 	sprite.scale(factor);
 }
+

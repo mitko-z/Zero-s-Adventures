@@ -18,7 +18,7 @@ public:
 	const UMAP<sf::Keyboard::Key, bool>& getReleasedKeys() { return keysReleased; }
 	void addReleasedKey(sf::Keyboard::Key key);
 	void setEventByButton(Definitions::ButtonType buttonType);
-	void setEventByGameCommand(Definitions::GameCommand command);
+	void setEventByGameCommand(Definitions::Command command);
 	Definitions::Mode getMode() { return mode; }
 	Definitions::RunningGameState getRunningGameState() { return runningGameState; }
 	Definitions::RunningMenuState getRunningMenuState() { return runningMenuState; }

@@ -1,15 +1,9 @@
 #include "StartScreen.h"
 #include "EventsHolder.h"
 
-void StartScreen::loadContent()
+OBJ_TYPE StartScreen::getLoadResourcesCommand()
 {
-	GameObject::loadContent();
-	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
-}
-
-LOAD_RES_COMMAND StartScreen::getLoadResourcesCommand()
-{
-	return LOAD_RES_COMMAND::START_SCREEN_RES;
+	return OBJ_TYPE::START_SCREEN_TYPE;
 }
 
 void StartScreen::initialize()
@@ -30,7 +24,7 @@ void StartScreen::update()
 	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
 	if (keyIsPressed)
 	{
-		eventHolder->setEventByGameCommand(Definitions::GameCommand::MIAN_MENU_COMMAND);
+		eventHolder->setEventByGameCommand(Definitions::Command::MIAN_MENU_COMMAND);
 		keyIsPressed = false;
 	}
 }

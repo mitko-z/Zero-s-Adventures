@@ -2,7 +2,13 @@
 
 #include <SFML\Graphics.hpp>
 
-#define LOAD_RES_COMMAND Definitions::LoadResourcesCommand
+#define OBJ_TYPE Definitions::ObjectType
+#define MODE Definitions::Mode
+#define RUN_GAME_STATE Definitions::RunningGameState
+#define RUN_MENU_STATE Definitions::RunningMenuState
+#define BUTTON_TYPE Definitions::ButtonType
+#define COMMAND Definitions::Command
+
 #define UMAP std::unordered_map
 
 namespace Definitions
@@ -43,15 +49,16 @@ namespace Definitions
 		START_SCREEN_STATE,
 	};
 
-	enum LoadResourcesCommand
+	enum ObjectType
 	{
 		NONE = 0,
-		BACKGROUND_RES,
-		ZERO_RES,
-		MENU_BUTTON_RES,
-		MENU_RES,
-		BUTTON_HIGHLIGHTER_RES,
-		START_SCREEN_RES
+		BACKGROUND_TYPE,
+		ZERO_TYPE,
+		MENU_BUTTON_TYPE,
+		MENU_TYPE,
+		BUTTON_HIGHLIGHTER_TYPE,
+		START_SCREEN_TYPE,
+		WALL_TYPE
 	};
 
 	enum ButtonType
@@ -60,7 +67,7 @@ namespace Definitions
 		EXIT_GAME_BUTTON
 	};
 
-	enum GameCommand
+	enum Command
 	{
 		GAME_COMMAND,
 		MENU_COMMAND,

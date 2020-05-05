@@ -15,9 +15,9 @@ void Menu::initialize()
 	setHighlighter(0);
 }
 
-Definitions::LoadResourcesCommand Menu::getLoadResourcesCommand()
+Definitions::ObjectType Menu::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::MENU_RES;
+	return Definitions::ObjectType::MENU_TYPE;
 }
 
 void Menu::update()
@@ -94,7 +94,6 @@ void Menu::loadContent()
 
 	highlighter.loadContent();
 
-	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
 }
 
 void Menu::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)

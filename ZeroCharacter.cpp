@@ -1,14 +1,13 @@
 #include "ZeroCharacter.h"
 
-ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, bool isAnimating) : 
-	GameObject(x, y, w, h, isAnimating)
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, bool isAnimating) : 
+	MovingCharacter(x, y, w, h, isAnimating, speed)
 {
-
 }
 
-Definitions::LoadResourcesCommand ZeroCharacter::getLoadResourcesCommand()
+Definitions::ObjectType ZeroCharacter::getLoadResourcesCommand()
 {
-	return Definitions::LoadResourcesCommand::ZERO_RES;
+	return Definitions::ObjectType::ZERO_TYPE;
 }
 
 void ZeroCharacter::initialize()
@@ -38,16 +37,6 @@ void ZeroCharacter::initialize()
 	this->controllingKeys.insert(std::make_pair(sf::Keyboard::R, false));		// drop weapon
 	this->controllingKeys.insert(std::make_pair(sf::Keyboard::BackSpace, false));// drop weapon
 #pragma endregion
-
-#pragma region drawing
-	// TODO: these to be set precise later
-	this->rect.x = 10;
-	this->rect.y = 10;
-	this->rect.h = 10;
-	this->rect.w = 10;
-	this->speed = 10;
-#pragma endregion
-
 }
 
 // disabled - the base functionality works for now fine for this
@@ -83,30 +72,24 @@ void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keys
 
 void ZeroCharacter::update()
 {
-	bool shouldAnimate = false;
 	if (this->controllingKeys[sf::Keyboard::S] || this->controllingKeys[sf::Keyboard::Down])
 	{
-		this->rect.y += this->speed;
-		shouldAnimate = true;
+		setDirectionToMove(MovingDirection::DIRECTION_DOWN);
 	}
 	if (this->controllingKeys[sf::Keyboard::W] || this->controllingKeys[sf::Keyboard::Up])
 	{
-		this->rect.y -= this->speed;
-		shouldAnimate = true;
+		setDirectionToMove(MovingDirection::DIRECTION_UP);
 	}
 	if (this->controllingKeys[sf::Keyboard::A] || this->controllingKeys[sf::Keyboard::Left])
 	{
-		this->rect.x -= this->speed;
-		shouldAnimate = true;
+		setDirectionToMove(MovingDirection::DIRECTION_LEFT);
 	}
 	if (this->controllingKeys[sf::Keyboard::D] || this->controllingKeys[sf::Keyboard::Right])
 	{
-		this->rect.x += this->speed;
-		shouldAnimate = true;
+		setDirectionToMove(MovingDirection::DIRECTION_RIGHT);
 	}
-	if (shouldAnimate)	isAnimating = true;
-	else				isAnimating = false;
 
+	MovingCharacter::update();
 	updateDrawingObject();
 }
 

@@ -45,20 +45,20 @@ void EventsHolder::setEventByButton(Definitions::ButtonType buttonType)
 	}
 }
 
-void EventsHolder::setEventByGameCommand(Definitions::GameCommand command)
+void EventsHolder::setEventByGameCommand(Definitions::Command command)
 {
 	switch (command)
 	{
-		case Definitions::GameCommand::EXIT_COMMAND:
+		case Definitions::Command::EXIT_COMMAND:
 			mode = Definitions::Mode::EXIT_MODE;
 		break;
-		case Definitions::GameCommand::MENU_COMMAND:
+		case Definitions::Command::MENU_COMMAND:
 			mode = Definitions::Mode::MENU_MODE;
 		break;
-		case Definitions::GameCommand::GAME_COMMAND:
+		case Definitions::Command::GAME_COMMAND:
 			mode = Definitions::Mode::GAME_MODE;
 		break;
-		case Definitions::GameCommand::MIAN_MENU_COMMAND:
+		case Definitions::Command::MIAN_MENU_COMMAND:
 			runningMenuState = Definitions::RunningMenuState::MAIN_MENU_STATE;
 		break;
 		default:
