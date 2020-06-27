@@ -82,6 +82,8 @@ private:
 	// events
 	sf::Event event;
 
+	unsigned int currentLevel;
+
 #pragma endregion
 
 };

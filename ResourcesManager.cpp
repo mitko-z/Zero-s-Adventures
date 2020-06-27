@@ -7,6 +7,7 @@
 #include "MainMenu.h"
 #include "StartScreen.h"
 #include "Wall.h"
+#include "EndOfLevel.h"
 
 ResourcesManager* ResourcesManager::instance = nullptr;
 
@@ -32,6 +33,7 @@ void ResourcesManager::setWindowDimensions(float w, float h)
 
 void ResourcesManager::loadResources(unsigned int level)
 {
+	// TODO figure out how to read any level defined by the parameter
 	std::string loadPath("Data/info.dat");
 	std::ifstream levelsReader(loadPath);
 
@@ -72,7 +74,11 @@ void ResourcesManager::loadResources(unsigned int level)
 	std::getline(levelsReader, lineRead);	// read the number of rows for the level
 	objectsInLevel.y = std::stoi(lineRead);
 	std::getline(levelsReader, lineRead);	// read ; table of the level; legend: 0 - empty space, 1 - wall, 2 - creature; 9 - end of level
+
+	imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = "mushroomHouse.png";
+
 	std::vector<sf::Vector2u> wallsCoords;
+	sf::Vector2u endOfLevelCoords;
 	for (unsigned int i = 0; i < objectsInLevel.y; ++i) // rows, i.e. y
 	{
 		std::getline(levelsReader, lineRead);
@@ -87,6 +93,9 @@ void ResourcesManager::loadResources(unsigned int level)
 			{
 				case objTypeOnLevelMap::WALL:
 					wallsCoords.push_back(sf::Vector2u(j, i));
+				break;
+				case objTypeOnLevelMap::END_OF_LEVEL:
+					endOfLevelCoords = sf::Vector2u(i, j);
 				break;
 				default:
 				break;
@@ -116,6 +125,11 @@ void ResourcesManager::loadResources(unsigned int level)
 	}
 	resCommands.push_back(OBJ_TYPE::WALL_TYPE);
 
+	// init end of level
+	sf::Vector2u eolWorldCoords = calcWorldCoordsFromMapCoords(endOfLevelCoords);
+	gameObjects.push_back(new EndOfLevel(eolWorldCoords.x, eolWorldCoords.y, getGameObjSize().x, getGameObjSize().y, false));
+	resCommands.push_back(OBJ_TYPE::END_OF_LEVEL_TYPE);
+
 	// Menu load
 	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = "MenuButtonEmptyWide.png";
 	resCommands.push_back(OBJ_TYPE::MENU_BUTTON_TYPE);
@@ -130,6 +144,11 @@ void ResourcesManager::loadResources(unsigned int level)
 	menus[RUN_MENU_STATE::START_SCREEN_STATE] =
 		new StartScreen(0, 0, windowDimensions.w, windowDimensions.h, false);
 	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
+
+	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = "StartScreen.png";
+	menus[RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE] =
+		new StartScreen(0, 0, windowDimensions.w, windowDimensions.h, false);
+	resCommands.push_back(OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE);
 
 	for (auto command : resCommands)
 	{

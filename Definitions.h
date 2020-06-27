@@ -21,6 +21,7 @@ namespace Definitions
 	enum Mode
 	{
 		GAME_MODE,
+		NEXT_LEVEL_MODE,
 		MENU_MODE,
 		EXIT_MODE
 	};
@@ -30,10 +31,7 @@ namespace Definitions
 	/// </summary>
 	enum RunningGameState
 	{
-		PLAYING_STATE,
-		FINISHED_LEVEL_SCREEN_STATE,
-		GAME_FINISHED_SCREEN_STATE,
-		GAME_OVER_SCRREN_STATE
+		PLAYING_STATE
 	};
 
 	/// <summary>
@@ -47,6 +45,7 @@ namespace Definitions
 		LOAD_GAME_STATE,
 		OPTIONS_STATE,
 		START_SCREEN_STATE,
+		FINISHED_LEVEL_SCREEN_STATE
 	};
 
 	enum ObjectType
@@ -58,7 +57,9 @@ namespace Definitions
 		MENU_TYPE,
 		BUTTON_HIGHLIGHTER_TYPE,
 		START_SCREEN_TYPE,
-		WALL_TYPE
+		WALL_TYPE,
+		END_OF_LEVEL_TYPE,
+		FINISHED_LEVEL_SCREEN_TYPE
 	};
 
 	enum ButtonType
@@ -69,10 +70,12 @@ namespace Definitions
 
 	enum Command
 	{
-		GAME_COMMAND,
-		MENU_COMMAND,
-		EXIT_COMMAND,
-		MIAN_MENU_COMMAND
+		GAME_COMMAND,					// command for going to game mode
+		MENU_COMMAND,					// command for going to menu mode
+		EXIT_COMMAND,					// command for exiting the game
+		MIAN_MENU_COMMAND,				// command for showing the main menu
+		FINISHED_LEVEL_SCREEN_COMMAND,	// command for showing the finished level screen
+		NEXT_LEVEL_COMMAND				// command for going to the next level
 	};
 }
 

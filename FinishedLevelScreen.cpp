@@ -1,16 +1,14 @@
-#include "StartScreen.h"
+#include "FinishedLevelScreen.h"
+
 #include "EventsHolder.h"
 
-OBJ_TYPE StartScreen::getLoadResourcesCommand()
+OBJ_TYPE FinishedLevelScreen::getLoadResourcesCommand()
 {
-	return OBJ_TYPE::START_SCREEN_TYPE;
+	return OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE;
 }
 
-void StartScreen::initialize()
-{
-}
 
-void StartScreen::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
+void FinishedLevelScreen::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 {
 	if (keysReleased.size() > 0)
 	{
@@ -18,7 +16,7 @@ void StartScreen::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysRe
 	}
 }
 
-void StartScreen::update()
+void FinishedLevelScreen::update()
 {
 	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
 	if (keyIsPressed)

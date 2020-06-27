@@ -9,7 +9,8 @@
 Game::Game() :
 	window(sf::VideoMode(800, 600), "Zero's Adventures"),
 	timePauseBetweenLevels(1000),
-	timeElapsedBetweenLevels(0)
+	timeElapsedBetweenLevels(0),
+	currentLevel(1)
 {
 }
 
@@ -28,7 +29,7 @@ void Game::initialize()
 void Game::loadContent()
 {
 	extern ResourcesManager *resMan;
-	resMan->loadResources(1);
+	resMan->loadResources(currentLevel);
 
 	std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 	for (auto gameObject : gameObjects)
@@ -87,7 +88,7 @@ void Game::eventsCapture()
 	extern ResourcesManager *resMan;
 	switch (eventsHolder->getMode())
 	{
-		case Definitions::Mode::GAME_MODE:
+		case MODE::GAME_MODE:
 		{
 			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 			for (auto gameObject : gameObjects)
@@ -96,11 +97,17 @@ void Game::eventsCapture()
 			}
 		}
 		break;
-		case Definitions::Mode::MENU_MODE:
+		case MODE::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
 			menus[eventsHolder->getRunningMenuState()]->updateEvents();
 		}
+		break;
+		case MODE::NEXT_LEVEL_MODE:
+			currentLevel++;
+			loadContent();
+			eventsHolder->setEventByGameCommand(COMMAND::GAME_COMMAND);
+		break;
 		break;
 		default:
 		break;

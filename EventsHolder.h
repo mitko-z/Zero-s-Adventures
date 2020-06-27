@@ -17,12 +17,12 @@ public:
 	void addPressedKey(sf::Keyboard::Key key);
 	const UMAP<sf::Keyboard::Key, bool>& getReleasedKeys() { return keysReleased; }
 	void addReleasedKey(sf::Keyboard::Key key);
-	void setEventByButton(Definitions::ButtonType buttonType);
-	void setEventByGameCommand(Definitions::Command command);
-	Definitions::Mode getMode() { return mode; }
-	Definitions::RunningGameState getRunningGameState() { return runningGameState; }
-	Definitions::RunningMenuState getRunningMenuState() { return runningMenuState; }
-	Definitions::RunningMenuState getPreviousRunningMenuState() { return previousRunningMenuState; }
+	void setEventByButton(BUTTON_TYPE buttonType);
+	void setEventByGameCommand(COMMAND command);
+	MODE getMode() { return mode; }
+	RUN_GAME_STATE getRunningGameState() { return runningGameState; }
+	RUN_MENU_STATE getRunningMenuState() { return runningMenuState; }
+	RUN_MENU_STATE getPreviousRunningMenuState() { return previousRunningMenuState; }
 	void nullEvents();
 private:
 	EventsHolder() {}
@@ -31,8 +31,8 @@ private:
 	UMAP<sf::Keyboard::Key, bool> keysReleased;
 
 	// states
-	Definitions::Mode mode;
-	Definitions::RunningGameState runningGameState;
-	Definitions::RunningMenuState runningMenuState;
-	Definitions::RunningMenuState previousRunningMenuState;
+	MODE mode;
+	RUN_GAME_STATE runningGameState;
+	RUN_MENU_STATE runningMenuState;
+	RUN_MENU_STATE previousRunningMenuState;
 };

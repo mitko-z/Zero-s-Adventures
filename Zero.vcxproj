@@ -120,7 +120,9 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="ButtonHighlighter.cpp" />
+    <ClCompile Include="EndOfLevel.cpp" />
     <ClCompile Include="EventsHolder.cpp" />
+    <ClCompile Include="FinishedLevelScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -137,7 +139,9 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="ButtonHighlighter.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="EndOfLevel.h" />
     <ClInclude Include="EventsHolder.h" />
+    <ClInclude Include="FinishedLevelScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MainMenu.h" />
