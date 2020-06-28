@@ -6,8 +6,14 @@
 class EndOfLevel : public GameObject
 {
 public:
-	EndOfLevel(double x, double y, double w, double h, double isAnimating) : GameObject(x, y, w, h, isAnimating) {}
+	EndOfLevel(double x, double y, double w, double h, double isAnimating, bool isLastLevel) : 
+		GameObject(x, y, w, h, isAnimating),
+		m_isLastLevel(isLastLevel)
+	{}
 
 	OBJ_TYPE getLoadResourcesCommand() override;
 	void processCollisions() override;
+
+private:
+	bool m_isLastLevel;
 };

@@ -75,7 +75,8 @@ namespace Definitions
 		EXIT_COMMAND,					// command for exiting the game
 		MIAN_MENU_COMMAND,				// command for showing the main menu
 		FINISHED_LEVEL_SCREEN_COMMAND,	// command for showing the finished level screen
-		NEXT_LEVEL_COMMAND				// command for going to the next level
+		NEXT_LEVEL_COMMAND,				// command for going to the next level
+		FINAL_SCREEN_COMMAND			// command for showing the final screen
 	};
 }
 

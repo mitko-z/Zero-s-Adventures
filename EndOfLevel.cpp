@@ -15,7 +15,10 @@ void EndOfLevel::processCollisions()
 		if (colidedObj->getLoadResourcesCommand() == OBJ_TYPE::ZERO_TYPE)
 		{
 			eventsHolder->setEventByGameCommand(COMMAND::MENU_COMMAND);
-			eventsHolder->setEventByGameCommand(COMMAND::FINISHED_LEVEL_SCREEN_COMMAND);
+			COMMAND setScreenCommand = m_isLastLevel ? 
+										COMMAND::FINAL_SCREEN_COMMAND : 
+										COMMAND::FINISHED_LEVEL_SCREEN_COMMAND;
+			eventsHolder->setEventByGameCommand(setScreenCommand);
 		}
 	}
 }

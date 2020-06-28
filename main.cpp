@@ -15,6 +15,7 @@ int main()
 	catch (std::string ex)
 	{
 		std::cerr << ex;
+		std::getchar();
 	}
 	return 0;
 }

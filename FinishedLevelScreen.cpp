@@ -21,7 +21,7 @@ void FinishedLevelScreen::update()
 	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
 	if (keyIsPressed)
 	{
-		eventHolder->setEventByGameCommand(Definitions::Command::MIAN_MENU_COMMAND);
+		eventHolder->setEventByGameCommand(COMMAND::NEXT_LEVEL_COMMAND);
 		keyIsPressed = false;
 	}
 }

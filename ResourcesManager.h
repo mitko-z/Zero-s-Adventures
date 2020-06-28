@@ -25,12 +25,11 @@ public:
 	void		loadResources(unsigned int level);
 	sf::Texture getTexture(Definitions::ObjectType command);
 	bool        getAnimation(Definitions::ObjectType command, Animation& animation);
-	//void		releaseResources();
 	void		setWindowDimensions(float w, float h);
-	void		getWindowDimensions(float& w, float& h) const { w = windowDimensions.w; h = windowDimensions.h; }
-	std::vector<GameObject *>& getGameObjects() { return gameObjects; }
-	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return menus; }
-	 
+	void		getWindowDimensions(float& w, float& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
+	std::vector<GameObject *>& getGameObjects() { return m_gameObjects; }
+	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
+
 	~ResourcesManager();
 private:
 	// private methods
@@ -43,10 +42,13 @@ private:
 	Animation getAnimationFromString(std::string strData);
 	sf::Vector2u getGameObjSize();
 	sf::Vector2u calcWorldCoordsFromMapCoords(const sf::Vector2u& mapCoords);
+	void loadLevel(unsigned int level,
+		UMAP<OBJ_TYPE, std::string>& imagesNames,
+		std::vector<OBJ_TYPE>& resCommands);
 
 	// private members
-	Rectangle windowDimensions;
-	sf::Vector2u objectsInLevel; // x = how many columns, y = how many rows current level has
+	Rectangle m_windowDimensions;
+	sf::Vector2u m_objectsInLevel; // x = how many columns, y = how many rows current level has
 	enum objTypeOnLevelMap
 	{
 		EMPTY = 0,
@@ -55,8 +57,8 @@ private:
 		END_OF_LEVEL = 9
 	};
 
-	std::vector<GameObject *> gameObjects;
-	UMAP<RUN_MENU_STATE, Menu *> menus;
+	std::vector<GameObject *> m_gameObjects;
+	UMAP<RUN_MENU_STATE, Menu *> m_menus;
 };
 
 #endif

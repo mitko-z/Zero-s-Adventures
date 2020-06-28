@@ -54,18 +54,19 @@ void Game::eventsCapture()
 	{
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		{
-			if (eventsHolder->getMode() == Definitions::Mode::GAME_MODE)
+			if (eventsHolder->getMode() == MODE::GAME_MODE)
 			{
-				eventsHolder->setEventByGameCommand(Definitions::Command::MENU_COMMAND);
+				eventsHolder->setEventByGameCommand(COMMAND::MENU_COMMAND);
+				eventsHolder->setEventByGameCommand(COMMAND::MIAN_MENU_COMMAND);
 			}
 			else
 			{
-				eventsHolder->setEventByGameCommand(Definitions::Command::GAME_COMMAND);
+				eventsHolder->setEventByGameCommand(COMMAND::GAME_COMMAND);
 			}
 		}
 		else if (event.type == sf::Event::Closed)
 		{
-			eventsHolder->setEventByGameCommand(Definitions::Command::EXIT_COMMAND);
+			eventsHolder->setEventByGameCommand(COMMAND::EXIT_COMMAND);
 		}
 		else
 		{
@@ -124,7 +125,7 @@ void Game::processColisions()
 	extern ResourcesManager *resMan;
 	switch (eventsHolder->getMode())
 	{
-	case Definitions::Mode::GAME_MODE:
+	case MODE::GAME_MODE:
 	{
 		std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 		for (auto gameObject : gameObjects)
@@ -149,9 +150,9 @@ void Game::processColisions()
 		}
 	}
 	break;
-	case Definitions::Mode::MENU_MODE:
+	case MODE::MENU_MODE:
 	{
-		// TODO
+		// TODO - mouse pointer "colisions" with buttons
 	}
 	break;
 	default:
@@ -182,7 +183,7 @@ void Game::update()
 	extern ResourcesManager *resMan;
 	switch (eventsHolder->getMode())
 	{
-		case Definitions::Mode::GAME_MODE:
+		case MODE::GAME_MODE:
 		{
 			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 			for (auto gameObject : gameObjects)
@@ -191,7 +192,7 @@ void Game::update()
 			}
 		}
 		break;
-		case Definitions::Mode::MENU_MODE:
+		case MODE::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
 			menus[eventsHolder->getRunningMenuState()]->update();

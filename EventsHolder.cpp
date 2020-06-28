@@ -62,10 +62,13 @@ void EventsHolder::setEventByGameCommand(COMMAND command)
 			runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
 		break;
 		case COMMAND::FINISHED_LEVEL_SCREEN_COMMAND:
-			runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
+			runningMenuState = RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE;
 		break;
 		case COMMAND::NEXT_LEVEL_COMMAND:
 			mode = MODE::NEXT_LEVEL_MODE;
+		break;
+		case COMMAND::FINAL_SCREEN_COMMAND:
+			runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE; // todo
 		break;
 		default:
 		break;
