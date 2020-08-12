@@ -1,11 +1,14 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Wall.h"
+
+#define MAX_HEALTH 100
 
 class MovingCharacter : public GameObject
 {
 public:
-	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed);
+	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, double damage);
 	virtual void update();
 	virtual void processCollisions();
 protected:
@@ -23,6 +26,8 @@ protected:
 	Rectangle lastPosition;
 	double speed;
 	bool goOutsideOfScreen;
+	double health;
+	double damage;
 private:
 	void setInsideWindow();
 	MovingDirection directionToMove_;

@@ -36,17 +36,16 @@ private:
 	ResourcesManager() {};
 	ResourcesManager(ResourcesManager const&);
 	void operator= (ResourcesManager const&);
-	static ResourcesManager* instance;
-	UMAP<OBJ_TYPE, sf::Texture> textures;
-	UMAP<OBJ_TYPE, Animation> animations;
 	Animation getAnimationFromString(std::string strData);
 	sf::Vector2u getGameObjSize();
 	sf::Vector2u calcWorldCoordsFromMapCoords(const sf::Vector2u& mapCoords);
 	void loadLevel(unsigned int level,
 		UMAP<OBJ_TYPE, std::string>& imagesNames,
 		std::vector<OBJ_TYPE>& resCommands);
-
-	// private members
+	// members
+	static ResourcesManager* m_instance;
+	UMAP<OBJ_TYPE, sf::Texture> m_textures;
+	UMAP<OBJ_TYPE, Animation> m_animations;
 	Rectangle m_windowDimensions;
 	sf::Vector2u m_objectsInLevel; // x = how many columns, y = how many rows current level has
 	enum objTypeOnLevelMap
@@ -54,6 +53,7 @@ private:
 		EMPTY = 0,
 		WALL,
 		MONSTER,
+		WEAPON,
 		END_OF_LEVEL = 9
 	};
 

@@ -214,7 +214,8 @@ void Game::draw()
 		case Definitions::Mode::GAME_MODE:
 		{
 			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
-			for (auto gameObject : gameObjects)
+			for (auto gameObject : 
+				gameObjects)
 			{
 				gameObject->draw(window);
 			}

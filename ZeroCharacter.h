@@ -4,14 +4,16 @@
 
 #include "MovingCharacter.h"
 
+#define ZERO_SPEED 10
+#define IS_ANIMATING false
 
 class ZeroCharacter : public MovingCharacter
 {
 public:
 	ZeroCharacter() = default;
-	ZeroCharacter(double x, double y, double w, double h, double speed, bool isAnimating);
+	ZeroCharacter(double x, double y, double w, double h);
 
-	Definitions::ObjectType getLoadResourcesCommand() override;
+	OBJ_TYPE getLoadResourcesCommand() override;
 	void initialize() override;
 	void update() override;
 	void draw(sf::RenderWindow &window) override;

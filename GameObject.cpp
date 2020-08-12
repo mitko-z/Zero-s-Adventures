@@ -28,7 +28,7 @@ void GameObject::loadContent()
 
 Definitions::ObjectType GameObject::getLoadResourcesCommand()
 {
-	return Definitions::ObjectType::NONE;
+	return Definitions::ObjectType::NO_OBJ_TYPE;
 }
 
 void GameObject::updateEvents()
@@ -97,8 +97,8 @@ void GameObject::updateAnimFrame()
 		}
 	}
 
-	int width = drawingObject.texture.getSize().x / frames.framesAlongX;
-	int height = drawingObject.texture.getSize().y / frames.framesAlongY;
+	int width = drawingObject.texture.getSize().x / frames.framesAlongY;
+	int height = drawingObject.texture.getSize().y / frames.framesAlongX;
 	int x = (animationFrame % frames.framesAlongX) * width;
 	int y = (animationFrame / frames.framesAlongX) * height;
 	drawingObject.sprite.setTextureRect(sf::IntRect{

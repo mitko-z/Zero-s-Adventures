@@ -129,9 +129,14 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterJelly.cpp" />
+    <ClCompile Include="MonsterOneEye.cpp" />
+    <ClCompile Include="MonsterWalkingSquare.cpp" />
     <ClCompile Include="MovingCharacter.cpp" />
     <ClCompile Include="ResourcesManager.cpp" />
     <ClCompile Include="StartScreen.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="ZeroCharacter.cpp" />
   </ItemGroup>
@@ -147,9 +152,14 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterJelly.h" />
+    <ClInclude Include="MonsterOneEye.h" />
+    <ClInclude Include="MonsterWalkingSquare.h" />
     <ClInclude Include="MovingCharacter.h" />
     <ClInclude Include="ResourcesManager.h" />
     <ClInclude Include="StartScreen.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="ZeroCharacter.h" />
   </ItemGroup>

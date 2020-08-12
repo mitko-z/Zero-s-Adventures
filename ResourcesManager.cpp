@@ -9,21 +9,22 @@
 #include "Wall.h"
 #include "EndOfLevel.h"
 #include "FinishedLevelScreen.h"
+#include "Monster.h"
 
-ResourcesManager* ResourcesManager::instance = nullptr;
+ResourcesManager* ResourcesManager::m_instance = nullptr;
 
 ResourcesManager* ResourcesManager::getInstance()
 {
-	if (!instance)
+	if (!m_instance)
 	{
-		instance = new ResourcesManager;
+		m_instance = new ResourcesManager;
 	}
-	return instance;
+	return m_instance;
 }
 
 ResourcesManager::~ResourcesManager()
 {
-	delete instance;
+	delete m_instance;
 }
 
 void ResourcesManager::setWindowDimensions(float w, float h)
@@ -70,7 +71,7 @@ void ResourcesManager::loadResources(unsigned int level)
 			std::string throwMessage = "Cannot load image " + loadPath;
 			throw throwMessage;
 		}
-		textures[command] = texture;
+		m_textures[command] = texture;
 	} // end for each command
 }
 
@@ -110,6 +111,9 @@ void ResourcesManager::loadLevel(unsigned int level,
 								 std::vector<OBJ_TYPE>& resCommands)
 {
 	m_gameObjects.clear();
+	imagesNames.clear();
+	resCommands.clear();
+	m_animations.clear();
 
 	std::string loadPath("Data/info.dat");
 	std::ifstream levelsReader(loadPath);
@@ -126,7 +130,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	imagesNames[OBJ_TYPE::ZERO_TYPE] = lineRead + ".png";
 	std::getline(levelsReader, lineRead);	// read "; Zero texture frames x, y"
 	std::getline(levelsReader, lineRead);	// read the frames upon x and y
-	animations[OBJ_TYPE::ZERO_TYPE] = getAnimationFromString(lineRead);
+	m_animations[OBJ_TYPE::ZERO_TYPE] = getAnimationFromString(lineRead);
 	std::getline(levelsReader, lineRead);	// read "; number of levels"
 	std::getline(levelsReader, lineRead);	// read the number of levels
 	unsigned int numbersOfLevels = std::stoi(lineRead);
@@ -134,33 +138,57 @@ void ResourcesManager::loadLevel(unsigned int level,
 	unsigned int currentLevel = 0;
 	std::vector<sf::Vector2u> wallsCoords;
 	sf::Vector2u endOfLevelCoords;
+	std::vector<sf::Vector2u> monstersCoords;
+	MONSTER_TYPES monsterType = MONSTER_TYPES::NO_MONSTER_TYPE;
 	do
 	{
+		// clear the coordinates form the previous level 
 		wallsCoords.clear();
+		monstersCoords.clear();
+
+		// read from file
+		
+		// read level info
 		std::getline(levelsReader, lineRead);	// read "; level no."
 		std::getline(levelsReader, lineRead);	// read 1
 		currentLevel = std::stoi(lineRead);
+		// read background info 
 		std::getline(levelsReader, lineRead);	// read "; name for the texture of the background"
 		std::getline(levelsReader, lineRead);	// read the name for the texture of the background
 		imagesNames[OBJ_TYPE::BACKGROUND_TYPE] = lineRead + ".png";
+
+		// read walls info
 		std::getline(levelsReader, lineRead);	// read  ; name for the texture of walls (without the extension of the file)
 		std::getline(levelsReader, lineRead);	// read  the name for the texture of walls
 		imagesNames[OBJ_TYPE::WALL_TYPE] = lineRead + ".png";
-		std::getline(levelsReader, lineRead);	// read ; index number of the creature type for this level
-		std::getline(levelsReader, lineRead);	// read the index number of the creature type for this level
-		// imagesNames[OBJ_TYPE::/**/] = lineRead + ".png"; // TODO set later
+
+		// read monsters info
+		std::getline(levelsReader, lineRead);	// read ; index number of the monster type for this level
+		std::getline(levelsReader, lineRead);	// read the index number of the monster type for this level
+		monsterType = static_cast<MONSTER_TYPES>(std::stoi(lineRead));
+		std::getline(levelsReader, lineRead);	// read  ; name for the texture of monsters (without the extension of the file)
+		std::getline(levelsReader, lineRead);	// read  the name for the texture of monsters
+		imagesNames[OBJ_TYPE::MONSTER_TYPE] = lineRead + ".png";
+		std::getline(levelsReader, lineRead);	// read "; Zero texture frames x, y"
+		std::getline(levelsReader, lineRead);	// read the frames upon x and y
+		m_animations[OBJ_TYPE::MONSTER_TYPE] = getAnimationFromString(lineRead);
+
+		// read weapon info
 		std::getline(levelsReader, lineRead);	// read ; index number for the type of weapon for this level
 		std::getline(levelsReader, lineRead);	// read the index number for the type of weapon for this level
 		// imagesNames[OBJ_TYPE::/**/] = lineRead + ".png"; // TODO set later
+
+		// read end of level info
+		imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = "mushroomHouse.png";
+
+		// read stage info
 		std::getline(levelsReader, lineRead);	// read ; number of columns for the level
 		std::getline(levelsReader, lineRead);	// read the number of columns for the level
 		m_objectsInLevel.x = std::stoi(lineRead);
 		std::getline(levelsReader, lineRead);	// read ; number of rows for the level
 		std::getline(levelsReader, lineRead);	// read the number of rows for the level
 		m_objectsInLevel.y = std::stoi(lineRead);
-		std::getline(levelsReader, lineRead);	// read ; table of the level; legend: 0 - empty space, 1 - wall, 2 - creature; 9 - end of level
-
-		imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = "mushroomHouse.png";
+		std::getline(levelsReader, lineRead);	// read ; table of the level; legend: 0 - empty space, 1 - wall, 2 - monster; 9 - end of level
 
 		for (unsigned int i = 0; i < m_objectsInLevel.y; ++i) // rows, i.e. y
 		{
@@ -176,6 +204,9 @@ void ResourcesManager::loadLevel(unsigned int level,
 				{
 				case objTypeOnLevelMap::WALL:
 					wallsCoords.push_back(sf::Vector2u(j, i));
+					break;
+				case objTypeOnLevelMap::MONSTER:
+					monstersCoords.push_back(sf::Vector2u(j, i));
 					break;
 				case objTypeOnLevelMap::END_OF_LEVEL:
 					endOfLevelCoords = sf::Vector2u(j, i);
@@ -193,11 +224,10 @@ void ResourcesManager::loadLevel(unsigned int level,
 	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false));
 	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
-	// initialize Zero AFTER background in order not to draw background after Zero
-	unsigned int zeroSpeed = 10; // TODO move this as setting or smth similar
+	// initialize Zero AFTER background in order not to draw background upon Zero
 	double zeroWidth = getGameObjSize().x / 2;
 	double zeroHeight = getGameObjSize().y / 2;
-	m_gameObjects.push_back(new ZeroCharacter(0, 0, zeroWidth, zeroHeight, zeroSpeed, false));
+	m_gameObjects.push_back(new ZeroCharacter(0, 0, zeroWidth, zeroHeight));
 	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
 
 	// init walls
@@ -207,6 +237,17 @@ void ResourcesManager::loadLevel(unsigned int level,
 		m_gameObjects.push_back(new Wall(worldCoords.x, worldCoords.y, getGameObjSize().x, getGameObjSize().y, false));
 	}
 	resCommands.push_back(OBJ_TYPE::WALL_TYPE);
+
+	// init monster
+	for (auto monstCoord : monstersCoords)
+	{
+		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
+		m_gameObjects.push_back(Monster::createMonster(monsterType, worldCoords.x, worldCoords.y, getGameObjSize().x, getGameObjSize().y));
+	}
+	if (monstersCoords.size() > 0)
+	{
+		resCommands.push_back(OBJ_TYPE::MONSTER_TYPE);
+	}
 
 	// init end of level
 	sf::Vector2u eolWorldCoords = calcWorldCoordsFromMapCoords(endOfLevelCoords);
@@ -220,19 +261,19 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.push_back(OBJ_TYPE::END_OF_LEVEL_TYPE);
 }
 
-sf::Texture ResourcesManager::getTexture(Definitions::ObjectType command)
+sf::Texture ResourcesManager::getTexture(OBJ_TYPE command)
 {
-	return textures[command];
+	return m_textures[command];
 }
 
-bool ResourcesManager::getAnimation(Definitions::ObjectType command, Animation& animation)
+bool ResourcesManager::getAnimation(OBJ_TYPE command, Animation& animation)
 {
 	bool rc = false;
-	for(auto it = animations.begin(); it != animations.end(); ++it)
+	for(auto it = m_animations.begin(); it != m_animations.end(); ++it)
 	{
 		if (it->first == command)
 		{
-			animation = animations[command];
+			animation = m_animations[command];
 			rc = true;
 			break;
 		}

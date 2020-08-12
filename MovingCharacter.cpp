@@ -1,13 +1,14 @@
 #include "MovingCharacter.h"
 
 
-MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed) :
+MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, double damage) :
 	GameObject(x, y, w, h, isAnimating),
 	speed(speed),
-	lastPosition(x, y, w, h)
-{
-	goOutsideOfScreen = false;
-}
+	lastPosition(x, y, w, h),
+	health(MAX_HEALTH),
+	damage(damage),
+	goOutsideOfScreen(false)
+{}
 
 void MovingCharacter::update()
 {

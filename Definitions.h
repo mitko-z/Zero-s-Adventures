@@ -8,6 +8,7 @@
 #define RUN_MENU_STATE Definitions::RunningMenuState
 #define BUTTON_TYPE Definitions::ButtonType
 #define COMMAND Definitions::Command
+#define MONSTER_TYPES Definitions::MonsterTypes
 
 #define UMAP std::unordered_map
 
@@ -50,7 +51,7 @@ namespace Definitions
 
 	enum ObjectType
 	{
-		NONE = 0,
+		NO_OBJ_TYPE = 0,
 		BACKGROUND_TYPE,
 		ZERO_TYPE,
 		MENU_BUTTON_TYPE,
@@ -59,7 +60,16 @@ namespace Definitions
 		START_SCREEN_TYPE,
 		WALL_TYPE,
 		END_OF_LEVEL_TYPE,
-		FINISHED_LEVEL_SCREEN_TYPE
+		FINISHED_LEVEL_SCREEN_TYPE,
+		MONSTER_TYPE
+	};
+
+	enum MonsterTypes
+	{
+		NO_MONSTER_TYPE = 0,
+		JELLY_MONSTER_TYPE,
+		ONE_EYE_MONSTER_TYPE,
+		WALKING_SQUARE_MONSTER_TYPE
 	};
 
 	enum ButtonType

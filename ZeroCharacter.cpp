@@ -1,13 +1,13 @@
 #include "ZeroCharacter.h"
 
-ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, bool isAnimating) : 
-	MovingCharacter(x, y, w, h, isAnimating, speed)
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h) : 
+	MovingCharacter(x, y, w, h, IS_ANIMATING, ZERO_SPEED, 0) // 0 for damage - zero cannot make damage without a weapon
 {
 }
 
-Definitions::ObjectType ZeroCharacter::getLoadResourcesCommand()
+OBJ_TYPE ZeroCharacter::getLoadResourcesCommand()
 {
-	return Definitions::ObjectType::ZERO_TYPE;
+	return OBJ_TYPE::ZERO_TYPE;
 }
 
 void ZeroCharacter::initialize()
