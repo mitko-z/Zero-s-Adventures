@@ -15,10 +15,10 @@ class GameObject
 public :
 	GameObject() = default;
 	GameObject(double x, double y, double w, double h, bool isAnimating) : 
-		rect(x, y, w, h),
-		isAnimating(isAnimating)
+		m_rect(x, y, w, h),
+		m_isAnimating(isAnimating)
 	{
-		hasCollisions = false;
+		m_hasCollisions = false;
 	}
 	GameObject(GameObject &other);
 	virtual void initialize();
@@ -28,8 +28,8 @@ public :
 	virtual void nullCollisions();
 	virtual void setCollisionWith(GameObject& other);
 	virtual void processCollisions() {}
-	virtual void setRect(Rectangle rect) { this->rect = rect; }
-	virtual const Rectangle getRect() const { return this->rect; }
+	virtual void setRect(Rectangle rect) { this->m_rect = rect; }
+	virtual const Rectangle getRect() const { return this->m_rect; }
 	virtual void update();
 	virtual void draw(sf::RenderWindow &window);
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
@@ -37,14 +37,14 @@ protected :
 	virtual void updateDrawingObject();
 	virtual void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased);
 
-	Rectangle rect;
-	DrawingObject drawingObject;
-	std::map<sf::Keyboard::Key, bool> controllingKeys;
-	Animation frames;
-	bool isAnimating;
-	int animationFrame;
-	bool hasCollisions;
-	std::vector<GameObject*> objsColideWith;
+	Rectangle m_rect;
+	DrawingObject m_drawingObject;
+	std::map<sf::Keyboard::Key, bool> m_controllingKeys;
+	Animation m_frames;
+	bool m_isAnimating;
+	int m_animationFrame;
+	bool m_hasCollisions;
+	std::vector<GameObject*> m_objsColideWith;
 private:
 	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
 	void updateAnimFrame();

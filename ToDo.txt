@@ -1,6 +1,3 @@
-Make monsters -- almost done
--- figure out how to fix the scale factor for animations with different rows and colls
-
 Clear pressed keys at the beginning of the next level screen menu
 
 Make separate dat files for the different object types. Specific type of reader should read the specific type of file.
@@ -17,6 +14,21 @@ Make Zero able to pick weapon and to be able to fire
 
 Make projectiles able if hit a monster to make damage on it
 
+make game over screen
+
+make game finished screen
+
 make helpers telling how to play
 
 make background music & sounds
+
+add resume game menu
+
+add save game menu
+
+add load game menu
+
+add options menu:
+	- change keys controlling Zero
+	- change game screen resolutions
+	- on/off playing music/sounds

@@ -12,35 +12,35 @@ MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool is
 
 void MovingCharacter::update()
 {
-	lastPosition = rect;
+	lastPosition = m_rect;
 
 	if (!goOutsideOfScreen)
 		setInsideWindow();
 
-	isAnimating = true;
+	m_isAnimating = true;
 	switch (directionToMove_)
 	{
 		case MovingDirection::DIRECTION_UP:
-			rect.y -= speed;
+			m_rect.y -= speed;
 		break;
 		case MovingDirection::DIRECTION_DOWN:
-			rect.y += speed;
+			m_rect.y += speed;
 		break;
 		case MovingDirection::DIRECTION_LEFT:
-			rect.x -= speed;
+			m_rect.x -= speed;
 		break;
 		case MovingDirection::DIRECTION_RIGHT:
-			rect.x += speed;
+			m_rect.x += speed;
 		break;
 		default:
-			isAnimating = false;
+			m_isAnimating = false;
 		break;
 	}
 }
 
 void MovingCharacter::processCollisions()
 {
-	for (auto colidedObj : objsColideWith)
+	for (auto colidedObj : m_objsColideWith)
 	{
 		switch (colidedObj->getLoadResourcesCommand())
 		{
@@ -60,16 +60,16 @@ void MovingCharacter::processWallCollision(GameObject & wall)
 	switch (directionToMove_)
 	{
 		case MovingDirection::DIRECTION_RIGHT:
-			rect.x = wall.getRect().x - rect.w - 1;
+			m_rect.x = wall.getRect().x - m_rect.w - 1;
 		break;
 		case MovingDirection::DIRECTION_LEFT:
-			rect.x = wall.getRect().x + wall.getRect().w + 1;
+			m_rect.x = wall.getRect().x + wall.getRect().w + 1;
 		break;
 		case MovingDirection::DIRECTION_DOWN:
-			rect.y = wall.getRect().y - rect.h - 1;
+			m_rect.y = wall.getRect().y - m_rect.h - 1;
 		break;
 		case MovingDirection::DIRECTION_UP:
-			rect.y = wall.getRect().y + wall.getRect().h + 1;
+			m_rect.y = wall.getRect().y + wall.getRect().h + 1;
 		break;
 		default:
 		break;
@@ -82,11 +82,11 @@ void MovingCharacter::setInsideWindow()
 	float windowW, windowH;
 	extern ResourcesManager *resMan;
 	resMan->getWindowDimensions(windowW, windowH);
-	if (rect.x < 0) rect.x = 0;
-	if (rect.y < 0) rect.y = 0;
-	if ((rect.x + rect.w) > windowW)
+	if (m_rect.x < 0) m_rect.x = 0;
+	if (m_rect.y < 0) m_rect.y = 0;
+	if ((m_rect.x + m_rect.w) > windowW)
 	{
-		rect.x = windowW - rect.w;
+		m_rect.x = windowW - m_rect.w;
 	}
-	if ((rect.y + rect.h) > windowH) rect.y = windowH - rect.h;
+	if ((m_rect.y + m_rect.h) > windowH) m_rect.y = windowH - m_rect.h;
 }

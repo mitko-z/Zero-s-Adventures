@@ -3,13 +3,13 @@
 
 void Menu::initialize()
 {
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::W, false));		// move up
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::Up, false));		// move up
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::S, false));		// move down
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::Down, false));	// move down
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::Space, false));	// Choice
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::Return, false));	// Choice
-	this->controllingKeys.insert(std::make_pair(sf::Keyboard::Escape, false));	// Return to previous
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::W, false));		// move up
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Up, false));		// move up
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::S, false));		// move down
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Down, false));	// move down
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Space, false));	// Choice
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Return, false));	// Choice
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Escape, false));	// Return to previous
 	activeButtonIndex = 0;
 	buttons[activeButtonIndex]->activate(); // make start button active
 	setHighlighter(0);
@@ -22,24 +22,24 @@ Definitions::ObjectType Menu::getLoadResourcesCommand()
 
 void Menu::update()
 {
-	if (controllingKeys[sf::Keyboard::Up] || controllingKeys[sf::Keyboard::W])
+	if (m_controllingKeys[sf::Keyboard::Up] || m_controllingKeys[sf::Keyboard::W])
 	{
 		activatePrevButton();
 		// unregister the event
-		controllingKeys[sf::Keyboard::Up] = false; 
-		controllingKeys[sf::Keyboard::W] = false;
+		m_controllingKeys[sf::Keyboard::Up] = false; 
+		m_controllingKeys[sf::Keyboard::W] = false;
 	}
-	if (controllingKeys[sf::Keyboard::Down] || controllingKeys[sf::Keyboard::S])
+	if (m_controllingKeys[sf::Keyboard::Down] || m_controllingKeys[sf::Keyboard::S])
 	{
 		activateNextButton();
-		controllingKeys[sf::Keyboard::Down] = false;
-		controllingKeys[sf::Keyboard::S] = false;
+		m_controllingKeys[sf::Keyboard::Down] = false;
+		m_controllingKeys[sf::Keyboard::S] = false;
 	}
-	if (controllingKeys[sf::Keyboard::Space] || controllingKeys[sf::Keyboard::Return])
+	if (m_controllingKeys[sf::Keyboard::Space] || m_controllingKeys[sf::Keyboard::Return])
 	{
 		buttons[activeButtonIndex]->press();
-		controllingKeys[sf::Keyboard::Space] = false;
-		controllingKeys[sf::Keyboard::Return] = false;
+		m_controllingKeys[sf::Keyboard::Space] = false;
+		m_controllingKeys[sf::Keyboard::Return] = false;
 	}
 
 	for (auto button : buttons)
@@ -98,13 +98,13 @@ void Menu::loadContent()
 
 void Menu::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 {
-	if (this->controllingKeys.size() > 0)
+	if (this->m_controllingKeys.size() > 0)
 	{
 		for (const auto& key : keysReleased)
 		{
-			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
+			if (this->m_controllingKeys.find(key.first) != this->m_controllingKeys.end())
 			{
-				this->controllingKeys[key.first] = key.second;
+				this->m_controllingKeys[key.first] = key.second;
 			}
 		}
 	}
@@ -115,11 +115,11 @@ void Menu::setAndInsertButtons(const std::vector<Definitions::ButtonType>& butto
 	if (buttonTypes.size() > 0)
 	{
 		const double scale = 0.7;
-		const double w = rect.w * scale;
-		const double x = (rect.w - w) / 2;
+		const double w = m_rect.w * scale;
+		const double x = (m_rect.w - w) / 2;
 		const size_t buttonsNum = buttonTypes.size();
 		const int allSpaces = 2 * buttonsNum + 1;
-		const double h = rect.h / allSpaces;
+		const double h = m_rect.h / allSpaces;
 		for (size_t i = 0; i < buttonsNum; ++i)
 		{
 			std::string text;

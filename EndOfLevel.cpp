@@ -10,7 +10,7 @@ OBJ_TYPE EndOfLevel::getLoadResourcesCommand()
 void EndOfLevel::processCollisions()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	for (auto colidedObj : objsColideWith)
+	for (auto colidedObj : m_objsColideWith)
 	{
 		if (colidedObj->getLoadResourcesCommand() == OBJ_TYPE::ZERO_TYPE)
 		{

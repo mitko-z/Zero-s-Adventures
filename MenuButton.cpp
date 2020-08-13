@@ -34,12 +34,12 @@ void MenuButton::loadContent()
 	text.setFont(font);
 	text.setFillColor(sf::Color(70, 255, 0));
 	text.setString(textToDisplay);
-	double fontSize = rect.h * 0.6;
+	double fontSize = m_rect.h * 0.6;
 	text.setCharacterSize(fontSize);
 	// center text in the middle along x...
-	double posX = rect.x + (rect.w / 2) - (textToDisplay.size() / 2) * text.getCharacterSize() * 0.5;
+	double posX = m_rect.x + (m_rect.w / 2) - (textToDisplay.size() / 2) * text.getCharacterSize() * 0.5;
 	// ... and along y
-	double posY = rect.y + (rect.h / 2) - text.getCharacterSize() * 0.7;
+	double posY = m_rect.y + (m_rect.h / 2) - text.getCharacterSize() * 0.7;
 	text.setPosition(posX, posY);
 }
 

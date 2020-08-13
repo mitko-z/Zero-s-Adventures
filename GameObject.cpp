@@ -5,12 +5,12 @@
 GameObject::~GameObject() {}
 
 GameObject::GameObject(GameObject &other) : 
-	rect(other.rect), 
-	drawingObject(other.drawingObject),
-	controllingKeys(other.controllingKeys),
-	isAnimating(other.isAnimating)
+	m_rect(other.m_rect), 
+	m_drawingObject(other.m_drawingObject),
+	m_controllingKeys(other.m_controllingKeys),
+	m_isAnimating(other.m_isAnimating)
 {
-	drawingObject.sprite.setTexture(*other.drawingObject.sprite.getTexture());
+	m_drawingObject.sprite.setTexture(*other.m_drawingObject.sprite.getTexture());
 }
 
 void GameObject::initialize() {}
@@ -19,11 +19,11 @@ void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
 	Definitions::ObjectType loadCommand = getLoadResourcesCommand();
-	resMan->getAnimation(loadCommand, frames);
-	drawingObject.texture = resMan->getTexture(loadCommand);
-	drawingObject.sprite.setPosition(rect.x, rect.y);
-	drawingObject.sprite.setTexture(drawingObject.texture);
-	scaleSpriteTo(rect.w, rect.h, drawingObject.texture, drawingObject.sprite);
+	resMan->getAnimation(loadCommand, m_frames);
+	m_drawingObject.texture = resMan->getTexture(loadCommand);
+	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
+	m_drawingObject.sprite.setTexture(m_drawingObject.texture);
+	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
 }
 
 Definitions::ObjectType GameObject::getLoadResourcesCommand()
@@ -41,26 +41,26 @@ void GameObject::updateEvents()
 
 void GameObject::nullCollisions()
 {
-	hasCollisions = false;
-	objsColideWith.clear();
+	m_hasCollisions = false;
+	m_objsColideWith.clear();
 }
 
 void GameObject::setCollisionWith(GameObject& other)
 {
-	hasCollisions = true;
-	objsColideWith.push_back(&other);
+	m_hasCollisions = true;
+	m_objsColideWith.push_back(&other);
 }
 
 // by default detect on pressed key; might be overriden if needed
 void GameObject::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 {
-	if (this->controllingKeys.size() > 0)
+	if (this->m_controllingKeys.size() > 0)
 	{
 		for (const auto& key : keysPressed)
 		{
-			if (this->controllingKeys.find(key.first) != this->controllingKeys.end())
+			if (this->m_controllingKeys.find(key.first) != this->m_controllingKeys.end())
 			{
-				this->controllingKeys[key.first] = true;
+				this->m_controllingKeys[key.first] = true;
 			}
 		}
 	}
@@ -74,34 +74,34 @@ void GameObject::update()
 void GameObject::draw(sf::RenderWindow &window) 
 {
 	extern ResourcesManager *resMan;
-	window.draw(drawingObject.sprite);
+	window.draw(m_drawingObject.sprite);
 }
 
 void GameObject::updateDrawingObject()
 {
-	drawingObject.sprite.setPosition(rect.x, rect.y);
+	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
 	updateAnimFrame();
 }
 
 void GameObject::updateAnimFrame()
 {
-	if (!isAnimating)
+	if (!m_isAnimating)
 	{
-		animationFrame = 0;
+		m_animationFrame = 0;
 	}
 	else
 	{
-		if (++animationFrame > ((frames.framesAlongX * frames.framesAlongY) - 1))
+		if (++m_animationFrame > ((m_frames.framesAlongX * m_frames.framesAlongY) - 1))
 		{
-			animationFrame = 0;
+			m_animationFrame = 0;
 		}
 	}
 
-	int width = drawingObject.texture.getSize().x / frames.framesAlongY;
-	int height = drawingObject.texture.getSize().y / frames.framesAlongX;
-	int x = (animationFrame % frames.framesAlongX) * width;
-	int y = (animationFrame / frames.framesAlongX) * height;
-	drawingObject.sprite.setTextureRect(sf::IntRect{
+	int width = m_drawingObject.texture.getSize().x / m_frames.framesAlongY;
+	int height = m_drawingObject.texture.getSize().y / m_frames.framesAlongX;
+	int x = (m_animationFrame % m_frames.framesAlongY) * width;
+	int y = (m_animationFrame / m_frames.framesAlongY) * height;
+	m_drawingObject.sprite.setTextureRect(sf::IntRect{
 		x,
 		y,
 		width,
@@ -111,9 +111,9 @@ void GameObject::updateAnimFrame()
 
 void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite)
 {
-	sf::Vector2f factor{
-		static_cast<float>(w * frames.framesAlongX / texture.getSize().x),
-		static_cast<float>(h * frames.framesAlongY / texture.getSize().y) };
+	float factor1 = w * m_frames.framesAlongY / texture.getSize().x;
+	float factor2 = h * m_frames.framesAlongX / texture.getSize().y;
+	sf::Vector2f factor{ factor1,factor2 };
 	sprite.scale(factor);
 }
 
