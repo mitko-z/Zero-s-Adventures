@@ -1,0 +1,32 @@
+; level no.
+1
+; index number of the monster type for this level
+0
+; name for the texture of monsters (without the extension of the file)
+
+; Monster texture frames y, x
+0	0
+; level no.
+2
+; index number of the monster type for this level
+1
+; name for the texture of monsters (without the extension of the file)
+Jelly
+; Monster texture frames y, x
+2	2
+; level no.
+3
+; index number of the monster type for this level
+2
+; name for the texture of monsters (without the extension of the file)
+OneEye
+; Monster texture frames y, x
+1	7
+; level no.
+4
+; index number of the monster type for this level
+3
+; name for the texture of monsters (without the extension of the file)
+WalkingSquare
+; Monster texture frames y, x
+1	5

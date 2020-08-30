@@ -14,6 +14,7 @@ public:
 	void update() override;
 protected:
 	void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased) override;
+	void updateEvents() override;
 private:
 	bool keyIsPressed;
 	Timer timer;

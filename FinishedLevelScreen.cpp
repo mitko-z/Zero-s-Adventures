@@ -16,6 +16,17 @@ void FinishedLevelScreen::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS
 	}
 }
 
+void FinishedLevelScreen::updateEvents()
+{
+	if (timer.isStarted() && (timer.elapsedSeconds() > secondsToWaitBeforeNextLevel))
+	{
+		std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+		MAP_KEYS keysPressed = eventsHolder->getPressedKeys();
+		MAP_KEYS keysReleased = eventsHolder->getReleasedKeys();
+		updateKeys(keysPressed, keysReleased);
+	}
+}
+
 void FinishedLevelScreen::update()
 {
 	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();

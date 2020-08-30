@@ -1,0 +1,68 @@
+; number of levels
+4
+; level no.
+1
+; number of columns for the level
+5
+; number of rows for the level
+5
+; table of the level; legend: 0 - empty space, 1 - wall, 2 - monster; 9 - end of level
+0	1	0	0	0
+0	1	0	1	0
+0	1	0	1	0
+0	1	0	1	0
+0	0	0	1	9
+; level no.
+2
+; number of columns for the level
+7
+; number of rows for the level
+7
+; table of the level; legend: 0 - empty space, 1 - wall, 2 - monster; 3-weapon; 9 - end of level
+0	0	0	0	0	0	0
+1	1	1	1	0	1	0
+9	1	0	0	0	1	0
+0	1	0	1	1	1	0
+0	1	0	0	0	1	0
+0	1	1	1	0	1	0
+0	2	0	0	0	1	3
+; level no.
+3
+; number of columns for the level
+10
+; number of rows for the level
+10
+; table of the level; legend: 0-empty space, 1-wall, 2-monster; 3-weapon; 9-end of level
+0	0	0	1	0	0	0	1	2	2
+0	1	0	1	0	1	0	1	0	0
+0	1	0	1	0	1	0	0	0	0
+0	1	0	0	0	1	0	1	0	0
+0	1	1	1	1	1	1	3	1	0
+0	0	0	0	2	0	0	0	1	0
+1	1	1	1	1	1	1	1	1	0
+9	0	0	2	0	0	0	0	1	2
+0	0	0	0	0	0	0	0	1	2
+0	0	0	2	2	2	0	0	0	0
+; level no.
+4
+; number of columns for the level
+13
+; number of rows for the level
+16
+; table of the level; legend: 0 - empty space, 1 - wall, 2 - monster; 3 - weapon; 9 - end of level
+0	0	0	0	1	0	0	0	0	0	0	0	0
+0	1	0	0	1	0	1	0	1	1	1	1	0
+0	1	9	2	1	0	1	0	1	0	0	0	0
+0	1	1	1	1	0	1	0	1	0	1	1	1
+0	0	0	0	0	0	1	0	1	0	0	0	0
+0	1	0	1	1	1	0	0	1	1	1	1	0
+0	1	0	0	0	1	0	0	0	0	0	1	0
+0	1	1	1	0	1	1	1	1	1	0	1	0
+0	0	0	1	0	1	0	0	0	0	0	1	0
+1	1	0	1	0	1	0	1	1	1	1	0	0
+0	0	0	1	1	1	0	0	0	1	0	0	1
+0	1	1	0	1	0	1	1	0	0	1	0	0
+0	1	0	0	1	0	0	0	1	0	0	1	0
+0	1	0	0	0	1	1	0	1	0	0	1	0
+0	0	0	0	0	0	1	0	1	0	1	1	1
+0	0	0	0	0	0	0	0	1	0	0	0	3

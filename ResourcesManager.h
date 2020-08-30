@@ -42,6 +42,17 @@ private:
 	void loadLevel(unsigned int level,
 		UMAP<OBJ_TYPE, std::string>& imagesNames,
 		std::vector<OBJ_TYPE>& resCommands);
+	std::ifstream getReader(std::string filePath);
+	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getMonstersInfo(const unsigned int& level, MONSTER_TYPES& monsterType, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getWeaponsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getEndOfLevelInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getGeneralInfo(const unsigned int& level, 
+						unsigned int& numbersOfLevels, std::vector<sf::Vector2u>& wallsCoords,
+						sf::Vector2u& endOfLevelCoords,
+						std::vector<sf::Vector2u> monstersCoords);
 	// members
 	static ResourcesManager* m_instance;
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;
