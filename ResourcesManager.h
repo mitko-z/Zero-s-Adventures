@@ -52,7 +52,7 @@ private:
 	void getGeneralInfo(const unsigned int& level, 
 						unsigned int& numbersOfLevels, std::vector<sf::Vector2u>& wallsCoords,
 						sf::Vector2u& endOfLevelCoords,
-						std::vector<sf::Vector2u> monstersCoords);
+						std::vector<sf::Vector2u>& monstersCoords);
 	// members
 	static ResourcesManager* m_instance;
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;

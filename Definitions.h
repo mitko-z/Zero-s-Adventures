@@ -95,6 +95,9 @@ struct Rectangle
 	double x, y, w, h;
 	Rectangle() = default;
 	Rectangle(double x, double y, double w, double h) : x(x), y(y), w(w), h(h) {}
+
+	double center_x() { return x + (w / 2); }
+	double center_y() { return y + (h / 2); }
 };
 
 

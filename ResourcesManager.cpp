@@ -138,7 +138,6 @@ void ResourcesManager::loadLevel(unsigned int level,
 	std::vector<sf::Vector2u> monstersCoords;
 	getGeneralInfo(level, numbersOfLevels, wallsCoords, endOfLevelCoords, monstersCoords);
 
-
 	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false));
 	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
@@ -156,7 +155,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	}
 	resCommands.push_back(OBJ_TYPE::WALL_TYPE);
 
-	// init monster
+	// init monsters
 	for (auto monstCoord : monstersCoords)
 	{
 		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
@@ -306,7 +305,7 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 									  unsigned int & numbersOfLevels, 
 									  std::vector<sf::Vector2u>& wallsCoords, 
 									  sf::Vector2u & endOfLevelCoords, 
-									  std::vector<sf::Vector2u> monstersCoords)
+									  std::vector<sf::Vector2u>& monstersCoords)
 {
 	std::ifstream generalInfoReader = getReader(GENERAL_INFO_FILE_PATH);
 	std::string lineRead;
