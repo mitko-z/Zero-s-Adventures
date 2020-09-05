@@ -74,6 +74,23 @@ void MovingCharacter::processWallCollision(GameObject & wall)
 		default:
 		break;
 	}
+	// move a little bit of outside of the wall
+	if (m_rect.x == (wall.getRect().x + wall.getRect().w))
+	{
+		m_rect.x++;
+	}
+	else if ((m_rect.x + m_rect.w) == wall.getRect().x)
+	{
+		m_rect.x--;
+	}
+	if (m_rect.y == (wall.getRect().y + wall.getRect().h))
+	{
+		m_rect.y++;
+	}
+	else if ((m_rect.y + m_rect.h) == wall.getRect().y)
+	{
+		m_rect.y--;
+	}
 }
 
 

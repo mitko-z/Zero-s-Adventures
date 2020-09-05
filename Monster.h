@@ -17,5 +17,8 @@ public:
 
 	void update() override;
 
-	static Monster* createMonster(MONSTER_TYPES type, double x, double y, double w, double h);
+	static Monster* createMonster(MONSTER_TYPES type, double x, double y, double w, double h, double damage, double speed);
+
+private:
+	void moveTowardsTarget(int x, int y);
 };

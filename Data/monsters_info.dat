@@ -6,6 +6,10 @@
 
 ; Monster texture frames y, x
 0	0
+; Monster damage
+0
+; Monster speed
+0
 ; level no.
 2
 ; index number of the monster type for this level
@@ -14,6 +18,10 @@
 Jelly
 ; Monster texture frames y, x
 2	2
+; Monster damage
+5
+; Monster speed
+5
 ; level no.
 3
 ; index number of the monster type for this level
@@ -22,6 +30,10 @@ Jelly
 OneEye
 ; Monster texture frames y, x
 1	7
+; Monster damage
+10
+; Monster speed
+10
 ; level no.
 4
 ; index number of the monster type for this level
@@ -30,3 +42,7 @@ OneEye
 WalkingSquare
 ; Monster texture frames y, x
 1	5
+; Monster damage
+15
+; Monster speed
+15

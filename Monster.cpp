@@ -24,11 +24,9 @@ void Monster::update()
 	//// check if Zero can be seen around
 	// define and places where the creature to look to
 	std::vector<sf::RectangleShape*> placesToLookTo; 
-	
-	// placesToLookTo[0].getGlobalBounds().intersects
-	
-	// set the places where to look to - it makes two "circles" around the creature; the second is twice bigger
-	// than the first one (thanks to the multiplier).
+		
+	// set the places where to look to - it makes some "circles" around the monster; each next is bigger
+	// than the previous one (thanks to the multiplier).
 	// it is not clear circles but just it is on its right (when angle is 0 then cos(angle) is 1 and sin(angle) 
 	// is 0, so x goes on right, y is the same), on its bottom (angle = PI/2, cos = 0, sin = 1), on its left and top
 	for (int i = 10; i < 20; i += 5)
@@ -37,18 +35,10 @@ void Monster::update()
 		{
 			placesToLookTo.push_back(new sf::RectangleShape(sf::Vector2f(m_rect.w, m_rect.h)));
 			size_t index = placesToLookTo.size() - 1;
-			/*placesToLookTo[index]->setOrigin(
-				m_rect.center_x() + 1.5 * m_rect.w * cos(angle) * multiplier,
-				m_rect.center_y() + 1.5 * m_rect.h * sin(angle) * multiplier);*/
 			double multiplier = static_cast<double>(i) / 10.0;
 			placesToLookTo[placesToLookTo.size() - 1]->setPosition(
 				m_rect.center_x() + 1.5 * m_rect.w * cos(angle) * multiplier,
 				m_rect.center_y() + 1.5 * m_rect.h * sin(angle) * multiplier);
-			/*(
-				(int)(destinationRectangle.Center.X + 1.5 * destinationRectangle.Width * Math.Cos(angle) * multiplier),
-				(int)(destinationRectangle.Center.Y + 1.5 * destinationRectangle.Height * Math.Sin(angle) * multiplier),
-				destinationRectangle.Width,
-				destinationRectangle.Height));*/
 		}
 	}
 
@@ -74,32 +64,46 @@ void Monster::update()
 	}
 	if (foundZero)
 	{
-		// TODO
-		// setMovementToTarget(zeroRect.left + zeroRect.width / 2, zeroRect.top + zeroRect.height / 2);
+		moveTowardsTarget(zeroRect.left, zeroRect.top);
 	}
-	//else
-	//{
-	//	isMovementAnimationNeeded = false;
-	//}
+
 	MovingCharacter::update();
 	updateDrawingObject();
 }
 
-Monster* Monster::createMonster(MONSTER_TYPES type, double x, double y, double w, double h)
+Monster* Monster::createMonster(MONSTER_TYPES type, double x, double y, double w, double h, double damage, double speed)
 {
 	switch (type)
 	{
 	case MONSTER_TYPES::JELLY_MONSTER_TYPE:
-		return new MonsterJelly(x, y, w, h);
+		return new MonsterJelly(x, y, w, h, damage, speed);
 		break;
 	case MONSTER_TYPES::ONE_EYE_MONSTER_TYPE:
-		return new MonsterOneEye(x, y, w, h);
+		return new MonsterOneEye(x, y, w, h, damage, speed);
 		break;
 	case MONSTER_TYPES::WALKING_SQUARE_MONSTER_TYPE:
-		return new MonsterWalkingSquare(x, y, w, h);
+		return new MonsterWalkingSquare(x, y, w, h, damage, speed);
 		break;
 	default:
 		break;
 	}
 	return nullptr;
+}
+
+void Monster::moveTowardsTarget(int x, int y)
+{
+	if ((m_rect.x != x) && (m_rect.y != y))
+	{
+		sf::Vector2i distance;
+		distance.x = m_rect.x - x;
+		distance.y = m_rect.y - y;
+		if (abs(distance.x) > abs(distance.y)) // move towards x
+		{
+			setDirectionToMove((distance.x < 0) ? MovingDirection::DIRECTION_RIGHT : MovingDirection::DIRECTION_LEFT);
+		}
+		else
+		{
+			setDirectionToMove((distance.y < 0) ? MovingDirection::DIRECTION_DOWN : MovingDirection::DIRECTION_UP);
+		}
+	}
 }

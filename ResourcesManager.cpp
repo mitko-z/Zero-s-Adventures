@@ -128,7 +128,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 	getBackgroundInfo(level, imagesNames);
 	getWallsInfo(level, imagesNames);
 	MONSTER_TYPES monsterType = MONSTER_TYPES::NO_MONSTER_TYPE;
-	getMonstersInfo(level, monsterType, imagesNames);
+	double monsterDamage, monsterSpeed;
+	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed);
 	getWeaponsInfo(level, imagesNames);
 	getEndOfLevelInfo(level, imagesNames);
 
@@ -142,9 +143,9 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
 	// initialize Zero AFTER background in order not to draw background upon Zero
-	double zeroWidth = getGameObjSize().x / 2;
-	double zeroHeight = getGameObjSize().y / 2;
-	m_gameObjects.push_back(new ZeroCharacter(0, 0, zeroWidth, zeroHeight));
+	double movingObjWidth = getGameObjSize().x / 2;
+	double movingObjHeight = getGameObjSize().y / 2;
+	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight));
 	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
 
 	// init walls
@@ -159,7 +160,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	for (auto monstCoord : monstersCoords)
 	{
 		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
-		m_gameObjects.push_back(Monster::createMonster(monsterType, worldCoords.x, worldCoords.y, getGameObjSize().x, getGameObjSize().y));
+		m_gameObjects.push_back(Monster::createMonster(monsterType, worldCoords.x, worldCoords.y, movingObjWidth, movingObjHeight, monsterDamage, monsterSpeed));
 	}
 	if (monstersCoords.size() > 0)
 	{
@@ -244,7 +245,7 @@ void ResourcesManager::getWallsInfo(const unsigned int & level, UMAP<OBJ_TYPE, s
 	wallsInfoReader.close();
 }
 
-void ResourcesManager::getMonstersInfo(const unsigned int & level, MONSTER_TYPES & monsterType, UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getMonstersInfo(const unsigned int & level, MONSTER_TYPES & monsterType, UMAP<OBJ_TYPE, std::string>& imagesNames, double&damage, double& speed)
 {
 	std::ifstream monstersInfoReader = getReader(MONSTERS_INFO_FILE_PATH);
 	std::string lineRead;
@@ -266,6 +267,12 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level, MONSTER_TYPES
 		std::getline(monstersInfoReader, lineRead);	// read "Monster texture frames x, y"
 		std::getline(monstersInfoReader, lineRead);	// read the frames upon y and x
 		m_animations[OBJ_TYPE::MONSTER_TYPE] = getAnimationFromString(lineRead);
+		std::getline(monstersInfoReader, lineRead);	// read ; Monster damage
+		std::getline(monstersInfoReader, lineRead);	// read the monster damage
+		damage = std::stod(lineRead);
+		std::getline(monstersInfoReader, lineRead);	// read ; Monster speed
+		std::getline(monstersInfoReader, lineRead);	// read the monster speed
+		speed = std::stod(lineRead);
 	} while (currentLevel != level);
 	monstersInfoReader.close();
 }

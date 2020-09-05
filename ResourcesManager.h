@@ -46,7 +46,7 @@ private:
 	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
-	void getMonstersInfo(const unsigned int& level, MONSTER_TYPES& monsterType, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getMonstersInfo(const unsigned int& level, MONSTER_TYPES& monsterType, UMAP<OBJ_TYPE, std::string>& imagesNames, double& damage, double& speed);
 	void getWeaponsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getEndOfLevelInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getGeneralInfo(const unsigned int& level, 

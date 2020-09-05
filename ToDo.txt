@@ -1,5 +1,3 @@
-Monsters go towards Zero when in range
-
 Monsters make damage on Zero
 
 make health object
