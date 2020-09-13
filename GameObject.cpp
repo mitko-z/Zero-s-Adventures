@@ -18,7 +18,7 @@ void GameObject::initialize() {}
 void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
-	Definitions::ObjectType loadCommand = getLoadResourcesCommand();
+	OBJ_TYPE loadCommand = getLoadResourcesCommand();
 	resMan->getAnimation(loadCommand, m_frames);
 	m_drawingObject.texture = resMan->getTexture(loadCommand);
 	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
@@ -26,9 +26,9 @@ void GameObject::loadContent()
 	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
 }
 
-Definitions::ObjectType GameObject::getLoadResourcesCommand()
+OBJ_TYPE GameObject::getLoadResourcesCommand()
 {
-	return Definitions::ObjectType::NO_OBJ_TYPE;
+	return OBJ_TYPE::NO_OBJ_TYPE;
 }
 
 void GameObject::updateEvents()
@@ -114,6 +114,7 @@ void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, s
 	float factor1 = w * m_frames.framesAlongY / texture.getSize().x;
 	float factor2 = h * m_frames.framesAlongX / texture.getSize().y;
 	sf::Vector2f factor{ factor1,factor2 };
-	sprite.scale(factor);
+	sprite.setScale(factor);
+	//sprite.scale(factor);
 }
 

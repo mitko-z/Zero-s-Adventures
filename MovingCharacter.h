@@ -8,8 +8,8 @@
 class MovingCharacter : public GameObject
 {
 public:
-	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, double damage);
-	virtual void update();
+	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed);
+	void update() override;
 	virtual void processCollisions();
 protected:
 	enum MovingDirection
@@ -26,8 +26,6 @@ protected:
 	Rectangle lastPosition;
 	double speed;
 	bool goOutsideOfScreen;
-	double health;
-	double damage;
 private:
 	void setInsideWindow();
 	MovingDirection directionToMove_;

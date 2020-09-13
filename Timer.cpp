@@ -17,6 +17,15 @@ void Timer::stop()
 	m_bRunning = false;
 }
 
+void Timer::restart()
+{
+	if (isStarted())
+	{
+		stop();
+		start();
+	}
+}
+
 double Timer::elapsedMilliseconds()
 {
 	std::chrono::time_point<std::chrono::system_clock> endTime;

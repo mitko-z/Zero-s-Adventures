@@ -23,7 +23,7 @@ public :
 	GameObject(GameObject &other);
 	virtual void initialize();
 	virtual void loadContent();
-	virtual Definitions::ObjectType getLoadResourcesCommand();
+	virtual OBJ_TYPE getLoadResourcesCommand();
 	virtual void updateEvents();
 	virtual void nullCollisions();
 	virtual void setCollisionWith(GameObject& other);
@@ -37,6 +37,8 @@ protected :
 	virtual void updateDrawingObject();
 	virtual void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased);
 
+	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
+
 	Rectangle m_rect;
 	DrawingObject m_drawingObject;
 	std::map<sf::Keyboard::Key, bool> m_controllingKeys;
@@ -46,6 +48,5 @@ protected :
 	bool m_hasCollisions;
 	std::vector<GameObject*> m_objsColideWith;
 private:
-	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
 	void updateAnimFrame();
 };

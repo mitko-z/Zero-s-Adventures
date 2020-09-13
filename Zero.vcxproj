@@ -125,6 +125,7 @@
     <ClCompile Include="FinishedLevelScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Health.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="MonsterOneEye.cpp" />
     <ClCompile Include="MonsterWalkingSquare.cpp" />
     <ClCompile Include="MovingCharacter.cpp" />
+    <ClCompile Include="PlayingCharacter.cpp" />
     <ClCompile Include="ResourcesManager.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -149,6 +151,7 @@
     <ClInclude Include="FinishedLevelScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Health.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="MonsterOneEye.h" />
     <ClInclude Include="MonsterWalkingSquare.h" />
     <ClInclude Include="MovingCharacter.h" />
+    <ClInclude Include="PlayingCharacter.h" />
     <ClInclude Include="ResourcesManager.h" />
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Timer.h" />

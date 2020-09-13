@@ -1,7 +1,8 @@
 #include "ZeroCharacter.h"
+#include "Monster.h"
 
-ZeroCharacter::ZeroCharacter(double x, double y, double w, double h) : 
-	MovingCharacter(x, y, w, h, IS_ANIMATING, ZERO_SPEED, 0) // 0 for damage - zero cannot make damage without a weapon
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health) :
+	PlayingCharacter(x, y, w, h, false, speed, 0, health, 0) // 0 for damage & attacking speed - zero cannot make damage without a weapon
 {
 }
 
@@ -89,11 +90,21 @@ void ZeroCharacter::update()
 		setDirectionToMove(MovingDirection::DIRECTION_RIGHT);
 	}
 
-	MovingCharacter::update();
-	updateDrawingObject();
+	PlayingCharacter::update();
 }
 
-void ZeroCharacter::draw(sf::RenderWindow &window)
+void ZeroCharacter::processCollisions()
 {
-	GameObject::draw(window);
+	for (auto colidedObj : m_objsColideWith)
+	{
+		switch (colidedObj->getLoadResourcesCommand())
+		{
+		case OBJ_TYPE::MONSTER_TYPE:
+			takeDamage(dynamic_cast<Monster*>(colidedObj)->getDamage());
+			break;
+		default:
+			break;
+		}
+	}
+	PlayingCharacter::processCollisions();
 }

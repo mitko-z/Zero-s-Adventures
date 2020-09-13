@@ -2,3 +2,7 @@
 SmileyWalkTighter
 ; Zero texture frames x, y
 4	4
+; Zero speed
+10
+; Zero health
+100

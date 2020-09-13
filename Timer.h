@@ -11,6 +11,8 @@ public:
 
 	void stop();
 
+	void restart();
+
 	double elapsedMilliseconds();
 
 	double elapsedSeconds();

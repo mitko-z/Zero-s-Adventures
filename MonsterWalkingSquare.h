@@ -2,14 +2,12 @@
 
 #include "Monster.h"
 
-#define IS_ANIMATING false
-
 class MonsterWalkingSquare : public Monster
 {
 public:
 	MonsterWalkingSquare() = default;
-	MonsterWalkingSquare::MonsterWalkingSquare(double x, double y, double w, double h, double damage, double speed) :
-		Monster(x, y, w, h, speed, IS_ANIMATING, damage)
+	MonsterWalkingSquare::MonsterWalkingSquare(double x, double y, double w, double h, double damage, double speed, double health, double attackingSpeed) :
+		Monster(x, y, w, h, speed, false, damage, health, attackingSpeed)
 	{
 	}
 

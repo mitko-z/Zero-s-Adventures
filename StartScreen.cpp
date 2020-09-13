@@ -14,16 +14,16 @@ void StartScreen::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysRe
 {
 	if (keysReleased.size() > 0)
 	{
-		keyIsPressed = true;
+		m_keyIsPressed = true;
 	}
 }
 
 void StartScreen::update()
 {
 	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
-	if (keyIsPressed)
+	if (m_keyIsPressed)
 	{
 		eventHolder->setEventByGameCommand(Definitions::Command::MIAN_MENU_COMMAND);
-		keyIsPressed = false;
+		m_keyIsPressed = false;
 	}
 }

@@ -12,13 +12,13 @@ void FinishedLevelScreen::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS
 {
 	if (keysReleased.size() > 0)
 	{
-		keyIsPressed = true;
+		m_keyIsPressed = true;
 	}
 }
 
 void FinishedLevelScreen::updateEvents()
 {
-	if (timer.isStarted() && (timer.elapsedSeconds() > secondsToWaitBeforeNextLevel))
+	if (m_timer.isStarted() && (m_timer.elapsedSeconds() > m_secondsToWaitBeforeNextLevel))
 	{
 		std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 		MAP_KEYS keysPressed = eventsHolder->getPressedKeys();
@@ -30,17 +30,17 @@ void FinishedLevelScreen::updateEvents()
 void FinishedLevelScreen::update()
 {
 	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
-	if (!timer.isStarted())
+	if (!m_timer.isStarted())
 	{
-		timer.start();
+		m_timer.start();
 	}
-	if (timer.elapsedSeconds() > secondsToWaitBeforeNextLevel)
+	if (m_timer.elapsedSeconds() > m_secondsToWaitBeforeNextLevel)
 	{
-		if (keyIsPressed)
+		if (m_keyIsPressed)
 		{
-			timer.stop();
+			m_timer.stop();
 			eventHolder->setEventByGameCommand(COMMAND::NEXT_LEVEL_COMMAND);
-			keyIsPressed = false;
+			m_keyIsPressed = false;
 		}
 	}
 }

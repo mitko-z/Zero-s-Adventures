@@ -1,6 +1,4 @@
-Monsters make damage on Zero
-
-make health object
+Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
 
 Make weapons & projectiles
 
@@ -26,3 +24,5 @@ add options menu:
 	- change keys controlling Zero
 	- change game screen resolutions
 	- on/off playing music/sounds
+	
+make help objects telling the player what should do

@@ -29,7 +29,7 @@ void Monster::update()
 	// than the previous one (thanks to the multiplier).
 	// it is not clear circles but just it is on its right (when angle is 0 then cos(angle) is 1 and sin(angle) 
 	// is 0, so x goes on right, y is the same), on its bottom (angle = PI/2, cos = 0, sin = 1), on its left and top
-	for (int i = 10; i < 20; i += 5)
+	for (int i = 10; i < 20; i++)
 	{
 		for (double angle = 0; angle < 2 * M_PI; angle += 0.5)
 		{
@@ -52,11 +52,10 @@ void Monster::update()
 	}
 	sf::FloatRect zeroRect(zeroCharacter->getRect().x, zeroCharacter->getRect().y, zeroCharacter->getRect().w, zeroCharacter->getRect().h);
 
+	// look if Zero is around
 	for (int i = 0; i < placesToLookTo.size(); i++)
 	{
-		// look if Zero is here
 		if(placesToLookTo[i]->getGlobalBounds().intersects(zeroRect))
-		//if (placesToLookTo[i].Intersects(zeroCharacter.CollisionRectangle))
 		{
 			foundZero = true;
 			break;
@@ -66,23 +65,45 @@ void Monster::update()
 	{
 		moveTowardsTarget(zeroRect.left, zeroRect.top);
 	}
+	
+	// attack Zero if touching him somehow
+	sf::RectangleShape monsterRect(sf::Vector2f(m_rect.w, m_rect.h));
+	monsterRect.setPosition(sf::Vector2f(m_rect.x, m_rect.y));
+	if (monsterRect.getGlobalBounds().intersects(zeroRect))
+	{
+		attack();
+		m_isAnimating = true;
+	}
+	else
+	{
+		stopAttack();
+		m_isAnimating = false;
+	}
 
-	MovingCharacter::update();
-	updateDrawingObject();
+	PlayingCharacter::update();
 }
 
-Monster* Monster::createMonster(MONSTER_TYPES type, double x, double y, double w, double h, double damage, double speed)
+Monster* Monster::createMonster(
+	MONSTER_TYPES type, 
+	double x, 
+	double y, 
+	double w, 
+	double h, 
+	double damage, 
+	double speed, 
+	double health, 
+	double attackingSpeed)
 {
 	switch (type)
 	{
 	case MONSTER_TYPES::JELLY_MONSTER_TYPE:
-		return new MonsterJelly(x, y, w, h, damage, speed);
+		return new MonsterJelly(x, y, w, h, damage, speed, health, attackingSpeed);
 		break;
 	case MONSTER_TYPES::ONE_EYE_MONSTER_TYPE:
-		return new MonsterOneEye(x, y, w, h, damage, speed);
+		return new MonsterOneEye(x, y, w, h, damage, speed, health, attackingSpeed);
 		break;
 	case MONSTER_TYPES::WALKING_SQUARE_MONSTER_TYPE:
-		return new MonsterWalkingSquare(x, y, w, h, damage, speed);
+		return new MonsterWalkingSquare(x, y, w, h, damage, speed, health, attackingSpeed);
 		break;
 	default:
 		break;
@@ -92,7 +113,7 @@ Monster* Monster::createMonster(MONSTER_TYPES type, double x, double y, double w
 
 void Monster::moveTowardsTarget(int x, int y)
 {
-	if ((m_rect.x != x) && (m_rect.y != y))
+	if ((m_rect.x != x) || (m_rect.y != y))
 	{
 		sf::Vector2i distance;
 		distance.x = m_rect.x - x;

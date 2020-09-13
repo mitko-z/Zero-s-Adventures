@@ -61,7 +61,8 @@ namespace Definitions
 		WALL_TYPE,
 		END_OF_LEVEL_TYPE,
 		FINISHED_LEVEL_SCREEN_TYPE,
-		MONSTER_TYPE
+		MONSTER_TYPE,
+		HEALTH_TYPE
 	};
 
 	enum MonsterTypes

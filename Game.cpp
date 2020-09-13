@@ -125,37 +125,37 @@ void Game::processColisions()
 	extern ResourcesManager *resMan;
 	switch (eventsHolder->getMode())
 	{
-	case MODE::GAME_MODE:
-	{
-		std::vector<GameObject *> gameObjects = resMan->getGameObjects();
-		for (auto gameObject : gameObjects)
+		case MODE::GAME_MODE:
 		{
-			gameObject->nullCollisions();
-		}
-		size_t numOfGameObjs = gameObjects.size();
-		for (size_t i = 1; i < numOfGameObjs - 1; ++i) // 0 is the background - not interacting with the other game objs
-		{
-			for (size_t j = i + 1; j < numOfGameObjs; ++j)
+			std::vector<GameObject *> gameObjects = resMan->getGameObjects();
+			for (auto gameObject : gameObjects)
 			{
-				if (twoObjsColide(*gameObjects[i], *gameObjects[j]))
+				gameObject->nullCollisions();
+			}
+			size_t numOfGameObjs = gameObjects.size();
+			for (size_t i = 1; i < numOfGameObjs - 1; ++i) // 0 is the background - not interacting with the other game objs
+			{
+				for (size_t j = i + 1; j < numOfGameObjs; ++j)
 				{
-					gameObjects[i]->setCollisionWith(*gameObjects[j]);
-					gameObjects[j]->setCollisionWith(*gameObjects[i]);
+					if (twoObjsColide(*gameObjects[i], *gameObjects[j]))
+					{
+						gameObjects[i]->setCollisionWith(*gameObjects[j]);
+						gameObjects[j]->setCollisionWith(*gameObjects[i]);
+					}
 				}
 			}
+			for (auto gameObject : gameObjects)
+			{
+				gameObject->processCollisions();
+			}
 		}
-		for (auto gameObject : gameObjects)
+		break;
+		case MODE::MENU_MODE:
 		{
-			gameObject->processCollisions();
+			// TODO - mouse pointer "colisions" with buttons
 		}
-	}
-	break;
-	case MODE::MENU_MODE:
-	{
-		// TODO - mouse pointer "colisions" with buttons
-	}
-	break;
-	default:
+		break;
+		default:
 		break;
 	}
 }

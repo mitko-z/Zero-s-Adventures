@@ -10,6 +10,7 @@
 #include "EndOfLevel.h"
 #include "FinishedLevelScreen.h"
 #include "Monster.h"
+#include "Health.h"
 
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
 #define WALLS_INFO_FILE_PATH		"Data/walls_info.dat"
@@ -18,6 +19,7 @@
 #define MONSTERS_INFO_FILE_PATH		"Data/monsters_info.dat"
 #define WEAPONS_INFO_FILE_PATH		"Data/weapons_info.dat"
 #define END_OF_LEVEL_INFO_FILE_PATH "Data/end_of_level_info.dat"
+#define HEALTH_INFO_FILE_PATH		"Data/health_info.dat"
 
 ResourcesManager* ResourcesManager::m_instance = nullptr;
 
@@ -124,14 +126,16 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.clear();
 	m_animations.clear();
 
-	getZeroInfo(imagesNames);
+	double zeroSpeed, zeroHealth;
+	getZeroInfo(imagesNames, zeroSpeed, zeroHealth);
 	getBackgroundInfo(level, imagesNames);
 	getWallsInfo(level, imagesNames);
 	MONSTER_TYPES monsterType = MONSTER_TYPES::NO_MONSTER_TYPE;
-	double monsterDamage, monsterSpeed;
-	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed);
+	double monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed;
+	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed);
 	getWeaponsInfo(level, imagesNames);
 	getEndOfLevelInfo(level, imagesNames);
+	getHealthInfo(level, imagesNames);
 
 	unsigned int numbersOfLevels = 0;
 	std::vector<sf::Vector2u> wallsCoords;
@@ -145,7 +149,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	// initialize Zero AFTER background in order not to draw background upon Zero
 	double movingObjWidth = getGameObjSize().x / 2;
 	double movingObjHeight = getGameObjSize().y / 2;
-	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight));
+	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight, zeroSpeed, zeroHealth));
 	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
 
 	// init walls
@@ -160,7 +164,15 @@ void ResourcesManager::loadLevel(unsigned int level,
 	for (auto monstCoord : monstersCoords)
 	{
 		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
-		m_gameObjects.push_back(Monster::createMonster(monsterType, worldCoords.x, worldCoords.y, movingObjWidth, movingObjHeight, monsterDamage, monsterSpeed));
+		m_gameObjects.push_back(Monster::createMonster(monsterType, 
+													   worldCoords.x, 
+													   worldCoords.y, 
+													   movingObjWidth, 
+													   movingObjHeight, 
+													   monsterDamage, 
+													   monsterSpeed,
+													   monsterHealth,
+													   monsterAttackingSpeed));
 	}
 	if (monstersCoords.size() > 0)
 	{
@@ -177,6 +189,9 @@ void ResourcesManager::loadLevel(unsigned int level,
 											false, 
 											(level == numbersOfLevels)));
 	resCommands.push_back(OBJ_TYPE::END_OF_LEVEL_TYPE);
+
+	// init health
+	resCommands.push_back(OBJ_TYPE::HEALTH_TYPE);
 }
 
 std::ifstream ResourcesManager::getReader(std::string filePath)
@@ -191,121 +206,150 @@ std::ifstream ResourcesManager::getReader(std::string filePath)
 	return reader;
 }
 
-void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, double& zeroSpeed, double& zeroHealth)
 {
-	std::ifstream zeroInfoReader = getReader(ZERO_INFO_FILE_PATH);
+	std::ifstream infoReader = getReader(ZERO_INFO_FILE_PATH);
 	std::string lineRead;
-	std::getline(zeroInfoReader, lineRead);	// read "; name of Zero's texture.."
-	std::getline(zeroInfoReader, lineRead);	// read the name of the texture
+	std::getline(infoReader, lineRead);	// read "; name of Zero's texture.."
+	std::getline(infoReader, lineRead);	// read the name of the texture
 	imagesNames[OBJ_TYPE::ZERO_TYPE] = lineRead + ".png";
-	std::getline(zeroInfoReader, lineRead);	// read "; Zero texture frames x, y"
-	std::getline(zeroInfoReader, lineRead);	// read the frames upon x and y
+	std::getline(infoReader, lineRead);	// read "; Zero texture frames x, y"
+	std::getline(infoReader, lineRead);	// read the frames upon x and y
 	m_animations[OBJ_TYPE::ZERO_TYPE] = getAnimationFromString(lineRead);
-	zeroInfoReader.close();
+	std::getline(infoReader, lineRead);	// read ; Zero speed
+	std::getline(infoReader, lineRead);	// read Zero's speed
+	zeroSpeed = std::stod(lineRead);
+	std::getline(infoReader, lineRead);	// read ; Zero health
+	std::getline(infoReader, lineRead);	// read Zero's health
+	zeroHealth = std::stod(lineRead);
+	infoReader.close();
 }
 
 void ResourcesManager::getBackgroundInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
 {
-	std::ifstream backgroundInfoReader = getReader(BACKGROUND_INFO_FILE_PATH);
+	std::ifstream infoReader = getReader(BACKGROUND_INFO_FILE_PATH);
 	std::string lineRead;
 	unsigned int currentLevel = 0;
 	do
 	{
 		// read level info
-		std::getline(backgroundInfoReader, lineRead);	// read "; level no."
-		std::getline(backgroundInfoReader, lineRead);	// read the level no
+		std::getline(infoReader, lineRead);	// read "; level no."
+		std::getline(infoReader, lineRead);	// read the level no
 		currentLevel = std::stoi(lineRead);
 
 		// read background info 
-		std::getline(backgroundInfoReader, lineRead);	// read "; name for the texture of the background"
-		std::getline(backgroundInfoReader, lineRead);	// read the name for the texture of the background
+		std::getline(infoReader, lineRead);	// read "; name for the texture of the background"
+		std::getline(infoReader, lineRead);	// read the name for the texture of the background
 		imagesNames[OBJ_TYPE::BACKGROUND_TYPE] = lineRead + ".png";
 	} while (currentLevel != level);
-	backgroundInfoReader.close();
+	infoReader.close();
 }
 
 void ResourcesManager::getWallsInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
 {
-	std::ifstream wallsInfoReader = getReader(WALLS_INFO_FILE_PATH);
+	std::ifstream infoReader = getReader(WALLS_INFO_FILE_PATH);
 	std::string lineRead;
 	unsigned int currentLevel = 0;
 	do
 	{
 		// read level info
-		std::getline(wallsInfoReader, lineRead);	// read "; level no."
-		std::getline(wallsInfoReader, lineRead);	// read the level no
+		std::getline(infoReader, lineRead);	// read "; level no."
+		std::getline(infoReader, lineRead);	// read the level no
 		currentLevel = std::stoi(lineRead);
 
 		// read walls info
-		std::getline(wallsInfoReader, lineRead);	// read  ; name for the texture of walls (without the extension of the file)
-		std::getline(wallsInfoReader, lineRead);	// read  the name for the texture of walls
+		std::getline(infoReader, lineRead);	// read  ; name for the texture of walls (without the extension of the file)
+		std::getline(infoReader, lineRead);	// read  the name for the texture of walls
 		imagesNames[OBJ_TYPE::WALL_TYPE] = lineRead + ".png";
 	} 
 	while (currentLevel != level);
-	wallsInfoReader.close();
+	infoReader.close();
 }
 
-void ResourcesManager::getMonstersInfo(const unsigned int & level, MONSTER_TYPES & monsterType, UMAP<OBJ_TYPE, std::string>& imagesNames, double&damage, double& speed)
+void ResourcesManager::getMonstersInfo(const unsigned int & level, 
+									   MONSTER_TYPES & monsterType, 
+									   UMAP<OBJ_TYPE, std::string>& imagesNames, 
+									   double&damage, 
+									   double& speed, 
+									   double& health,
+									   double& attackingSpeed)
 {
-	std::ifstream monstersInfoReader = getReader(MONSTERS_INFO_FILE_PATH);
+	std::ifstream infoReader = getReader(MONSTERS_INFO_FILE_PATH);
 	std::string lineRead;
 	unsigned int currentLevel = 0;
 	do
 	{
 		// read level info
-		std::getline(monstersInfoReader, lineRead);	// read "; level no."
-		std::getline(monstersInfoReader, lineRead);	// read the level no
+		std::getline(infoReader, lineRead);	// read "; level no."
+		std::getline(infoReader, lineRead);	// read the level no
 		currentLevel = std::stoi(lineRead);
 
 		// read monsters info
-		std::getline(monstersInfoReader, lineRead);	// read ; index number of the monster type for this level
-		std::getline(monstersInfoReader, lineRead);	// read the index number of the monster type for this level
+		std::getline(infoReader, lineRead);	// read ; index number of the monster type for this level
+		std::getline(infoReader, lineRead);	// read the index number of the monster type for this level
 		monsterType = static_cast<MONSTER_TYPES>(std::stoi(lineRead));
-		std::getline(monstersInfoReader, lineRead);	// read  ; name for the texture of monsters (without the extension of the file)
-		std::getline(monstersInfoReader, lineRead);	// read  the name for the texture of monsters
+		std::getline(infoReader, lineRead);	// read  ; name for the texture of monsters (without the extension of the file)
+		std::getline(infoReader, lineRead);	// read  the name for the texture of monsters
 		imagesNames[OBJ_TYPE::MONSTER_TYPE] = lineRead + ".png";
-		std::getline(monstersInfoReader, lineRead);	// read "Monster texture frames x, y"
-		std::getline(monstersInfoReader, lineRead);	// read the frames upon y and x
+		std::getline(infoReader, lineRead);	// read "Monster texture frames x, y"
+		std::getline(infoReader, lineRead);	// read the frames upon y and x
 		m_animations[OBJ_TYPE::MONSTER_TYPE] = getAnimationFromString(lineRead);
-		std::getline(monstersInfoReader, lineRead);	// read ; Monster damage
-		std::getline(monstersInfoReader, lineRead);	// read the monster damage
+		std::getline(infoReader, lineRead);	// read ; Monster damage
+		std::getline(infoReader, lineRead);	// read the monster damage
 		damage = std::stod(lineRead);
-		std::getline(monstersInfoReader, lineRead);	// read ; Monster speed
-		std::getline(monstersInfoReader, lineRead);	// read the monster speed
+		std::getline(infoReader, lineRead);	// read ; Monster speed
+		std::getline(infoReader, lineRead);	// read the monster speed
 		speed = std::stod(lineRead);
+		std::getline(infoReader, lineRead);	// read ; Monster health
+		std::getline(infoReader, lineRead);	// read the monster health
+		health = std::stod(lineRead);
+		std::getline(infoReader, lineRead);	// read ; Monster attacking speed
+		std::getline(infoReader, lineRead);	// read the monster attacking speed
+		attackingSpeed = std::stod(lineRead);
 	} while (currentLevel != level);
-	monstersInfoReader.close();
+	infoReader.close();
 }
 
 void ResourcesManager::getWeaponsInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
 {
-	std::ifstream weaponsInfoReader = getReader(WEAPONS_INFO_FILE_PATH);
+	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
 	std::string lineRead;
 	unsigned int currentLevel = 0;
 	do
 	{
 		// read level info
-		std::getline(weaponsInfoReader, lineRead);	// read "; level no."
-		std::getline(weaponsInfoReader, lineRead);	// read the level no
+		std::getline(infoReader, lineRead);	// read "; level no."
+		std::getline(infoReader, lineRead);	// read the level no
 		currentLevel = std::stoi(lineRead);
 
 		// read weapon info
-		std::getline(weaponsInfoReader, lineRead);	// read ; index number for the type of weapon for this level
-		std::getline(weaponsInfoReader, lineRead);	// read the index number for the type of weapon for this level
+		std::getline(infoReader, lineRead);	// read ; index number for the type of weapon for this level
+		std::getline(infoReader, lineRead);	// read the index number for the type of weapon for this level
 		// imagesNames[OBJ_TYPE::/**/] = lineRead + ".png"; // TODO set later
 	} while (currentLevel != level);
-	weaponsInfoReader.close();
+	infoReader.close();
 }
 
 void ResourcesManager::getEndOfLevelInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
 {
-	std::ifstream endOfLevelInfoReader = getReader(END_OF_LEVEL_INFO_FILE_PATH);
+	std::ifstream infoReader = getReader(END_OF_LEVEL_INFO_FILE_PATH);
 	std::string lineRead;
-	// read level info
-	std::getline(endOfLevelInfoReader, lineRead);	// read "; name of texture for the end of level object withot the .png extension"
-	std::getline(endOfLevelInfoReader, lineRead);	// read the name for the texture
+
+	std::getline(infoReader, lineRead);	// read "; name of texture for the end of level object withot the .png extension"
+	std::getline(infoReader, lineRead);	// read the name for the texture
 	imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = lineRead + ".png";
-	endOfLevelInfoReader.close();
+	infoReader.close();
+}
+
+void ResourcesManager::getHealthInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+{
+	std::ifstream infoReader = getReader(HEALTH_INFO_FILE_PATH);
+	std::string lineRead;
+
+	std::getline(infoReader, lineRead);	// read "; name of texture for the health object withot the .png extension"
+	std::getline(infoReader, lineRead);	// read the name for the texture
+	imagesNames[OBJ_TYPE::HEALTH_TYPE] = lineRead + ".png";
+	infoReader.close();
 }
 
 void ResourcesManager::getGeneralInfo(const unsigned int & level, 
