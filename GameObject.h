@@ -28,8 +28,8 @@ public :
 	virtual void nullCollisions();
 	virtual void setCollisionWith(GameObject& other);
 	virtual void processCollisions() {}
-	virtual void setRect(Rectangle rect) { this->m_rect = rect; }
-	virtual const Rectangle getRect() const { return this->m_rect; }
+	virtual void setRect(Rectangle rect) { m_rect = rect; }
+	virtual const Rectangle getRect() const { return m_rect; }
 	virtual void update();
 	virtual void draw(sf::RenderWindow &window);
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate

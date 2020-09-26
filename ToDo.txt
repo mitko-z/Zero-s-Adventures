@@ -1,3 +1,5 @@
+Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster 
+
 Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
 
 Make weapons & projectiles

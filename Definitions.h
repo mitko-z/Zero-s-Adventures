@@ -62,7 +62,8 @@ namespace Definitions
 		END_OF_LEVEL_TYPE,
 		FINISHED_LEVEL_SCREEN_TYPE,
 		MONSTER_TYPE,
-		HEALTH_TYPE
+		HEALTH_TYPE,
+		HEALTH_BACKGROUND_TYPE
 	};
 
 	enum MonsterTypes

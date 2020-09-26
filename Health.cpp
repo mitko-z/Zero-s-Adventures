@@ -4,18 +4,19 @@
 #define HEALTH_Y_OFSET_FACTOR 15
 //#define CALCULATE_Y(y, height) (y - ((height) / (HEALTH_Y_OFSET_FACTOR)))
 
-Health::Health(double health, double parentsX, double parentsY, double parentsWidth, double parentsHeight) : 
+Health::Health(double health, double parentsX, double parentsY, double parentsWidth, double parentsHeight, OBJ_TYPE loadResourcesCommand) :
 	// GameObject(parentsX, CALCULATE_Y(parentsY, parentsHeight), parentsWidth, parentsHeight / HEALTH_HEIGHT_FACTOR, false)
 	GameObject(parentsX, calculateYPosition(parentsY, parentsHeight), parentsWidth, parentsHeight / HEALTH_HEIGHT_FACTOR, false),
 	m_currentHealth(health),
 	m_maxHealth(health),
-	m_maxWidth(parentsWidth)
+	m_maxWidth(parentsWidth),
+	m_loadResCommand(loadResourcesCommand)
 {
 }
 
 OBJ_TYPE Health::getLoadResourcesCommand()
 {
-	return OBJ_TYPE::HEALTH_TYPE;
+	return m_loadResCommand;
 }
 
 void Health::substractHealth(double substractWith)

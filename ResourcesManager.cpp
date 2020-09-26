@@ -20,6 +20,7 @@
 #define WEAPONS_INFO_FILE_PATH		"Data/weapons_info.dat"
 #define END_OF_LEVEL_INFO_FILE_PATH "Data/end_of_level_info.dat"
 #define HEALTH_INFO_FILE_PATH		"Data/health_info.dat"
+#define MENUS_INFO_FILE_PATH		"Data/menus_info.dat"
 
 ResourcesManager* ResourcesManager::m_instance = nullptr;
 
@@ -52,24 +53,11 @@ void ResourcesManager::loadResources(unsigned int level)
 	loadLevel(level, imagesNames, resCommands);
 
 	// Menu load
-	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = "MenuButtonEmptyWide.png";
-	resCommands.push_back(OBJ_TYPE::MENU_BUTTON_TYPE);
-	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = "frame-transparent.png";
-	resCommands.push_back(OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE);
-	imagesNames[OBJ_TYPE::MENU_TYPE] = "MenuBackgroundRectangle.png";
-	m_menus[RUN_MENU_STATE::MAIN_MENU_STATE] =
-		new MainMenu(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
-	resCommands.push_back(OBJ_TYPE::MENU_TYPE);
-
-	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = "StartScreen.png";
-	m_menus[RUN_MENU_STATE::START_SCREEN_STATE] =
-		new StartScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
-	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
-
-	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = "finished level screen image.png";
-	m_menus[RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE] =
-		new FinishedLevelScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
-	resCommands.push_back(OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE);
+	if (level == 1)
+	{
+		loadMenus(imagesNames);
+		initMenus(resCommands);
+	}
 
 	for (auto command : resCommands)
 	{
@@ -192,6 +180,45 @@ void ResourcesManager::loadLevel(unsigned int level,
 
 	// init health
 	resCommands.push_back(OBJ_TYPE::HEALTH_TYPE);
+	resCommands.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
+}
+
+void ResourcesManager::loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames)
+{
+	std::ifstream infoReader = getReader(MENUS_INFO_FILE_PATH);
+	std::string lineRead;
+	std::getline(infoReader, lineRead);	// read "; name of the buttons texture (without the extension of the file)"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the buttons highlighter texture"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the menus background texture"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::MENU_TYPE] = lineRead + ".png";
+
+	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = lineRead + ".png";
+
+	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = lineRead + ".png";
+}
+
+void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands)
+{
+	resCommands.push_back(OBJ_TYPE::MENU_BUTTON_TYPE);
+	resCommands.push_back(OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE);
+	resCommands.push_back(OBJ_TYPE::MENU_TYPE);
+	m_menus[RUN_MENU_STATE::MAIN_MENU_STATE] =
+		new MainMenu(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
+	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
+	m_menus[RUN_MENU_STATE::START_SCREEN_STATE] =
+		new StartScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
+	resCommands.push_back(OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE);
+	m_menus[RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE] =
+		new FinishedLevelScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
 }
 
 std::ifstream ResourcesManager::getReader(std::string filePath)
@@ -349,6 +376,9 @@ void ResourcesManager::getHealthInfo(const unsigned int & level, UMAP<OBJ_TYPE, 
 	std::getline(infoReader, lineRead);	// read "; name of texture for the health object withot the .png extension"
 	std::getline(infoReader, lineRead);	// read the name for the texture
 	imagesNames[OBJ_TYPE::HEALTH_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of texture for the background health object withot the .png extension"
+	std::getline(infoReader, lineRead);	// read the name for the texture
+	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE] = lineRead + ".png";
 	infoReader.close();
 }
 

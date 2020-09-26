@@ -42,6 +42,8 @@ private:
 	void loadLevel(unsigned int level,
 		UMAP<OBJ_TYPE, std::string>& imagesNames,
 		std::vector<OBJ_TYPE>& resCommands);
+	void loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void initMenus(std::vector<OBJ_TYPE>& resCommands);
 	std::ifstream getReader(std::string filePath);
 	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, double& zeroSpeed, double& zeroHealth);
 	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);

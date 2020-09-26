@@ -1,0 +1,10 @@
+; name of the buttons texture (without the extension of the file)
+MenuButtonEmptyWide
+; name of the buttons highlighter texture 
+frame-transparent
+; name of the menus background texture 
+MenuBackgroundRectangle
+; name of the start screen texture 
+StartScreen
+; name of the finished level screen texture 
+finished level screen image

@@ -29,6 +29,6 @@ private:
 
 	double m_damage;
 	double m_attackingSpeed;
-	Health m_health;
+	Health m_backgroundHealth, m_health;
 	Timer m_attackingTimer;
 };

@@ -2,19 +2,20 @@
 
 
 PlayingCharacter::PlayingCharacter(
-	double x, 
-	double y, 
-	double w, 
-	double h, 
-	bool isAnimating, 
-	double speed, 
-	double damage, 
-	double health, 
+	double x,
+	double y,
+	double w,
+	double h,
+	bool isAnimating,
+	double speed,
+	double damage,
+	double health,
 	double attackingSpeed) :
 
 	MovingCharacter(x, y, w, h, isAnimating, speed),
 	m_damage(damage),
-	m_health(health, x, y, w, h),
+	m_backgroundHealth(health, x, y, w, h, OBJ_TYPE::HEALTH_BACKGROUND_TYPE),
+	m_health(health, x, y, w, h, OBJ_TYPE::HEALTH_TYPE),
 	m_attackingSpeed(attackingSpeed)
 {
 }
@@ -32,7 +33,10 @@ double PlayingCharacter::getDamage()
 void PlayingCharacter::update()
 {
 	// update health
+	m_backgroundHealth.setPosition(m_rect.x, m_rect.y, m_rect.h);
 	m_health.setPosition(m_rect.x, m_rect.y, m_rect.h);
+
+	m_backgroundHealth.update();
 	m_health.update();
 
 	// update the rest of itself
@@ -41,12 +45,14 @@ void PlayingCharacter::update()
 
 void PlayingCharacter::draw(sf::RenderWindow & window)
 {
+	m_backgroundHealth.draw(window);
 	m_health.draw(window);
 	MovingCharacter::draw(window);
 }
 
 void PlayingCharacter::loadContent()
 {
+	m_backgroundHealth.loadContent();
 	m_health.loadContent();
 	MovingCharacter::loadContent();
 }
