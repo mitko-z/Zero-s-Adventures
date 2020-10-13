@@ -1,6 +1,6 @@
 #include "MonsterWalkingSquare.h"
 
-MONSTER_TYPES MonsterWalkingSquare::getMonsterType()
+MONSTERS_TYPE MonsterWalkingSquare::getMonsterType()
 {
-	return MONSTER_TYPES::WALKING_SQUARE_MONSTER_TYPE;
+	return MONSTERS_TYPE::WALKING_SQUARE_MONSTER_TYPE;
 }

@@ -1,6 +1,6 @@
 #include "MonsterOneEye.h"
 
-MONSTER_TYPES MonsterOneEye::getMonsterType()
+MONSTERS_TYPE MonsterOneEye::getMonsterType()
 {
-	return MONSTER_TYPES::ONE_EYE_MONSTER_TYPE;
+	return MONSTERS_TYPE::ONE_EYE_MONSTER_TYPE;
 }

@@ -14,11 +14,11 @@ public:
 
 	OBJ_TYPE getLoadResourcesCommand() override;
 
-	virtual MONSTER_TYPES getMonsterType();
+	virtual MONSTERS_TYPE getMonsterType();
 
 	void update() override;
 
-	static Monster* createMonster(MONSTER_TYPES type, double x, double y, double w, double h, double damage, double speed, double health, double attackingSpeed);
+	static Monster* createMonster(MONSTERS_TYPE type, double x, double y, double w, double h, double damage, double speed, double health, double attackingSpeed);
 
 private:
 	void moveTowardsTarget(int x, int y);

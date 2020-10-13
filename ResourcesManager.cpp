@@ -11,6 +11,7 @@
 #include "FinishedLevelScreen.h"
 #include "Monster.h"
 #include "Health.h"
+#include "Weapon.h"
 
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
 #define WALLS_INFO_FILE_PATH		"Data/walls_info.dat"
@@ -118,10 +119,13 @@ void ResourcesManager::loadLevel(unsigned int level,
 	getZeroInfo(imagesNames, zeroSpeed, zeroHealth);
 	getBackgroundInfo(level, imagesNames);
 	getWallsInfo(level, imagesNames);
-	MONSTER_TYPES monsterType = MONSTER_TYPES::NO_MONSTER_TYPE;
+	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
 	double monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed;
 	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed);
-	getWeaponsInfo(level, imagesNames);
+	WEAPONS_TYPE weaponType = WEAPONS_TYPE::NO_WEAPON_TYPE;
+	PROJECTILES_TYPE projectilesType = PROJECTILES_TYPE::NO_PROJECTILE_TYPE;
+	double projectilesDamage, weaponAttackSpeed;
+	getWeaponsInfo(level, weaponType, projectilesType, imagesNames, projectilesDamage, weaponAttackSpeed);
 	getEndOfLevelInfo(level, imagesNames);
 	getHealthInfo(level, imagesNames);
 
@@ -129,7 +133,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 	std::vector<sf::Vector2u> wallsCoords;
 	sf::Vector2u endOfLevelCoords;
 	std::vector<sf::Vector2u> monstersCoords;
-	getGeneralInfo(level, numbersOfLevels, wallsCoords, endOfLevelCoords, monstersCoords);
+	std::vector<sf::Vector2u> weaponsCoords;
+	getGeneralInfo(level, numbersOfLevels, wallsCoords, endOfLevelCoords, monstersCoords, weaponsCoords);
 
 	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false));
 	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
@@ -167,6 +172,24 @@ void ResourcesManager::loadLevel(unsigned int level,
 		resCommands.push_back(OBJ_TYPE::MONSTER_TYPE);
 	}
 
+	// init weapons
+	for (auto weaponCoord : weaponsCoords)
+	{
+		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(weaponCoord);
+		m_gameObjects.push_back(Weapon::createWeapon(weaponType, 
+													worldCoords.x, 
+													worldCoords.y, 
+													movingObjWidth, 
+													movingObjHeight, 
+													false, 
+													weaponAttackSpeed,
+													projectilesType,
+													projectilesDamage));
+	}
+	if (weaponsCoords.size() > 0)
+	{
+		resCommands.push_back(OBJ_TYPE::WEAPON_TYPE);
+	}
 	// init end of level
 	sf::Vector2u eolWorldCoords = calcWorldCoordsFromMapCoords(endOfLevelCoords);
 	m_gameObjects.push_back(new EndOfLevel(
@@ -294,7 +317,7 @@ void ResourcesManager::getWallsInfo(const unsigned int & level, UMAP<OBJ_TYPE, s
 }
 
 void ResourcesManager::getMonstersInfo(const unsigned int & level, 
-									   MONSTER_TYPES & monsterType, 
+									   MONSTERS_TYPE & monsterType, 
 									   UMAP<OBJ_TYPE, std::string>& imagesNames, 
 									   double&damage, 
 									   double& speed, 
@@ -314,7 +337,7 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 		// read monsters info
 		std::getline(infoReader, lineRead);	// read ; index number of the monster type for this level
 		std::getline(infoReader, lineRead);	// read the index number of the monster type for this level
-		monsterType = static_cast<MONSTER_TYPES>(std::stoi(lineRead));
+		monsterType = static_cast<MONSTERS_TYPE>(std::stoi(lineRead));
 		std::getline(infoReader, lineRead);	// read  ; name for the texture of monsters (without the extension of the file)
 		std::getline(infoReader, lineRead);	// read  the name for the texture of monsters
 		imagesNames[OBJ_TYPE::MONSTER_TYPE] = lineRead + ".png";
@@ -337,7 +360,12 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 	infoReader.close();
 }
 
-void ResourcesManager::getWeaponsInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getWeaponsInfo(const unsigned int & level,
+					   WEAPONS_TYPE& weaponType,
+					   PROJECTILES_TYPE& projectilesType,
+					   UMAP<OBJ_TYPE, std::string>& imagesNames,
+					   double& projectilesDamage,
+					   double& firingRate)
 {
 	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
 	std::string lineRead;
@@ -351,8 +379,27 @@ void ResourcesManager::getWeaponsInfo(const unsigned int & level, UMAP<OBJ_TYPE,
 
 		// read weapon info
 		std::getline(infoReader, lineRead);	// read ; index number for the type of weapon for this level
-		std::getline(infoReader, lineRead);	// read the index number for the type of weapon for this level
-		// imagesNames[OBJ_TYPE::/**/] = lineRead + ".png"; // TODO set later
+		std::getline(infoReader, lineRead);	// read the index number for the type of weapon 
+		weaponType = static_cast<WEAPONS_TYPE>(std::stoi(lineRead));
+		std::getline(infoReader, lineRead);	// read ; name for the texture of the weapon (without the extension of the file)
+		std::getline(infoReader, lineRead);	// read the name for the texture of the weapon
+		imagesNames[OBJ_TYPE::WEAPON_TYPE] = lineRead + ".png";
+		std::getline(infoReader, lineRead);	// read ; Weapon texture frames y, x
+		std::getline(infoReader, lineRead);	// read the Weapon animation texture frames
+		m_animations[OBJ_TYPE::WEAPON_TYPE] = getAnimationFromString(lineRead);
+		std::getline(infoReader, lineRead);	// read ; firing rate of the weapon (in seconds)
+		std::getline(infoReader, lineRead);	// read the firing rate 
+		firingRate = std::stod(lineRead);
+		std::getline(infoReader, lineRead);	// read ; index number for the type of projectile for this level
+		std::getline(infoReader, lineRead);	// read the type of projectile
+		projectilesType = static_cast<PROJECTILES_TYPE>(std::stoi(lineRead));
+		std::getline(infoReader, lineRead);	// read ; name for the texture of the projectile (without the extension of the file)
+		std::getline(infoReader, lineRead);	// read the name for the texture of the projectile
+		imagesNames[OBJ_TYPE::PROJECTILE_TYPE] = lineRead + ".png";
+		std::getline(infoReader, lineRead);	// read ; projectile damage
+		std::getline(infoReader, lineRead);	// read the projectile damage
+		projectilesDamage = std::stod(lineRead);
+
 	} while (currentLevel != level);
 	infoReader.close();
 }
@@ -382,11 +429,26 @@ void ResourcesManager::getHealthInfo(const unsigned int & level, UMAP<OBJ_TYPE, 
 	infoReader.close();
 }
 
+void ResourcesManager::getWeaponInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+{
+	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
+	std::string lineRead;
+
+	std::getline(infoReader, lineRead);	// read "; name of texture for the health object withot the .png extension"
+	std::getline(infoReader, lineRead);	// read the name for the texture
+	imagesNames[OBJ_TYPE::HEALTH_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of texture for the background health object withot the .png extension"
+	std::getline(infoReader, lineRead);	// read the name for the texture
+	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE] = lineRead + ".png";
+	infoReader.close();
+}
+
 void ResourcesManager::getGeneralInfo(const unsigned int & level, 
 									  unsigned int & numbersOfLevels, 
 									  std::vector<sf::Vector2u>& wallsCoords, 
 									  sf::Vector2u & endOfLevelCoords, 
-									  std::vector<sf::Vector2u>& monstersCoords)
+									  std::vector<sf::Vector2u>& monstersCoords,
+									  std::vector<sf::Vector2u>& weaponsCoords)
 {
 	std::ifstream generalInfoReader = getReader(GENERAL_INFO_FILE_PATH);
 	std::string lineRead;
@@ -400,6 +462,7 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 		// clear the coordinates form the previous level if there were any
 		wallsCoords.clear();
 		monstersCoords.clear();
+		weaponsCoords.clear();
 
 		// read from file
 
@@ -429,17 +492,20 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 				objTypeOnLevelMap typeOfObjInt = static_cast<objTypeOnLevelMap>(std::stoi(typeOfObjStr));
 				switch (typeOfObjInt)
 				{
-				case objTypeOnLevelMap::WALL:
-					wallsCoords.push_back(sf::Vector2u(j, i));
-					break;
-				case objTypeOnLevelMap::MONSTER:
-					monstersCoords.push_back(sf::Vector2u(j, i));
-					break;
-				case objTypeOnLevelMap::END_OF_LEVEL:
-					endOfLevelCoords = sf::Vector2u(j, i);
-					break;
-				default:
-					break;
+					case objTypeOnLevelMap::MAP_WALL_OBJ:
+						wallsCoords.push_back(sf::Vector2u(j, i));
+						break;
+					case objTypeOnLevelMap::MAP_MONSTER_OBJ:
+						monstersCoords.push_back(sf::Vector2u(j, i));
+						break;
+					case objTypeOnLevelMap::MAP_WEAPON_OBJ:
+						weaponsCoords.push_back(sf::Vector2u(j, i));
+						break;
+					case objTypeOnLevelMap::MAP_END_OF_LEVEL_OBJ:
+						endOfLevelCoords = sf::Vector2u(j, i);
+						break;
+					default:
+						break;
 				}
 			}
 		}

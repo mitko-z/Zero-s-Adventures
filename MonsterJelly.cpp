@@ -1,6 +1,6 @@
 #include "MonsterJelly.h"
 
-MONSTER_TYPES MonsterJelly::getMonsterType()
+MONSTERS_TYPE MonsterJelly::getMonsterType()
 {
-	return MONSTER_TYPES::JELLY_MONSTER_TYPE;
+	return MONSTERS_TYPE::JELLY_MONSTER_TYPE;
 }

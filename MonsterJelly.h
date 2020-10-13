@@ -11,5 +11,5 @@ public:
 	{
 	}
 
-	MONSTER_TYPES getMonsterType() override;
+	MONSTERS_TYPE getMonsterType() override;
 };

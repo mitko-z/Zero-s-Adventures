@@ -140,6 +140,7 @@
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="ZeroCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,8 @@
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponBow.h" />
     <ClInclude Include="ZeroCharacter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

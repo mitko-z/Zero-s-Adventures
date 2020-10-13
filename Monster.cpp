@@ -13,9 +13,9 @@ OBJ_TYPE Monster::getLoadResourcesCommand()
 	return OBJ_TYPE::MONSTER_TYPE;
 }
 
-MONSTER_TYPES Monster::getMonsterType()
+MONSTERS_TYPE Monster::getMonsterType()
 {
-	return MONSTER_TYPES::NO_MONSTER_TYPE;
+	return MONSTERS_TYPE::NO_MONSTER_TYPE;
 }
 
 void Monster::update()
@@ -84,7 +84,7 @@ void Monster::update()
 }
 
 Monster* Monster::createMonster(
-	MONSTER_TYPES type, 
+	MONSTERS_TYPE type, 
 	double x, 
 	double y, 
 	double w, 
@@ -96,13 +96,13 @@ Monster* Monster::createMonster(
 {
 	switch (type)
 	{
-	case MONSTER_TYPES::JELLY_MONSTER_TYPE:
+	case MONSTERS_TYPE::JELLY_MONSTER_TYPE:
 		return new MonsterJelly(x, y, w, h, damage, speed, health, attackingSpeed);
 		break;
-	case MONSTER_TYPES::ONE_EYE_MONSTER_TYPE:
+	case MONSTERS_TYPE::ONE_EYE_MONSTER_TYPE:
 		return new MonsterOneEye(x, y, w, h, damage, speed, health, attackingSpeed);
 		break;
-	case MONSTER_TYPES::WALKING_SQUARE_MONSTER_TYPE:
+	case MONSTERS_TYPE::WALKING_SQUARE_MONSTER_TYPE:
 		return new MonsterWalkingSquare(x, y, w, h, damage, speed, health, attackingSpeed);
 		break;
 	default:

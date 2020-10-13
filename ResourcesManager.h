@@ -48,20 +48,27 @@ private:
 	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, double& zeroSpeed, double& zeroHealth);
 	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
-	void getMonstersInfo(const unsigned int& level, MONSTER_TYPES& 
-						 monsterType, UMAP<OBJ_TYPE, 
-						 std::string>& imagesNames, 
+	void getMonstersInfo(const unsigned int& level, 
+						 MONSTERS_TYPE& monsterType, 
+						 UMAP<OBJ_TYPE, std::string>& imagesNames, 
 						 double& damage, 
 						 double& speed,
 						 double& health,
 						 double& attackingSpeed);
-	void getWeaponsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getWeaponsInfo(const unsigned int& level, 
+						WEAPONS_TYPE& weaponType,
+						PROJECTILES_TYPE& projectilesType,
+						UMAP<OBJ_TYPE, std::string>& imagesNames,
+						double& projectilesDamage,
+						double& firingRate);
 	void getEndOfLevelInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getHealthInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getWeaponInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getGeneralInfo(const unsigned int& level, 
 						unsigned int& numbersOfLevels, std::vector<sf::Vector2u>& wallsCoords,
 						sf::Vector2u& endOfLevelCoords,
-						std::vector<sf::Vector2u>& monstersCoords);
+						std::vector<sf::Vector2u>& monstersCoords,
+						std::vector<sf::Vector2u>& weaponsCoords);
 	// members
 	static ResourcesManager* m_instance;
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;
@@ -70,11 +77,11 @@ private:
 	sf::Vector2u m_objectsInLevel; // x = how many columns, y = how many rows current level has
 	enum objTypeOnLevelMap
 	{
-		EMPTY = 0,
-		WALL,
-		MONSTER,
-		WEAPON,
-		END_OF_LEVEL = 9
+		MAP_EMPTY_OBJ = 0,
+		MAP_WALL_OBJ,
+		MAP_MONSTER_OBJ,
+		MAP_WEAPON_OBJ,
+		MAP_END_OF_LEVEL_OBJ = 9
 	};
 
 	std::vector<GameObject *> m_gameObjects;

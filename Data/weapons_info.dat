@@ -2,15 +2,63 @@
 1
 ; index number for the type of weapon for this level
 0
+; name for the texture of the weapon (without the extension of the file)
+
+; Weapon texture frames y, x
+0	0
+; firing rate of the weapon (in seconds)
+0
+; index number for the type of projectile for this level
+0
+; name for the texture of the projectile (without the extension of the file)
+
+; projectile damage
+0
 ; level no.
 2
 ; index number for the type of weapon for this level
 1
+; name for the texture of the weapon (without the extension of the file)
+bow-and-arrow
+; Weapon texture frames y, x
+1	1
+; firing rate of the weapon (in seconds)
+3
+; index number for the type of projectile for this level
+1
+; name for the texture of the projectile (without the extension of the file)
+arrow
+; projectile damage
+10
 ; level no.
 3
 ; index number for the type of weapon for this level
 2
+; name for the texture of the weapon (without the extension of the file)
+Fireball
+; Weapon texture frames y, x
+1	1
+; firing rate of the weapon (in seconds)
+2
+; index number for the type of projectile for this level
+2
+; name for the texture of the projectile (without the extension of the file)
+Fireball
+; projectile damage
+15
 ; level no.
 4
 ; index number for the type of weapon for this level
 3
+; name for the texture of the weapon (without the extension of the file)
+StarsWeapon
+; Weapon texture frames y, x
+1	1
+; firing rate of the weapon (in seconds)
+1
+; index number for the type of projectile for this level
+3
+; name for the texture of the projectile (without the extension of the file)
+StarProjectile
+; projectile damage
+20
