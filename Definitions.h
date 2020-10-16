@@ -82,7 +82,7 @@ namespace Definitions
 	{
 		NO_WEAPON_TYPE = 0,
 		BOW_WEAPON_TYPE,
-		FIRE_WEAPON_TYPE,
+		FIREBALL_WEAPON_TYPE,
 		STAR_WEAPON_TYPE
 	};
 

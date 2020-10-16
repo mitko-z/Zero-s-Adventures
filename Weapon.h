@@ -24,8 +24,14 @@ public:
 								double firingRate, 
 								PROJECTILES_TYPE projectilesType, 
 								double projectilesDamage);
+
+	void setIsOwned(bool isOwned) { m_isOwned = isOwned; }
+	bool isOwned() { return m_isOwned; }
+
+	void draw(sf::RenderWindow &window) override;
 private:
 	PROJECTILES_TYPE m_projectilesType;
 	double m_firingRate;
 	double m_projectilesDamage;
+	bool m_isOwned;
 };

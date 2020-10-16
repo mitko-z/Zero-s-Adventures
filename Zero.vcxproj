@@ -168,6 +168,8 @@
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponBow.h" />
+    <ClInclude Include="WeaponFireball.h" />
+    <ClInclude Include="WeaponStar.h" />
     <ClInclude Include="ZeroCharacter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

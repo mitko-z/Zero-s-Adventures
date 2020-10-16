@@ -164,5 +164,11 @@
     <ClInclude Include="WeaponBow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponFireball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponStar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

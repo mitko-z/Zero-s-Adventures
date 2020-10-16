@@ -3,6 +3,7 @@
 #include <string>		// loading path
 
 #include "PlayingCharacter.h"
+#include "Weapon.h"
 
 class ZeroCharacter : public PlayingCharacter
 {
@@ -14,6 +15,11 @@ public:
 	void initialize() override;
 	void update() override;
 	void processCollisions() override;
+
 protected:
 	void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased) override;
+
+private:
+	bool m_takeWeapon;
+	Weapon* m_weapon;
 };

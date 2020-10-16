@@ -1,6 +1,8 @@
 #include "Weapon.h"
 
 #include "WeaponBow.h"
+#include "WeaponFireball.h"
+#include "WeaponStar.h"
 
 OBJ_TYPE Weapon::getLoadResourcesCommand()
 {
@@ -19,15 +21,25 @@ Weapon * Weapon::createWeapon(WEAPONS_TYPE weaponType,
 {
 	switch (weaponType)
 	{
-	case Definitions::BOW_WEAPON_TYPE:
+	case WEAPONS_TYPE::BOW_WEAPON_TYPE:
 		return new WeaponBow(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage);
 		break;
-	case Definitions::FIRE_WEAPON_TYPE:
+	case WEAPONS_TYPE::FIREBALL_WEAPON_TYPE:
+		return new WeaponFireball(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage);
 		break;
-	case Definitions::STAR_WEAPON_TYPE:
+	case WEAPONS_TYPE::STAR_WEAPON_TYPE:
+		return new WeaponStar(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage);
 		break;
 	default:
 		break;
 	}
 	return nullptr;
+}
+
+void Weapon::draw(sf::RenderWindow & window)
+{
+	if (!m_isOwned)
+	{
+		GameObject::draw(window);
+	}
 }

@@ -2,7 +2,9 @@
 #include "Monster.h"
 
 ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health) :
-	PlayingCharacter(x, y, w, h, false, speed, 0, health, 0) // 0 for damage & attacking speed - zero cannot make damage without a weapon
+	PlayingCharacter(x, y, w, h, false, speed, 0, health, 0), // 0 for damage & attacking speed - zero cannot make damage without a weapon
+	m_takeWeapon(false),
+	m_weapon(nullptr)
 {
 }
 
@@ -73,21 +75,38 @@ void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keys
 
 void ZeroCharacter::update()
 {
-	if (this->m_controllingKeys[sf::Keyboard::S] || this->m_controllingKeys[sf::Keyboard::Down])
+	if (m_controllingKeys[sf::Keyboard::S] || m_controllingKeys[sf::Keyboard::Down])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_DOWN);
 	}
-	if (this->m_controllingKeys[sf::Keyboard::W] || this->m_controllingKeys[sf::Keyboard::Up])
+	if (m_controllingKeys[sf::Keyboard::W] || m_controllingKeys[sf::Keyboard::Up])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_UP);
 	}
-	if (this->m_controllingKeys[sf::Keyboard::A] || this->m_controllingKeys[sf::Keyboard::Left])
+	if (m_controllingKeys[sf::Keyboard::A] || m_controllingKeys[sf::Keyboard::Left])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_LEFT);
 	}
-	if (this->m_controllingKeys[sf::Keyboard::D] || this->m_controllingKeys[sf::Keyboard::Right])
+	if (m_controllingKeys[sf::Keyboard::D] || m_controllingKeys[sf::Keyboard::Right])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_RIGHT);
+	}
+	if (m_controllingKeys[sf::Keyboard::F] || m_controllingKeys[sf::Keyboard::Return])
+	{
+		m_takeWeapon = true;
+	}
+	else
+	{
+		m_takeWeapon = false;
+	}
+	if (m_controllingKeys[sf::Keyboard::R] || m_controllingKeys[sf::Keyboard::BackSpace])
+	{
+		if (m_weapon)
+		{
+			m_weapon->setIsOwned(false);
+			m_weapon->setRect(Rectangle(m_rect.x, m_rect.y, m_weapon->getRect().w, m_weapon->getRect().h));
+			m_weapon = nullptr;
+		}
 	}
 
 	PlayingCharacter::update();
@@ -95,13 +114,22 @@ void ZeroCharacter::update()
 
 void ZeroCharacter::processCollisions()
 {
-	for (auto colidedObj : m_objsColideWith)
+	for (auto* colidedObj : m_objsColideWith)
 	{
 		switch (colidedObj->getLoadResourcesCommand())
 		{
 		case OBJ_TYPE::MONSTER_TYPE:
 			takeDamage(dynamic_cast<Monster*>(colidedObj)->getDamage());
 			break;
+		case OBJ_TYPE::WEAPON_TYPE:
+			if (m_takeWeapon)
+			{
+				if (!m_weapon)
+				{
+					m_weapon = dynamic_cast<Weapon*>(colidedObj);
+					m_weapon->setIsOwned(true);
+				}
+			}
 		default:
 			break;
 		}
