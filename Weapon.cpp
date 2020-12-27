@@ -4,31 +4,27 @@
 #include "WeaponFireball.h"
 #include "WeaponStar.h"
 
-OBJ_TYPE Weapon::getLoadResourcesCommand()
-{
-	return OBJ_TYPE::WEAPON_TYPE;
-}
-
-Weapon * Weapon::createWeapon(WEAPONS_TYPE weaponType, 
+Weapon * Weapon::createWeapon(OBJ_TYPE weaponType, 
 							  double x, 
 							  double y, 
 							  double w, 
 							  double h, 
 							  bool isAnimating, 
 							  double firingRate, 
-							  PROJECTILES_TYPE projectilesType, 
-							  double projectilesDamage)
+							  OBJ_TYPE projectilesType, 
+							  double projectilesDamage,
+							  double projectilesSpeed)
 {
 	switch (weaponType)
 	{
-	case WEAPONS_TYPE::BOW_WEAPON_TYPE:
-		return new WeaponBow(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage);
+	case OBJ_TYPE::BOW_WEAPON_TYPE:
+		return new WeaponBow(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage, projectilesSpeed);
 		break;
-	case WEAPONS_TYPE::FIREBALL_WEAPON_TYPE:
-		return new WeaponFireball(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage);
+	case OBJ_TYPE::FIREBALL_WEAPON_TYPE:
+		return new WeaponFireball(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage, projectilesSpeed);
 		break;
-	case WEAPONS_TYPE::STAR_WEAPON_TYPE:
-		return new WeaponStar(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage);
+	case OBJ_TYPE::STAR_WEAPON_TYPE:
+		return new WeaponStar(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage, projectilesSpeed);
 		break;
 	default:
 		break;
@@ -36,10 +32,36 @@ Weapon * Weapon::createWeapon(WEAPONS_TYPE weaponType,
 	return nullptr;
 }
 
+void Weapon::fire(double angle)
+{
+	extern ResourcesManager *resMan;
+	resMan->addGameObject(Projectile::createProjectile(
+		m_projectilesType, 
+		m_rect.center_x(), 
+		m_rect.center_y(), 
+		m_rect.w / 2, 
+		m_rect.h / 2, 
+		m_projectilesDamage, 
+		m_projectilesSpeed, 
+		angle));
+	std::vector<GameObject*> gameObjects = resMan->getGameObjects();
+	gameObjects[gameObjects.size() - 1]->loadContent();
+}
+
+void Weapon::update()
+{
+	GameObject::update();
+}
+
 void Weapon::draw(sf::RenderWindow & window)
 {
 	if (!m_isOwned)
 	{
 		GameObject::draw(window);
+	}
+
+	for (auto projectile : m_projectiles)
+	{
+		projectile->draw(window);
 	}
 }

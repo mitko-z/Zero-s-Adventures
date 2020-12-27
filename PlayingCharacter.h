@@ -19,14 +19,16 @@ public:
 
 	void loadContent() override;
 
-	void attack();
+	virtual void attack();
 
-	void stopAttack();
-
-private:
+	virtual void stopAttack();
 
 	bool canMakeNextAttack();
 
+protected:
+	void setIsActive();
+
+private:
 	double m_damage;
 	double m_attackingSpeed;
 	Health m_backgroundHealth, m_health;

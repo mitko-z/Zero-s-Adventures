@@ -9,24 +9,27 @@ class MovingCharacter : public GameObject
 {
 public:
 	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed);
-	void update() override;
+	virtual void update();
 	virtual void processCollisions();
+
 protected:
 	enum MovingDirection
 	{
-		DIRECTION_NONE,
-		DIRECTION_UP,
-		DIRECTION_DOWN,
-		DIRECTION_LEFT,
-		DIRECTION_RIGHT
+		DIRECTION_NONE = -1,
+		DIRECTION_UP = 270,
+		DIRECTION_DOWN = 90,
+		DIRECTION_LEFT = 180,
+		DIRECTION_RIGHT = 0
 	};
-	void setDirectionToMove(MovingDirection direction) { directionToMove_ = direction; }
-	MovingDirection directionToMove() { return directionToMove_; }
-	void processWallCollision(GameObject& wall);
-	Rectangle lastPosition;
-	double speed;
-	bool goOutsideOfScreen;
-private:
+	void setDirectionToMove(MovingDirection direction) { m_directionToMove = direction; }
+	MovingDirection directionToMove() { return m_directionToMove; }
+	virtual void processWallCollision(GameObject& wall);
+	virtual void processMonsterCollision(GameObject* monster);
 	void setInsideWindow();
-	MovingDirection directionToMove_;
+	virtual void updateDirectionToMove();
+	
+	Rectangle m_lastPosition;
+	double m_speed;
+	bool m_goOutsideOfScreen;
+	MovingDirection m_directionToMove;
 };

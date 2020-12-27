@@ -9,8 +9,6 @@
 #define BUTTON_TYPE Definitions::ButtonType
 #define COMMAND Definitions::Command
 #define MONSTERS_TYPE Definitions::MonstersType
-#define WEAPONS_TYPE Definitions::WeaponsType
-#define PROJECTILES_TYPE Definitions::ProjectilesType
 
 #define UMAP std::unordered_map
 
@@ -66,8 +64,14 @@ namespace Definitions
 		MONSTER_TYPE,
 		HEALTH_TYPE,
 		HEALTH_BACKGROUND_TYPE,
-		WEAPON_TYPE,
-		PROJECTILE_TYPE
+		WEAPONS_TYPES_START,
+		BOW_WEAPON_TYPE,
+		FIREBALL_WEAPON_TYPE,
+		STAR_WEAPON_TYPE,
+		PROJECTILES_TYPES_START,
+		ARROW_PROJECTILE_TYPE,
+		FIREBALL_PROJECTILE_TYPE,
+		STAR_PROJECTILE_TYPE
 	};
 
 	enum MonstersType
@@ -76,22 +80,6 @@ namespace Definitions
 		JELLY_MONSTER_TYPE,
 		ONE_EYE_MONSTER_TYPE,
 		WALKING_SQUARE_MONSTER_TYPE
-	};
-
-	enum WeaponsType
-	{
-		NO_WEAPON_TYPE = 0,
-		BOW_WEAPON_TYPE,
-		FIREBALL_WEAPON_TYPE,
-		STAR_WEAPON_TYPE
-	};
-
-	enum ProjectilesType
-	{
-		NO_PROJECTILE_TYPE = 0,
-		ARROW_PROJECTILE_TYPE,
-		FIREBALL_PROJECTILE_TYPE,
-		STAR_PROJECTILE_TYPE
 	};
 
 	enum ButtonType

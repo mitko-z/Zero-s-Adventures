@@ -108,6 +108,19 @@ void ZeroCharacter::update()
 			m_weapon = nullptr;
 		}
 	}
+	if (m_controllingKeys[sf::Keyboard::LControl] || m_controllingKeys[sf::Keyboard::Space])
+	{
+		if (m_weapon)
+		{
+			attack();
+			m_isAnimating = true;
+		}
+	}
+	else
+	{
+		stopAttack();
+		m_isAnimating = false;
+	}
 
 	PlayingCharacter::update();
 }
@@ -121,7 +134,9 @@ void ZeroCharacter::processCollisions()
 		case OBJ_TYPE::MONSTER_TYPE:
 			takeDamage(dynamic_cast<Monster*>(colidedObj)->getDamage());
 			break;
-		case OBJ_TYPE::WEAPON_TYPE:
+		case OBJ_TYPE::BOW_WEAPON_TYPE:
+		case OBJ_TYPE::FIREBALL_WEAPON_TYPE:
+		case OBJ_TYPE::STAR_WEAPON_TYPE:
 			if (m_takeWeapon)
 			{
 				if (!m_weapon)
@@ -135,4 +150,27 @@ void ZeroCharacter::processCollisions()
 		}
 	}
 	PlayingCharacter::processCollisions();
+}
+
+void ZeroCharacter::attack()
+{
+	PlayingCharacter::attack();
+	if (canMakeNextAttack())
+	{
+		if (m_weapon)
+		{
+			double firingAngle;
+			calculateFiringAngle(firingAngle);
+			m_weapon->fire(firingAngle);
+		}
+	}
+}
+
+void ZeroCharacter::calculateFiringAngle(double& angle)
+{
+	if (m_directionToMove == MovingDirection::DIRECTION_NONE)
+		angle = MovingDirection::DIRECTION_RIGHT;
+	else
+		angle = m_directionToMove;
+	//// TODO: add randomness
 }

@@ -28,6 +28,8 @@ public:
 	void		setWindowDimensions(float w, float h);
 	void		getWindowDimensions(float& w, float& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
 	std::vector<GameObject *>& getGameObjects() { return m_gameObjects; }
+	void		addGameObject(GameObject* gameObject);
+	void		removeInactiveGameObjects();
 	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
 
 	~ResourcesManager();
@@ -56,11 +58,12 @@ private:
 						 double& health,
 						 double& attackingSpeed);
 	void getWeaponsInfo(const unsigned int& level, 
-						WEAPONS_TYPE& weaponType,
-						PROJECTILES_TYPE& projectilesType,
+						std::vector<OBJ_TYPE>& weaponType,
+						std::vector<OBJ_TYPE>& projectilesType,
 						UMAP<OBJ_TYPE, std::string>& imagesNames,
 						double& projectilesDamage,
-						double& firingRate);
+						double& firingRate,
+						double& projectilesSpeed);
 	void getEndOfLevelInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getHealthInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getWeaponInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);

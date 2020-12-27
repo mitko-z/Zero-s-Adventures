@@ -136,11 +136,18 @@
     <ClCompile Include="MonsterWalkingSquare.cpp" />
     <ClCompile Include="MovingCharacter.cpp" />
     <ClCompile Include="PlayingCharacter.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileArrow.cpp" />
+    <ClCompile Include="ProjectileFireball.cpp" />
+    <ClCompile Include="ProjectileStar.cpp" />
     <ClCompile Include="ResourcesManager.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponBow.cpp" />
+    <ClCompile Include="WeaponFireball.cpp" />
+    <ClCompile Include="WeaponStar.cpp" />
     <ClCompile Include="ZeroCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +159,7 @@
     <ClInclude Include="FinishedLevelScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Health.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Menu.h" />
@@ -162,6 +170,9 @@
     <ClInclude Include="MonsterWalkingSquare.h" />
     <ClInclude Include="MovingCharacter.h" />
     <ClInclude Include="PlayingCharacter.h" />
+    <ClInclude Include="ProjectileArrow.h" />
+    <ClInclude Include="ProjectileFireball.h" />
+    <ClInclude Include="ProjectileStar.h" />
     <ClInclude Include="ResourcesManager.h" />
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Timer.h" />

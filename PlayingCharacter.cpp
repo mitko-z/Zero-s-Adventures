@@ -39,6 +39,8 @@ void PlayingCharacter::update()
 	m_backgroundHealth.update();
 	m_health.update();
 
+	setIsActive();
+
 	// update the rest of itself
 	MovingCharacter::update();
 }
@@ -81,4 +83,12 @@ bool PlayingCharacter::canMakeNextAttack()
 		}
 	}
 	return result;
+}
+
+void PlayingCharacter::setIsActive()
+{
+	if (m_health.currentHealth() <= 0)
+	{
+		m_isActive = false;
+	}
 }

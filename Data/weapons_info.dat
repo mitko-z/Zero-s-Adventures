@@ -12,7 +12,9 @@
 0
 ; name for the texture of the projectile (without the extension of the file)
 
-; projectile damage
+; projectiles damage
+0
+; projectiles speed
 0
 ; level no.
 2
@@ -30,6 +32,8 @@ bow-and-arrow
 arrow
 ; projectile damage
 10
+; projectiles speed
+10
 ; level no.
 3
 ; index number for the type of weapon for this level
@@ -46,6 +50,8 @@ Fireball
 Fireball
 ; projectile damage
 15
+; projectiles speed
+12
 ; level no.
 4
 ; index number for the type of weapon for this level
@@ -62,3 +68,5 @@ StarsWeapon
 StarProjectile
 ; projectile damage
 20
+; projectiles speed
+15

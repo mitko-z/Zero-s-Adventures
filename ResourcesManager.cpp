@@ -45,6 +45,20 @@ void ResourcesManager::setWindowDimensions(float w, float h)
 	m_windowDimensions.h = h;
 }
 
+void ResourcesManager::addGameObject(GameObject* gameObject)
+{
+	m_gameObjects.push_back(gameObject);
+}
+
+void ResourcesManager::removeInactiveGameObjects()
+{
+	for (size_t i = m_gameObjects.size() - 1; i >= 0; i--)
+	{
+		if (!m_gameObjects[i]->isActive())
+			m_gameObjects.erase(m_gameObjects.begin() + i);
+	}
+}
+
 void ResourcesManager::loadResources(unsigned int level)
 {
 	// TODO figure out how to read any level defined by the parameter
@@ -109,6 +123,13 @@ void ResourcesManager::loadLevel(unsigned int level,
 								 UMAP<OBJ_TYPE, std::string>& imagesNames,
 								 std::vector<OBJ_TYPE>& resCommands)
 {
+	// get Zero's previous stats, if any
+	Weapon* ZeroCurrentWeapon = nullptr;
+	if (m_gameObjects.size() >= 1)
+	{
+		ZeroCurrentWeapon = dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->getCurrentWeapon();
+	}
+
 	// clear all objects so they can be loaded freshly
 	m_gameObjects.clear();
 	imagesNames.clear();
@@ -122,10 +143,10 @@ void ResourcesManager::loadLevel(unsigned int level,
 	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
 	double monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed;
 	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed);
-	WEAPONS_TYPE weaponType = WEAPONS_TYPE::NO_WEAPON_TYPE;
-	PROJECTILES_TYPE projectilesType = PROJECTILES_TYPE::NO_PROJECTILE_TYPE;
-	double projectilesDamage, weaponAttackSpeed;
-	getWeaponsInfo(level, weaponType, projectilesType, imagesNames, projectilesDamage, weaponAttackSpeed);
+	std::vector<OBJ_TYPE> allWeaponsTypes;
+	std::vector<OBJ_TYPE> allProjectilesTypes;
+	double weaponAttackSpeed, projectilesDamage, projectilesSpeed;
+	getWeaponsInfo(level, allWeaponsTypes, allProjectilesTypes, imagesNames, projectilesDamage, weaponAttackSpeed, projectilesSpeed);
 	getEndOfLevelInfo(level, imagesNames);
 	getHealthInfo(level, imagesNames);
 
@@ -139,11 +160,12 @@ void ResourcesManager::loadLevel(unsigned int level,
 	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false));
 	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
-	// initialize Zero AFTER background in order not to draw background upon Zero
+	// initialize Zero 
 	double movingObjWidth = getGameObjSize().x / 2;
 	double movingObjHeight = getGameObjSize().y / 2;
 	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight, zeroSpeed, zeroHealth));
 	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
+	dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->setWeapon(ZeroCurrentWeapon);
 
 	// init walls
 	for (auto wallCoord : wallsCoords)
@@ -176,20 +198,29 @@ void ResourcesManager::loadLevel(unsigned int level,
 	for (auto weaponCoord : weaponsCoords)
 	{
 		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(weaponCoord);
-		m_gameObjects.push_back(Weapon::createWeapon(weaponType, 
+		m_gameObjects.push_back(Weapon::createWeapon(allWeaponsTypes[allWeaponsTypes.size() - 1],
 													worldCoords.x, 
 													worldCoords.y, 
 													movingObjWidth, 
 													movingObjHeight, 
 													false, 
 													weaponAttackSpeed,
-													projectilesType,
-													projectilesDamage));
+													allProjectilesTypes[allProjectilesTypes.size() - 1],
+													projectilesDamage,
+													projectilesSpeed));
+		if (ZeroCurrentWeapon)
+			m_gameObjects.push_back(ZeroCurrentWeapon);
 	}
-	if (weaponsCoords.size() > 0)
+
+	for (auto& type : allWeaponsTypes)
 	{
-		resCommands.push_back(OBJ_TYPE::WEAPON_TYPE);
+		resCommands.push_back(type);
 	}
+	for (auto& type : allProjectilesTypes)
+	{
+		resCommands.push_back(type);
+	}
+
 	// init end of level
 	sf::Vector2u eolWorldCoords = calcWorldCoordsFromMapCoords(endOfLevelCoords);
 	m_gameObjects.push_back(new EndOfLevel(
@@ -361,11 +392,12 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 }
 
 void ResourcesManager::getWeaponsInfo(const unsigned int & level,
-					   WEAPONS_TYPE& weaponType,
-					   PROJECTILES_TYPE& projectilesType,
+					   std::vector<OBJ_TYPE>& weaponsTypes,
+					   std::vector<OBJ_TYPE>& projectilesTypes,
 					   UMAP<OBJ_TYPE, std::string>& imagesNames,
 					   double& projectilesDamage,
-					   double& firingRate)
+					   double& firingRate,
+					   double& projectilesSpeed)
 {
 	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
 	std::string lineRead;
@@ -380,25 +412,31 @@ void ResourcesManager::getWeaponsInfo(const unsigned int & level,
 		// read weapon info
 		std::getline(infoReader, lineRead);	// read ; index number for the type of weapon for this level
 		std::getline(infoReader, lineRead);	// read the index number for the type of weapon 
-		weaponType = static_cast<WEAPONS_TYPE>(std::stoi(lineRead));
+		OBJ_TYPE weaponType = static_cast<OBJ_TYPE>(std::stoi(lineRead) + static_cast<int>(OBJ_TYPE::WEAPONS_TYPES_START));
+		bool noWeapon = (weaponType == OBJ_TYPE::WEAPONS_TYPES_START);
+		if(!noWeapon) weaponsTypes.push_back(weaponType);
 		std::getline(infoReader, lineRead);	// read ; name for the texture of the weapon (without the extension of the file)
 		std::getline(infoReader, lineRead);	// read the name for the texture of the weapon
-		imagesNames[OBJ_TYPE::WEAPON_TYPE] = lineRead + ".png";
+		if (!noWeapon) imagesNames[weaponType] = lineRead + ".png";
 		std::getline(infoReader, lineRead);	// read ; Weapon texture frames y, x
 		std::getline(infoReader, lineRead);	// read the Weapon animation texture frames
-		m_animations[OBJ_TYPE::WEAPON_TYPE] = getAnimationFromString(lineRead);
+		if (!noWeapon) m_animations[weaponType] = getAnimationFromString(lineRead);
 		std::getline(infoReader, lineRead);	// read ; firing rate of the weapon (in seconds)
 		std::getline(infoReader, lineRead);	// read the firing rate 
 		firingRate = std::stod(lineRead);
 		std::getline(infoReader, lineRead);	// read ; index number for the type of projectile for this level
 		std::getline(infoReader, lineRead);	// read the type of projectile
-		projectilesType = static_cast<PROJECTILES_TYPE>(std::stoi(lineRead));
+		OBJ_TYPE projectilesType = static_cast<OBJ_TYPE>(std::stoi(lineRead) + static_cast<int>(OBJ_TYPE::PROJECTILES_TYPES_START));
+		if (!noWeapon) projectilesTypes.push_back(projectilesType);
 		std::getline(infoReader, lineRead);	// read ; name for the texture of the projectile (without the extension of the file)
 		std::getline(infoReader, lineRead);	// read the name for the texture of the projectile
-		imagesNames[OBJ_TYPE::PROJECTILE_TYPE] = lineRead + ".png";
-		std::getline(infoReader, lineRead);	// read ; projectile damage
-		std::getline(infoReader, lineRead);	// read the projectile damage
+		if (!noWeapon) imagesNames[projectilesType] = lineRead + ".png";
+		std::getline(infoReader, lineRead);	// read ; projectiles damage
+		std::getline(infoReader, lineRead);	// read the projectiles damage
 		projectilesDamage = std::stod(lineRead);
+		std::getline(infoReader, lineRead);	// read ; projectiles speed
+		std::getline(infoReader, lineRead);	// read the projectiles speed
+		projectilesSpeed = std::stod(lineRead);
 
 	} while (currentLevel != level);
 	infoReader.close();

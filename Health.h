@@ -12,6 +12,9 @@ public:
 	void substractHealth(double substractWith);
 
 	void setPosition(double parentsX, double parentsY, double parentsHeight);
+
+	double currentHealth() { return m_currentHealth; }
+
 private:
 	double calculateYPosition(double y, double h);
 

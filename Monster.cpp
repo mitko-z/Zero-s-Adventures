@@ -23,7 +23,7 @@ void Monster::update()
 
 	//// check if Zero can be seen around
 	// define and places where the creature to look to
-	std::vector<sf::RectangleShape*> placesToLookTo; 
+	std::vector<sf::RectangleShape> placesToLookTo; 
 		
 	// set the places where to look to - it makes some "circles" around the monster; each next is bigger
 	// than the previous one (thanks to the multiplier).
@@ -33,10 +33,10 @@ void Monster::update()
 	{
 		for (double angle = 0; angle < 2 * M_PI; angle += 0.5)
 		{
-			placesToLookTo.push_back(new sf::RectangleShape(sf::Vector2f(m_rect.w, m_rect.h)));
+			placesToLookTo.push_back(sf::RectangleShape(sf::Vector2f(m_rect.w, m_rect.h)));
 			size_t index = placesToLookTo.size() - 1;
 			double multiplier = static_cast<double>(i) / 10.0;
-			placesToLookTo[placesToLookTo.size() - 1]->setPosition(
+			placesToLookTo[placesToLookTo.size() - 1].setPosition(
 				m_rect.center_x() + 1.5 * m_rect.w * cos(angle) * multiplier,
 				m_rect.center_y() + 1.5 * m_rect.h * sin(angle) * multiplier);
 		}
@@ -55,7 +55,7 @@ void Monster::update()
 	// look if Zero is around
 	for (int i = 0; i < placesToLookTo.size(); i++)
 	{
-		if(placesToLookTo[i]->getGlobalBounds().intersects(zeroRect))
+		if(placesToLookTo[i].getGlobalBounds().intersects(zeroRect))
 		{
 			foundZero = true;
 			break;

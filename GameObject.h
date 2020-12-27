@@ -19,6 +19,7 @@ public :
 		m_isAnimating(isAnimating)
 	{
 		m_hasCollisions = false;
+		m_isActive = true;
 	}
 	GameObject(GameObject &other);
 	virtual void initialize();
@@ -32,6 +33,7 @@ public :
 	virtual const Rectangle getRect() const { return m_rect; }
 	virtual void update();
 	virtual void draw(sf::RenderWindow &window);
+	const bool	isActive() const { return m_isActive; }
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
 protected :
 	virtual void updateDrawingObject();
@@ -47,6 +49,7 @@ protected :
 	int m_animationFrame;
 	bool m_hasCollisions;
 	std::vector<GameObject*> m_objsColideWith;
+	bool m_isActive;
 private:
 	void updateAnimFrame();
 };

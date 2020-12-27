@@ -15,7 +15,10 @@ public:
 	void initialize() override;
 	void update() override;
 	void processCollisions() override;
-
+	void attack();
+	void calculateFiringAngle(double& angle);
+	Weapon* getCurrentWeapon() { return m_weapon; }
+	void setWeapon(Weapon* weapon) { m_weapon = weapon; }
 protected:
 	void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased) override;
 
