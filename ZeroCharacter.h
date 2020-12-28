@@ -25,4 +25,5 @@ protected:
 private:
 	bool m_takeWeapon;
 	Weapon* m_weapon;
+	MovingDirection m_lastDirection;
 };

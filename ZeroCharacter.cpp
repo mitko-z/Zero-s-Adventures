@@ -4,7 +4,8 @@
 ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health) :
 	PlayingCharacter(x, y, w, h, false, speed, 0, health, 0), // 0 for damage & attacking speed - zero cannot make damage without a weapon
 	m_takeWeapon(false),
-	m_weapon(nullptr)
+	m_weapon(nullptr),
+	m_lastDirection(MovingDirection::DIRECTION_NONE)
 {
 }
 
@@ -122,6 +123,16 @@ void ZeroCharacter::update()
 		m_isAnimating = false;
 	}
 
+	if (m_weapon)
+	{
+		m_weapon->setRect(this->m_rect);
+	}
+
+	if (m_directionToMove != MovingDirection::DIRECTION_NONE)
+	{
+		m_lastDirection = m_directionToMove;
+	}
+
 	PlayingCharacter::update();
 }
 
@@ -168,9 +179,9 @@ void ZeroCharacter::attack()
 
 void ZeroCharacter::calculateFiringAngle(double& angle)
 {
-	if (m_directionToMove == MovingDirection::DIRECTION_NONE)
+	if (m_lastDirection == MovingDirection::DIRECTION_NONE)
 		angle = MovingDirection::DIRECTION_RIGHT;
 	else
-		angle = m_directionToMove;
+		angle = m_lastDirection;
 	//// TODO: add randomness
 }

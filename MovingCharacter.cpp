@@ -29,7 +29,7 @@ void MovingCharacter::processCollisions()
 				processWallCollision(*colidedObj);
 			break;
 			case OBJ_TYPE::MONSTER_TYPE:
-				
+				processMonsterCollision(colidedObj);
 			break;
 			default:
 			break;

@@ -13,6 +13,7 @@ Projectile::Projectile(double x, double y, double w, double h, double speed, dou
 	m_angleDirection(angleDirection),
 	m_damage(damage)
 {
+	m_goOutsideOfScreen = true;
 }
 
 Projectile * Projectile::createProjectile(OBJ_TYPE type, double x, double y, double w, double h, double damage, double speed, double angle)
@@ -34,6 +35,13 @@ Projectile * Projectile::createProjectile(OBJ_TYPE type, double x, double y, dou
 	return nullptr;
 }
 
+void Projectile::update()
+{
+	if (isOutsideOfScreen())
+		m_isActive = false;
+	MovingCharacter::update();
+}
+
 void Projectile::updateDirectionToMove()
 {
 	m_isAnimating = true; // projectiles always move
@@ -50,4 +58,17 @@ void Projectile::processMonsterCollision(GameObject* monster)
 {
 	dynamic_cast<Monster*>(monster)->takeDamage(m_damage);
 	m_isActive = false;
+}
+
+bool Projectile::isOutsideOfScreen()
+{
+	float windowW, windowH;
+	extern ResourcesManager *resMan;
+	resMan->getWindowDimensions(windowW, windowH);
+	if (m_rect.x < 0 ||
+		m_rect.y < 0 ||
+		(m_rect.x + m_rect.w) > windowW ||
+		(m_rect.y + m_rect.h) > windowH)
+		return true;
+	return false;
 }

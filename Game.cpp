@@ -190,6 +190,7 @@ void Game::update()
 			{
 				gameObject->update();
 			}
+			resMan->removeInactiveGameObjects();
 		}
 		break;
 		case MODE::MENU_MODE:

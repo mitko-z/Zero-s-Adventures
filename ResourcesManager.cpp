@@ -52,7 +52,7 @@ void ResourcesManager::addGameObject(GameObject* gameObject)
 
 void ResourcesManager::removeInactiveGameObjects()
 {
-	for (size_t i = m_gameObjects.size() - 1; i >= 0; i--)
+	for (int i = m_gameObjects.size() - 1; i >= 0; i--)
 	{
 		if (!m_gameObjects[i]->isActive())
 			m_gameObjects.erase(m_gameObjects.begin() + i);

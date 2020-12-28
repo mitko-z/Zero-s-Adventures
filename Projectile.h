@@ -10,12 +10,16 @@ public:
 
 	static Projectile* createProjectile(OBJ_TYPE type, double x, double y, double w, double h, double damage, double speed, double angle);
 
+	void update() override;
+
 	void updateDirectionToMove() override;
 
 	void processWallCollision(GameObject& wall) override;
 	void processMonsterCollision(GameObject* monster) override;
 
 private:
+	bool isOutsideOfScreen();
+
 	double m_angleDirection;
 	double m_damage;
 };
