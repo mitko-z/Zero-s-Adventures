@@ -9,7 +9,7 @@ class ZeroCharacter : public PlayingCharacter
 {
 public:
 	ZeroCharacter() = default;
-	ZeroCharacter(double x, double y, double w, double h, double speed, double health);
+	ZeroCharacter(double x, double y, double w, double h, double speed, double health, double attackingSpeed, double firingAccuracy);
 
 	OBJ_TYPE getLoadResourcesCommand() override;
 	void initialize() override;
@@ -19,6 +19,7 @@ public:
 	void calculateFiringAngle(double& angle);
 	Weapon* getCurrentWeapon() { return m_weapon; }
 	void setWeapon(Weapon* weapon) { m_weapon = weapon; }
+	void setIsActive() override;
 protected:
 	void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased) override;
 
@@ -26,4 +27,5 @@ private:
 	bool m_takeWeapon;
 	Weapon* m_weapon;
 	MovingDirection m_lastDirection;
+	int m_firingAccuracy;
 };

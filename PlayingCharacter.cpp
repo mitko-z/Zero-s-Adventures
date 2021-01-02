@@ -27,7 +27,7 @@ void PlayingCharacter::takeDamage(double damage)
 
 double PlayingCharacter::getDamage()
 {
-	return canMakeNextAttack() ? m_damage : 0;
+	return (startAttack() || canMakeNextAttack()) ? m_damage : 0;
 }
 
 void PlayingCharacter::update()
@@ -59,15 +59,21 @@ void PlayingCharacter::loadContent()
 	MovingCharacter::loadContent();
 }
 
-void PlayingCharacter::attack()
+bool PlayingCharacter::startAttack()
 {
+	bool startingNow = false;
 	if (!m_attackingTimer.isStarted())
+	{
 		m_attackingTimer.start();
+		startingNow = true;
+	}
+
+	return startingNow;
 }
 
 void PlayingCharacter::stopAttack()
 {
-	if(m_attackingTimer.isStarted())
+	if(canMakeNextAttack())
 		m_attackingTimer.stop();
 }
 
@@ -79,6 +85,7 @@ bool PlayingCharacter::canMakeNextAttack()
 		if (m_attackingTimer.elapsedSeconds() >= m_attackingSpeed)
 		{
 			m_attackingTimer.restart();
+			m_attackingTimer.stop();
 			result = true;
 		}
 	}

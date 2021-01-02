@@ -6,3 +6,7 @@ SmileyWalkTighter
 10
 ; Zero health
 100
+; Zero attacking speed (in seconds)
+1
+; Zero firing accurracy (in percentages)
+70

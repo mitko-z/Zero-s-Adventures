@@ -1,11 +1,15 @@
 #include "ZeroCharacter.h"
 #include "Monster.h"
 
-ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health) :
-	PlayingCharacter(x, y, w, h, false, speed, 0, health, 0), // 0 for damage & attacking speed - zero cannot make damage without a weapon
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health, double attackingSpeed, double firingAccuracy) :
+	PlayingCharacter(x, y, w, h, false, speed, 0, health, attackingSpeed), // 0 for damage & attacking speed - zero cannot make damage without a weapon
 	m_takeWeapon(false),
 	m_weapon(nullptr),
-	m_lastDirection(MovingDirection::DIRECTION_NONE)
+	m_lastDirection(MovingDirection::DIRECTION_NONE),
+	m_firingAccuracy(firingAccuracy)
 {
 }
 
@@ -48,6 +52,11 @@ void ZeroCharacter::initialize()
 //{
 //	
 //}
+
+void ZeroCharacter::setIsActive()
+{
+	// TODO - rise game over event
+}
 
 void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 {
@@ -165,8 +174,7 @@ void ZeroCharacter::processCollisions()
 
 void ZeroCharacter::attack()
 {
-	PlayingCharacter::attack();
-	if (canMakeNextAttack())
+	if (PlayingCharacter::startAttack() || canMakeNextAttack())
 	{
 		if (m_weapon)
 		{
@@ -183,5 +191,11 @@ void ZeroCharacter::calculateFiringAngle(double& angle)
 		angle = MovingDirection::DIRECTION_RIGHT;
 	else
 		angle = m_lastDirection;
-	//// TODO: add randomness
+	// adding randomness
+	srand(time(NULL));
+	int errorRange = 100 - m_firingAccuracy;
+	int randomness = rand() % (errorRange) + 1;
+	int inaccuracy = randomness - errorRange / 2;
+
+	angle += inaccuracy;
 }

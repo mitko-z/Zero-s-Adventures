@@ -19,14 +19,14 @@ public:
 
 	void loadContent() override;
 
-	virtual void attack();
+	virtual bool startAttack();
 
 	virtual void stopAttack();
 
 	bool canMakeNextAttack();
 
 protected:
-	void setIsActive();
+	virtual void setIsActive();
 
 private:
 	double m_damage;

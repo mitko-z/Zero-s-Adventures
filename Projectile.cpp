@@ -14,6 +14,7 @@ Projectile::Projectile(double x, double y, double w, double h, double speed, dou
 	m_damage(damage)
 {
 	m_goOutsideOfScreen = true;
+	this->m_drawingObject.sprite.rotate(angleDirection + 180);
 }
 
 Projectile * Projectile::createProjectile(OBJ_TYPE type, double x, double y, double w, double h, double damage, double speed, double angle)
@@ -62,7 +63,7 @@ void Projectile::processMonsterCollision(GameObject* monster)
 
 bool Projectile::isOutsideOfScreen()
 {
-	float windowW, windowH;
+	double windowW, windowH;
 	extern ResourcesManager *resMan;
 	resMan->getWindowDimensions(windowW, windowH);
 	if (m_rect.x < 0 ||

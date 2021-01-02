@@ -71,7 +71,7 @@ void Monster::update()
 	monsterRect.setPosition(sf::Vector2f(m_rect.x, m_rect.y));
 	if (monsterRect.getGlobalBounds().intersects(zeroRect))
 	{
-		attack();
+		startAttack();
 		m_isAnimating = true;
 	}
 	else

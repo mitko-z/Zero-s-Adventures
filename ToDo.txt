@@ -1,12 +1,8 @@
+optimize the game constants - speeds, damages, healths, etc.
+
 optimize the monsters looking for Zero mechanism
 
 Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
-
-Make weapons & projectiles
-
-Make Zero able to pick weapon and to be able to fire
-
-Make projectiles able if hit a monster to make damage on it
 
 make game over screen
 

@@ -29,7 +29,7 @@ bow-and-arrow
 ; index number for the type of projectile for this level
 1
 ; name for the texture of the projectile (without the extension of the file)
-arrow
+arrow_239_239_thicker
 ; projectile damage
 10
 ; projectiles speed

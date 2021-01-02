@@ -25,8 +25,8 @@ public:
 	void		loadResources(unsigned int level);
 	sf::Texture getTexture(Definitions::ObjectType command);
 	bool        getAnimation(Definitions::ObjectType command, Animation& animation);
-	void		setWindowDimensions(float w, float h);
-	void		getWindowDimensions(float& w, float& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
+	void		setWindowDimensions(double w, double h);
+	void		getWindowDimensions(double& w, double& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
 	std::vector<GameObject *>& getGameObjects() { return m_gameObjects; }
 	void		addGameObject(GameObject* gameObject);
 	void		removeInactiveGameObjects();
@@ -47,7 +47,11 @@ private:
 	void loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void initMenus(std::vector<OBJ_TYPE>& resCommands);
 	std::ifstream getReader(std::string filePath);
-	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, double& zeroSpeed, double& zeroHealth);
+	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, 
+					 double& zeroSpeed, 
+					 double& zeroHealth, 
+					 double& zeroAttcackingSpeed,
+					 double& zeroFiringAccurracy);
 	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getMonstersInfo(const unsigned int& level, 

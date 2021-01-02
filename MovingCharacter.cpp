@@ -84,7 +84,7 @@ void MovingCharacter::processMonsterCollision(GameObject* monster)
 
 void MovingCharacter::setInsideWindow()
 {
-	float windowW, windowH;
+	double windowW, windowH;
 	extern ResourcesManager *resMan;
 	resMan->getWindowDimensions(windowW, windowH);
 	if (m_rect.x < 0) m_rect.x = 0;

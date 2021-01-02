@@ -39,7 +39,7 @@ ResourcesManager::~ResourcesManager()
 	delete m_instance;
 }
 
-void ResourcesManager::setWindowDimensions(float w, float h)
+void ResourcesManager::setWindowDimensions(double w, double h)
 {
 	m_windowDimensions.w = w;
 	m_windowDimensions.h = h;
@@ -136,8 +136,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.clear();
 	m_animations.clear();
 
-	double zeroSpeed, zeroHealth;
-	getZeroInfo(imagesNames, zeroSpeed, zeroHealth);
+	double zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy;
+	getZeroInfo(imagesNames, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy);
 	getBackgroundInfo(level, imagesNames);
 	getWallsInfo(level, imagesNames);
 	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
@@ -163,7 +163,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	// initialize Zero 
 	double movingObjWidth = getGameObjSize().x / 2;
 	double movingObjHeight = getGameObjSize().y / 2;
-	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight, zeroSpeed, zeroHealth));
+	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy));
 	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
 	dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->setWeapon(ZeroCurrentWeapon);
 
@@ -287,7 +287,11 @@ std::ifstream ResourcesManager::getReader(std::string filePath)
 	return reader;
 }
 
-void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, double& zeroSpeed, double& zeroHealth)
+void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, 
+								   double& zeroSpeed, 
+								   double& zeroHealth, 
+								   double& zeroAttcackingSpeed, 
+								   double& zeroFiringAccurracy)
 {
 	std::ifstream infoReader = getReader(ZERO_INFO_FILE_PATH);
 	std::string lineRead;
@@ -303,6 +307,12 @@ void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, dou
 	std::getline(infoReader, lineRead);	// read ; Zero health
 	std::getline(infoReader, lineRead);	// read Zero's health
 	zeroHealth = std::stod(lineRead);
+	std::getline(infoReader, lineRead);	// read ; Zero attacking speed (in seconds)
+	std::getline(infoReader, lineRead);	// read Zero's attacking speed
+	zeroAttcackingSpeed = std::stod(lineRead);
+	std::getline(infoReader, lineRead);	// read ; Zero firing accurracy (in percentages)
+	std::getline(infoReader, lineRead);	// read Zero's firing accurracy
+	zeroFiringAccurracy = std::stod(lineRead);
 	infoReader.close();
 }
 
