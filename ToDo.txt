@@ -1,4 +1,4 @@
-optimize the game constants - speeds, damages, healths, etc.
+optimize the speed of objects according the size of objects (or the number of blocks in level)
 
 optimize the monsters looking for Zero mechanism
 

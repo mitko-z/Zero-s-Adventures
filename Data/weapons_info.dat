@@ -51,7 +51,7 @@ Fireball
 ; projectile damage
 15
 ; projectiles speed
-12
+15
 ; level no.
 4
 ; index number for the type of weapon for this level
@@ -69,4 +69,4 @@ StarProjectile
 ; projectile damage
 20
 ; projectiles speed
-15
+20

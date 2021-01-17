@@ -23,11 +23,11 @@ Jelly
 ; Monster texture frames y, x
 2	2
 ; Monster damage
-10
-; Monster speed
 5
+; Monster speed
+3
 ; Monster health
-25
+100
 ; Monster attacking speed (in seconds)
 2
 ; level no.
@@ -39,11 +39,11 @@ OneEye
 ; Monster texture frames y, x
 1	7
 ; Monster damage
-20
+7
 ; Monster speed
-10
+5
 ; Monster health
-50
+100
 ; Monster attacking speed (in seconds)
 1
 ; level no.
@@ -55,10 +55,10 @@ WalkingSquare
 ; Monster texture frames y, x
 1	5
 ; Monster damage
-30
-; Monster speed
 15
+; Monster speed
+7
 ; Monster health
-100
+300
 ; Monster attacking speed (in seconds)
 0.5

@@ -46,8 +46,8 @@ void Projectile::update()
 void Projectile::updateDirectionToMove()
 {
 	m_isAnimating = true; // projectiles always move
-	m_rect.x += cos(m_angleDirection * M_PI / 180);
-	m_rect.y += sin(m_angleDirection * M_PI / 180);
+	m_rect.x += m_speed*cos(m_angleDirection * M_PI / 180);
+	m_rect.y += m_speed*sin(m_angleDirection * M_PI / 180);
 }
 
 void Projectile::processWallCollision(GameObject & wall)
