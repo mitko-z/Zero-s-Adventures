@@ -560,6 +560,14 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 	} while (currentLevel != level);
 
 	generalInfoReader.close();
+
+	setSpeedFactor();
+}
+
+void ResourcesManager::setSpeedFactor()
+{
+	m_speedFactor.x = (m_windowDimensions.w / m_objectsInLevel.x) / m_speedFactroDivider;
+	m_speedFactor.y = (m_windowDimensions.h / m_objectsInLevel.y) / m_speedFactroDivider;
 }
 
 sf::Texture ResourcesManager::getTexture(OBJ_TYPE command)

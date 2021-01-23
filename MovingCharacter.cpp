@@ -99,19 +99,20 @@ void MovingCharacter::setInsideWindow()
 void MovingCharacter::updateDirectionToMove()
 {
 	m_isAnimating = true;
+	extern ResourcesManager *resMan;
 	switch (m_directionToMove)
 	{
 	case MovingDirection::DIRECTION_UP:
-		m_rect.y -= m_speed;
+		m_rect.y -= m_speed * resMan->getSpeedFactor().y;
 		break;
 	case MovingDirection::DIRECTION_DOWN:
-		m_rect.y += m_speed;
+		m_rect.y += m_speed * resMan->getSpeedFactor().y;
 		break;
 	case MovingDirection::DIRECTION_LEFT:
-		m_rect.x -= m_speed;
+		m_rect.x -= m_speed * resMan->getSpeedFactor().x;
 		break;
 	case MovingDirection::DIRECTION_RIGHT:
-		m_rect.x += m_speed;
+		m_rect.x += m_speed * resMan->getSpeedFactor().x;
 		break;
 	default:
 		m_isAnimating = false;

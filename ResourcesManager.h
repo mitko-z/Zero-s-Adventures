@@ -11,15 +11,14 @@
 
 #include "Definitions.h"		// ObjectType, Animations
 
-//#include "GameObject.h"
-//#include "Menu.h"
-
 // fwd declarations
 class GameObject;
 class Menu;
 
 class ResourcesManager
 {
+private:
+	const double m_speedFactroDivider = 100;
 public:
 	static ResourcesManager* getInstance();
 	void		loadResources(unsigned int level);
@@ -31,6 +30,7 @@ public:
 	void		addGameObject(GameObject* gameObject);
 	void		removeInactiveGameObjects();
 	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
+	const sf::Vector2f getSpeedFactor() const { return m_speedFactor; }
 
 	~ResourcesManager();
 private:
@@ -76,6 +76,8 @@ private:
 						sf::Vector2u& endOfLevelCoords,
 						std::vector<sf::Vector2u>& monstersCoords,
 						std::vector<sf::Vector2u>& weaponsCoords);
+	void setSpeedFactor();
+
 	// members
 	static ResourcesManager* m_instance;
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;
@@ -93,6 +95,7 @@ private:
 
 	std::vector<GameObject *> m_gameObjects;
 	UMAP<RUN_MENU_STATE, Menu *> m_menus;
+	sf::Vector2f m_speedFactor;
 };
 
 #endif
