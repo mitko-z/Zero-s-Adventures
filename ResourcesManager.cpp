@@ -142,7 +142,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 	getWallsInfo(level, imagesNames);
 	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
 	double monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed;
-	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed);
+	std::vector<OBJ_TYPE> monsterImmuneFrom;
+	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed, monsterImmuneFrom);
 	std::vector<OBJ_TYPE> allWeaponsTypes;
 	std::vector<OBJ_TYPE> allProjectilesTypes;
 	double weaponAttackSpeed, projectilesDamage, projectilesSpeed;
@@ -187,7 +188,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 													   monsterDamage, 
 													   monsterSpeed,
 													   monsterHealth,
-													   monsterAttackingSpeed));
+													   monsterAttackingSpeed,
+													   monsterImmuneFrom));
 	}
 	if (monstersCoords.size() > 0)
 	{
@@ -360,10 +362,11 @@ void ResourcesManager::getWallsInfo(const unsigned int & level, UMAP<OBJ_TYPE, s
 void ResourcesManager::getMonstersInfo(const unsigned int & level, 
 									   MONSTERS_TYPE & monsterType, 
 									   UMAP<OBJ_TYPE, std::string>& imagesNames, 
-									   double&damage, 
+									   double& damage, 
 									   double& speed, 
 									   double& health,
-									   double& attackingSpeed)
+									   double& attackingSpeed,
+									   std::vector<OBJ_TYPE>& monsterImmuneFrom)
 {
 	std::ifstream infoReader = getReader(MONSTERS_INFO_FILE_PATH);
 	std::string lineRead;
@@ -397,6 +400,19 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 		std::getline(infoReader, lineRead);	// read ; Monster attacking speed
 		std::getline(infoReader, lineRead);	// read the monster attacking speed
 		attackingSpeed = std::stod(lineRead);
+		std::getline(infoReader, lineRead);	// read ; Number of projectiles types monster immune from
+		std::getline(infoReader, lineRead);	// read the number of projectiles types monster immune from
+		int numProjTypes = std::stoi(lineRead);
+		std::getline(infoReader, lineRead);	// read ; Monster immune from projectiles
+		std::getline(infoReader, lineRead);	// read the list of projectiles which monster is immune of
+		std::stringstream ss;
+		ss << lineRead;
+		std::string projectileTypeAsStr;
+		for(int i = 0; i < numProjTypes; i++)
+		{
+			ss >> projectileTypeAsStr;
+			monsterImmuneFrom.push_back(static_cast<OBJ_TYPE>(std::stoi(projectileTypeAsStr)));
+		}
 	} while (currentLevel != level);
 	infoReader.close();
 }

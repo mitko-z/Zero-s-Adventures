@@ -1,7 +1,3 @@
-optimize the monsters looking for Zero mechanism
-
-make monsters be able to be ummune on types of projectiles
-
 Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
 
 make game over screen

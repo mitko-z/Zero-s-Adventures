@@ -60,7 +60,8 @@ private:
 						 double& damage, 
 						 double& speed,
 						 double& health,
-						 double& attackingSpeed);
+						 double& attackingSpeed,
+						 std::vector<OBJ_TYPE>& monsterImmuneFrom);
 	void getWeaponsInfo(const unsigned int& level, 
 						std::vector<OBJ_TYPE>& weaponType,
 						std::vector<OBJ_TYPE>& projectilesType,

@@ -14,6 +14,10 @@
 0
 ; Monster attacking speed (in seconds)
 0
+; Number of projectiles types monster immune from
+0
+; Monster immune from projectiles
+
 ; level no.
 2
 ; index number of the monster type for this level
@@ -30,6 +34,10 @@ Jelly
 100
 ; Monster attacking speed (in seconds)
 2
+; Number of projectiles types monster immune from
+0
+; Monster immune from projectiles
+
 ; level no.
 3
 ; index number of the monster type for this level
@@ -46,6 +54,10 @@ OneEye
 100
 ; Monster attacking speed (in seconds)
 1
+; Number of projectiles types monster immune from
+0
+; Monster immune from projectiles
+
 ; level no.
 4
 ; index number of the monster type for this level
@@ -62,3 +74,7 @@ WalkingSquare
 300
 ; Monster attacking speed (in seconds)
 0.5
+; Number of projectiles types monster immune from
+2
+; Monster immune from projectiles - immune from arrows & fireballs
+18	19

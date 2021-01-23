@@ -58,8 +58,12 @@ void Projectile::processWallCollision(GameObject & wall)
 
 void Projectile::processMonsterCollision(GameObject* monster)
 {
-	dynamic_cast<Monster*>(monster)->takeDamage(m_damage);
-	m_isActive = false;
+	Monster* monsterLocal = dynamic_cast<Monster*>(monster); 
+	if (!monsterLocal->isImmuneFrom(getLoadResourcesCommand()))
+	{
+		monsterLocal->takeDamage(m_damage);
+		m_isActive = false;
+	}
 }
 
 bool Projectile::isOutsideOfScreen()

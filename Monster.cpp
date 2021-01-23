@@ -92,23 +92,38 @@ Monster* Monster::createMonster(
 	double damage, 
 	double speed, 
 	double health, 
-	double attackingSpeed)
+	double attackingSpeed,
+	const std::vector<OBJ_TYPE>& immuneFromProjectiles)
 {
 	switch (type)
 	{
 	case MONSTERS_TYPE::JELLY_MONSTER_TYPE:
-		return new MonsterJelly(x, y, w, h, damage, speed, health, attackingSpeed);
+		return new MonsterJelly(x, y, w, h, damage, speed, health, attackingSpeed, immuneFromProjectiles);
 		break;
 	case MONSTERS_TYPE::ONE_EYE_MONSTER_TYPE:
-		return new MonsterOneEye(x, y, w, h, damage, speed, health, attackingSpeed);
+		return new MonsterOneEye(x, y, w, h, damage, speed, health, attackingSpeed, immuneFromProjectiles);
 		break;
 	case MONSTERS_TYPE::WALKING_SQUARE_MONSTER_TYPE:
-		return new MonsterWalkingSquare(x, y, w, h, damage, speed, health, attackingSpeed);
+		return new MonsterWalkingSquare(x, y, w, h, damage, speed, health, attackingSpeed, immuneFromProjectiles);
 		break;
 	default:
 		break;
 	}
 	return nullptr;
+}
+
+bool Monster::isImmuneFrom(OBJ_TYPE projectileType)
+{
+	bool isImmune = false;
+	for (auto& type : m_immuneFromProjectiles)
+	{
+		if (projectileType == type)
+		{
+			isImmune = true;
+			break;
+		}
+	}
+	return isImmune;
 }
 
 void Monster::moveTowardsTarget(int x, int y)
