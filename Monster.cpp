@@ -29,7 +29,7 @@ void Monster::update()
 	// than the previous one (thanks to the multiplier).
 	// it is not clear circles but just it is on its right (when angle is 0 then cos(angle) is 1 and sin(angle) 
 	// is 0, so x goes on right, y is the same), on its bottom (angle = PI/2, cos = 0, sin = 1), on its left and top
-	for (int i = 10; i < 20; i++)
+	for (int i = 10; i < 20; i += 4)
 	{
 		for (double angle = 0; angle < 2 * M_PI; angle += 0.5)
 		{
