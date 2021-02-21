@@ -1,18 +1,17 @@
 #pragma once
 
-#include "Menu.h"
+#include "PressKeyFullScreen.h"
 
-class StartScreen : public Menu
+class StartScreen : public PressKeyFullScreen
 {
 public:
-	StartScreen() : Menu(), m_keyIsPressed(false) {}
-	StartScreen(double x, double y, double w, double h, bool animating) : Menu(x, y, w, h, animating) {}
+	StartScreen() : PressKeyFullScreen() {}
+	StartScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey) : 
+		PressKeyFullScreen(x, y, w, h, animating, secondsToWaitBeforeAbleToPressKey) 
+	{}
 
 	OBJ_TYPE getLoadResourcesCommand() override;
-	void initialize() override;
-	void update() override;
-protected:
-	void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased) override;
+
 private:
-	bool m_keyIsPressed;		// if a key is pressed -> set event to go to main menu
+	void setEvent() override;
 };

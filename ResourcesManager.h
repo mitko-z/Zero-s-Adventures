@@ -21,6 +21,7 @@ private:
 	const double m_speedFactroDivider = 100;
 public:
 	static ResourcesManager* getInstance();
+	void		initialize();
 	void		loadResources(unsigned int level);
 	sf::Texture getTexture(Definitions::ObjectType command);
 	bool        getAnimation(Definitions::ObjectType command, Animation& animation);

@@ -8,3 +8,5 @@ MenuBackgroundRectangle
 StartScreen
 ; name of the finished level screen texture 
 finished level screen image
+; name of the game over screen texture 
+game over screen image

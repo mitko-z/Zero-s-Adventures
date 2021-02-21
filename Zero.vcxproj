@@ -125,6 +125,7 @@
     <ClCompile Include="FinishedLevelScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="MonsterWalkingSquare.cpp" />
     <ClCompile Include="MovingCharacter.cpp" />
     <ClCompile Include="PlayingCharacter.cpp" />
+    <ClCompile Include="PressKeyFullScreen.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileArrow.cpp" />
     <ClCompile Include="ProjectileFireball.cpp" />
@@ -159,6 +161,8 @@
     <ClInclude Include="FinishedLevelScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameOverScreen.h" />
+    <ClInclude Include="PressKeyFullScreen.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Health.h" />
     <ClInclude Include="MainMenu.h" />

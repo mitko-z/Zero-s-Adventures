@@ -28,6 +28,8 @@ public:
 protected:
 	virtual void setIsActive();
 
+	double getCurrentHealth() { return m_health.currentHealth(); }
+
 private:
 	double m_damage;
 	double m_attackingSpeed;

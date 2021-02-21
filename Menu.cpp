@@ -11,8 +11,11 @@ void Menu::initialize()
 	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Return, false));	// Choice
 	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Escape, false));	// Return to previous
 	activeButtonIndex = 0;
-	buttons[activeButtonIndex]->activate(); // make start button active
-	setHighlighter(0);
+	if (buttons.size() > 0)
+	{
+		buttons[activeButtonIndex]->activate(); // make start button active
+		setHighlighter(0);
+	}
 }
 
 Definitions::ObjectType Menu::getLoadResourcesCommand()

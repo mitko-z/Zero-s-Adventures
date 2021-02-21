@@ -1,8 +1,8 @@
-Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
-
-make game over screen
+increase the monsters damage they make to Zero
 
 make game finished screen
+
+change backgrounds, monsters & weapons images to ones which are more handy
 
 make helpers telling how to play
 
@@ -23,3 +23,9 @@ make help objects telling the player what should do
 
 Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster 
 
+Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
+
+Make Zero be able to gain level: 
+	- if it reach at certain number of firings with any type of weapon then it become more accurate;
+	- if it reach at certain number of firings with particular type of weapon then the projectiles it fires with this weapon make more damage to the monsters
+	- a screen showing Zero reached new level should appear

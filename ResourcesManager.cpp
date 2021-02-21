@@ -9,6 +9,7 @@
 #include "Wall.h"
 #include "EndOfLevel.h"
 #include "FinishedLevelScreen.h"
+#include "GameOverScreen.h"
 #include "Monster.h"
 #include "Health.h"
 #include "Weapon.h"
@@ -23,6 +24,11 @@
 #define HEALTH_INFO_FILE_PATH		"Data/health_info.dat"
 #define MENUS_INFO_FILE_PATH		"Data/menus_info.dat"
 
+// TODO - move these below to a settings file (when one is available)
+#define START_SCREEN_SECONDS_TO_WAIT			0
+#define FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT	2
+#define GAME_OVER_SCREEN_SECONDS_TO_WAIT		5
+
 ResourcesManager* ResourcesManager::m_instance = nullptr;
 
 ResourcesManager* ResourcesManager::getInstance()
@@ -32,6 +38,14 @@ ResourcesManager* ResourcesManager::getInstance()
 		m_instance = new ResourcesManager;
 	}
 	return m_instance;
+}
+
+void ResourcesManager::initialize()
+{
+	m_gameObjects.clear();
+	m_menus.clear();
+	m_textures.clear();
+	m_animations.clear();
 }
 
 ResourcesManager::~ResourcesManager()
@@ -136,21 +150,35 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.clear();
 	m_animations.clear();
 
+	/// reading infos
+	// read zero info
 	double zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy;
 	getZeroInfo(imagesNames, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy);
+
+	// read background info
 	getBackgroundInfo(level, imagesNames);
+
+	// read walls info
 	getWallsInfo(level, imagesNames);
 	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
+	// read monsters info
 	double monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed;
 	std::vector<OBJ_TYPE> monsterImmuneFrom;
 	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed, monsterImmuneFrom);
+
+	// read wapons & projectiles info
 	std::vector<OBJ_TYPE> allWeaponsTypes;
 	std::vector<OBJ_TYPE> allProjectilesTypes;
 	double weaponAttackSpeed, projectilesDamage, projectilesSpeed;
 	getWeaponsInfo(level, allWeaponsTypes, allProjectilesTypes, imagesNames, projectilesDamage, weaponAttackSpeed, projectilesSpeed);
+
+	// read end of level info
 	getEndOfLevelInfo(level, imagesNames);
+
+	// read health info
 	getHealthInfo(level, imagesNames);
 
+	/// initialize objects
 	unsigned int numbersOfLevels = 0;
 	std::vector<sf::Vector2u> wallsCoords;
 	sf::Vector2u endOfLevelCoords;
@@ -177,22 +205,22 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.push_back(OBJ_TYPE::WALL_TYPE);
 
 	// init monsters
-	for (auto monstCoord : monstersCoords)
-	{
-		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
-		m_gameObjects.push_back(Monster::createMonster(monsterType, 
-													   worldCoords.x, 
-													   worldCoords.y, 
-													   movingObjWidth, 
-													   movingObjHeight, 
-													   monsterDamage, 
-													   monsterSpeed,
-													   monsterHealth,
-													   monsterAttackingSpeed,
-													   monsterImmuneFrom));
-	}
 	if (monstersCoords.size() > 0)
 	{
+		for (auto monstCoord : monstersCoords)
+		{
+			sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
+			m_gameObjects.push_back(Monster::createMonster(monsterType,
+				worldCoords.x,
+				worldCoords.y,
+				movingObjWidth,
+				movingObjHeight,
+				monsterDamage,
+				monsterSpeed,
+				monsterHealth,
+				monsterAttackingSpeed,
+				monsterImmuneFrom));
+		}
 		resCommands.push_back(OBJ_TYPE::MONSTER_TYPE);
 	}
 
@@ -210,10 +238,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 													allProjectilesTypes[allProjectilesTypes.size() - 1],
 													projectilesDamage,
 													projectilesSpeed));
-		if (ZeroCurrentWeapon)
-			m_gameObjects.push_back(ZeroCurrentWeapon);
 	}
-
 	for (auto& type : allWeaponsTypes)
 	{
 		resCommands.push_back(type);
@@ -222,6 +247,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 	{
 		resCommands.push_back(type);
 	}
+	if (ZeroCurrentWeapon)
+		m_gameObjects.push_back(ZeroCurrentWeapon);
 
 	// init end of level
 	sf::Vector2u eolWorldCoords = calcWorldCoordsFromMapCoords(endOfLevelCoords);
@@ -257,9 +284,13 @@ void ResourcesManager::loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames)
 	std::getline(infoReader, lineRead);	// read "; name of the texture
 	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = lineRead + ".png";
 
-	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"
+	std::getline(infoReader, lineRead);	// read "; name of the finished level screen texture"
 	std::getline(infoReader, lineRead);	// read "; name of the texture
 	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = lineRead + ".png";
+
+	std::getline(infoReader, lineRead);	// read "; name of the game over screen texture"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = lineRead + ".png";
 }
 
 void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands)
@@ -271,10 +302,13 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands)
 		new MainMenu(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
 	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::START_SCREEN_STATE] =
-		new StartScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
+		new StartScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, START_SCREEN_SECONDS_TO_WAIT);
 	resCommands.push_back(OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE] =
-		new FinishedLevelScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
+		new FinishedLevelScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT);
+	resCommands.push_back(OBJ_TYPE::GAME_OVER_SCREEN_TYPE);
+	m_menus[RUN_MENU_STATE::GAME_OVER_SCREEN_STATE] = 
+		new GameOverScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, GAME_OVER_SCREEN_SECONDS_TO_WAIT);
 }
 
 std::ifstream ResourcesManager::getReader(std::string filePath)

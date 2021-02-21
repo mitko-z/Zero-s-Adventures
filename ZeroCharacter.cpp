@@ -1,5 +1,6 @@
 #include "ZeroCharacter.h"
 #include "Monster.h"
+#include "EventsHolder.h"
 
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -55,7 +56,13 @@ void ZeroCharacter::initialize()
 
 void ZeroCharacter::setIsActive()
 {
-	// TODO - rise game over event
+	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	int health = static_cast<int>(getCurrentHealth());
+	if (health <= 0)
+	{
+		eventsHolder->setEventByGameCommand(COMMAND::MENU_COMMAND);
+		eventsHolder->setEventByGameCommand(COMMAND::GAME_OVER_COMMAND);
+	}
 }
 
 void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)

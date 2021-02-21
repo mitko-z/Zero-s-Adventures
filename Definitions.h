@@ -24,7 +24,8 @@ namespace Definitions
 		GAME_MODE,
 		NEXT_LEVEL_MODE,
 		MENU_MODE,
-		EXIT_MODE
+		EXIT_MODE,
+		INITIALIZE_MODE
 	};
 
 	/// <summary>
@@ -46,7 +47,8 @@ namespace Definitions
 		LOAD_GAME_STATE,
 		OPTIONS_STATE,
 		START_SCREEN_STATE,
-		FINISHED_LEVEL_SCREEN_STATE
+		FINISHED_LEVEL_SCREEN_STATE,
+		GAME_OVER_SCREEN_STATE
 	};
 
 	enum ObjectType
@@ -72,6 +74,7 @@ namespace Definitions
 		ARROW_PROJECTILE_TYPE = 18,
 		FIREBALL_PROJECTILE_TYPE = 19,
 		STAR_PROJECTILE_TYPE = 20,
+		GAME_OVER_SCREEN_TYPE = 21
 	};
 
 	enum MonstersType
@@ -90,13 +93,15 @@ namespace Definitions
 
 	enum Command
 	{
-		GAME_COMMAND,					// command for going to game mode
-		MENU_COMMAND,					// command for going to menu mode
-		EXIT_COMMAND,					// command for exiting the game
-		MIAN_MENU_COMMAND,				// command for showing the main menu
-		FINISHED_LEVEL_SCREEN_COMMAND,	// command for showing the finished level screen
-		NEXT_LEVEL_COMMAND,				// command for going to the next level
-		FINAL_SCREEN_COMMAND			// command for showing the final screen
+		GAME_COMMAND,					// going to game mode
+		MENU_COMMAND,					// to menu mode
+		EXIT_COMMAND,					// exit the game
+		MIAN_MENU_COMMAND,				// show the main menu
+		FINISHED_LEVEL_SCREEN_COMMAND,	// show the finished level screen
+		NEXT_LEVEL_COMMAND,				// go to the next level
+		FINAL_SCREEN_COMMAND,			// show the final screen
+		GAME_OVER_COMMAND,				// show the game over screen
+		START_SCREEN_COMMAND			// initialize & show the start screen		
 	};
 }
 
