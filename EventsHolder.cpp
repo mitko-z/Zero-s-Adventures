@@ -68,7 +68,7 @@ void EventsHolder::setEventByGameCommand(COMMAND command)
 			mode = MODE::NEXT_LEVEL_MODE;
 		break;
 		case COMMAND::FINAL_SCREEN_COMMAND:
-			mode = MODE::INITIALIZE_MODE;
+			runningMenuState = RUN_MENU_STATE::FINAL_SCREEN_STATE;
 		break;
 		case COMMAND::GAME_OVER_COMMAND:
 			runningMenuState = RUN_MENU_STATE::GAME_OVER_SCREEN_STATE;

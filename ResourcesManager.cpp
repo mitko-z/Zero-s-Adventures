@@ -10,6 +10,7 @@
 #include "EndOfLevel.h"
 #include "FinishedLevelScreen.h"
 #include "GameOverScreen.h"
+#include "FinalScreen.h"
 #include "Monster.h"
 #include "Health.h"
 #include "Weapon.h"
@@ -291,6 +292,10 @@ void ResourcesManager::loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames)
 	std::getline(infoReader, lineRead);	// read "; name of the game over screen texture"
 	std::getline(infoReader, lineRead);	// read "; name of the texture
 	imagesNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = lineRead + ".png";
+
+	std::getline(infoReader, lineRead);	// read "; name of the final screen texture"
+	std::getline(infoReader, lineRead);	// read "; name of the texture
+	imagesNames[OBJ_TYPE::FINAL_SCREEN] = lineRead + ".png";
 }
 
 void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands)
@@ -309,6 +314,9 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands)
 	resCommands.push_back(OBJ_TYPE::GAME_OVER_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::GAME_OVER_SCREEN_STATE] = 
 		new GameOverScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, GAME_OVER_SCREEN_SECONDS_TO_WAIT);
+	resCommands.push_back(OBJ_TYPE::FINAL_SCREEN);
+	m_menus[RUN_MENU_STATE::FINAL_SCREEN_STATE] =
+		new FinalScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, GAME_OVER_SCREEN_SECONDS_TO_WAIT);
 }
 
 std::ifstream ResourcesManager::getReader(std::string filePath)

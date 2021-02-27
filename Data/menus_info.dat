@@ -10,3 +10,5 @@ StartScreen
 finished level screen image
 ; name of the game over screen texture 
 game over screen image
+; name of the final screen texture 
+final screen image
