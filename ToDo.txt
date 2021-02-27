@@ -1,8 +1,6 @@
-make game finished screen
-
 make Zero/monsters cannot pass through eachother as well as monsters to pass through other monsters
 
-change backgrounds, monsters & weapons images to ones which are more handy
+make Zero/mosnters images flips so they appear to look to the direction they move in case of they move left/right
 
 make background music & sounds
 
@@ -29,3 +27,5 @@ Make Zero be able to gain level:
 	- a screen showing Zero reached new level should appear
 	
 Make a "Press any key" message appears on the PressKeyFullScreen screens when the waiting time left
+
+Make the same font on the PressKeyFullScreen screes as the one on the main menu screen.

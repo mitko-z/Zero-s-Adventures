@@ -21,7 +21,7 @@
 ; index number for the type of weapon for this level
 1
 ; name for the texture of the weapon (without the extension of the file)
-bow-and-arrow
+cartoon-bow-and-arrow
 ; Weapon texture frames y, x
 1	1
 ; firing rate of the weapon (in seconds)
