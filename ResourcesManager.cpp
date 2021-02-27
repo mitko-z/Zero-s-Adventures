@@ -137,9 +137,9 @@ void ResourcesManager::loadLevel(unsigned int level,
 								 UMAP<OBJ_TYPE, std::string>& imagesNames,
 								 std::vector<OBJ_TYPE>& resCommands)
 {
-	// get Zero's previous stats, if any
+	// get Zero's previous stats, if any and if we are not on level one
 	Weapon* ZeroCurrentWeapon = nullptr;
-	if (m_gameObjects.size() >= 1)
+	if (m_gameObjects.size() >= 1 && level > 1)
 	{
 		ZeroCurrentWeapon = dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->getCurrentWeapon();
 	}
@@ -616,8 +616,13 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 
 void ResourcesManager::setSpeedFactor()
 {
-	m_speedFactor.x = (m_windowDimensions.w / m_objectsInLevel.x) / m_speedFactroDivider;
-	m_speedFactor.y = (m_windowDimensions.h / m_objectsInLevel.y) / m_speedFactroDivider;
+	m_speedFactor.x = getLevelBlockDimensions().x / m_speedFactroDivider;
+	m_speedFactor.y = getLevelBlockDimensions().y / m_speedFactroDivider;
+}
+
+const sf::Vector2f ResourcesManager::getLevelBlockDimensions()
+{
+	return sf::Vector2f(m_windowDimensions.w / m_objectsInLevel.x, m_windowDimensions.h / m_objectsInLevel.y);
 }
 
 sf::Texture ResourcesManager::getTexture(OBJ_TYPE command)

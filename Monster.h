@@ -45,6 +45,7 @@ public:
 
 private:
 	void moveTowardsTarget(int x, int y);
+	double distanceToTarget(sf::FloatRect target);
 
 	bool m_isTouchingZero;
 	std::vector<OBJ_TYPE> m_immuneFromProjectiles;

@@ -3,7 +3,7 @@ SmileyWalkTighter
 ; Zero texture frames x, y
 4	4
 ; Zero speed
-5
+7
 ; Zero health
 100
 ; Zero attacking speed (in seconds)

@@ -8,6 +8,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#define MAX_DISTANCE_TO_LOOK_FOR_ZERO 3 // 3 blocks
+
 OBJ_TYPE Monster::getLoadResourcesCommand()
 {
 	return OBJ_TYPE::MONSTER_TYPE;
@@ -24,24 +26,8 @@ void Monster::update()
 	//// check if Zero can be seen around
 	// define and places where the creature to look to
 	std::vector<sf::RectangleShape> placesToLookTo; 
-		
-	// set the places where to look to - it makes some "circles" around the monster; each next is bigger
-	// than the previous one (thanks to the multiplier).
-	// it is not clear circles but just it is on its right (when angle is 0 then cos(angle) is 1 and sin(angle) 
-	// is 0, so x goes on right, y is the same), on its bottom (angle = PI/2, cos = 0, sin = 1), on its left and top
-	for (int i = 10; i < 20; i += 4)
-	{
-		for (double angle = 0; angle < 2 * M_PI; angle += 0.5)
-		{
-			placesToLookTo.push_back(sf::RectangleShape(sf::Vector2f(m_rect.w, m_rect.h)));
-			size_t index = placesToLookTo.size() - 1;
-			double multiplier = static_cast<double>(i) / 10.0;
-			placesToLookTo[placesToLookTo.size() - 1].setPosition(
-				m_rect.center_x() + 1.5 * m_rect.w * cos(angle) * multiplier,
-				m_rect.center_y() + 1.5 * m_rect.h * sin(angle) * multiplier);
-		}
-	}
 
+	// look if Zero is around
 	bool foundZero = false;
 	extern ResourcesManager *resMan;
 	std::vector<GameObject *> gameObjects = resMan->getGameObjects();
@@ -51,17 +37,8 @@ void Monster::update()
 		throw "Couldn't find the Zero character at index 1 in the gameObjects list.";
 	}
 	sf::FloatRect zeroRect(zeroCharacter->getRect().x, zeroCharacter->getRect().y, zeroCharacter->getRect().w, zeroCharacter->getRect().h);
-
-	// look if Zero is around
-	for (int i = 0; i < placesToLookTo.size(); i++)
-	{
-		if(placesToLookTo[i].getGlobalBounds().intersects(zeroRect))
-		{
-			foundZero = true;
-			break;
-		}
-	}
-	if (foundZero)
+	double distanceInPixels = MAX_DISTANCE_TO_LOOK_FOR_ZERO * (resMan->getLevelBlockDimensions().x + resMan->getLevelBlockDimensions().y) / 2;
+	if (distanceToTarget(zeroRect) < distanceInPixels)
 	{
 		moveTowardsTarget(zeroRect.left, zeroRect.top);
 	}
@@ -142,4 +119,10 @@ void Monster::moveTowardsTarget(int x, int y)
 			setDirectionToMove((distance.y < 0) ? MovingDirection::DIRECTION_DOWN : MovingDirection::DIRECTION_UP);
 		}
 	}
+}
+
+double Monster::distanceToTarget(sf::FloatRect target)
+{
+	sf::Vector2f targetCenter(target.left + target.width / 2, target.top + target.height / 2);
+	return sqrt((m_rect.x - targetCenter.x)*(m_rect.x - targetCenter.x) + (m_rect.y - targetCenter.y)*(m_rect.y - targetCenter.y));
 }

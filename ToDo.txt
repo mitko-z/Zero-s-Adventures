@@ -1,10 +1,10 @@
-increase the monsters damage they make to Zero
+make Zero more accurate
 
 make game finished screen
 
-change backgrounds, monsters & weapons images to ones which are more handy
+make Zero/monsters cannot pass through eachother as well as monsters to pass through other monsters
 
-make helpers telling how to play
+change backgrounds, monsters & weapons images to ones which are more handy
 
 make background music & sounds
 

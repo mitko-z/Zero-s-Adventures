@@ -32,6 +32,7 @@ public:
 	void		removeInactiveGameObjects();
 	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
 	const sf::Vector2f getSpeedFactor() const { return m_speedFactor; }
+	const sf::Vector2f getLevelBlockDimensions();
 
 	~ResourcesManager();
 private:
