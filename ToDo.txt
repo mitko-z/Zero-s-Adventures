@@ -1,5 +1,3 @@
-make Zero more accurate
-
 make game finished screen
 
 make Zero/monsters cannot pass through eachother as well as monsters to pass through other monsters
@@ -29,3 +27,5 @@ Make Zero be able to gain level:
 	- if it reach at certain number of firings with any type of weapon then it become more accurate;
 	- if it reach at certain number of firings with particular type of weapon then the projectiles it fires with this weapon make more damage to the monsters
 	- a screen showing Zero reached new level should appear
+	
+Make a "Press any key" message appears on the PressKeyFullScreen screens when the waiting time left
