@@ -193,7 +193,17 @@ void ResourcesManager::loadLevel(unsigned int level,
 	// initialize Zero 
 	double movingObjWidth = getGameObjSize().x / 2;
 	double movingObjHeight = getGameObjSize().y / 2;
-	m_gameObjects.push_back(new ZeroCharacter(0, 0, movingObjWidth, movingObjHeight, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy));
+	sf::Vector2u offsetFromTopLeft(getLevelBlockDimensions().x / 10, getLevelBlockDimensions().y / 10);
+	m_gameObjects.push_back(
+		new ZeroCharacter(
+			offsetFromTopLeft.x, 
+			offsetFromTopLeft.y, 
+			movingObjWidth, 
+			movingObjHeight, 
+			zeroSpeed, 
+			zeroHealth, 
+			zeroAttcackingSpeed, 
+			zeroFiringAccurracy));
 	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
 	dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->setWeapon(ZeroCurrentWeapon);
 
@@ -212,8 +222,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 		{
 			sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(monstCoord);
 			m_gameObjects.push_back(Monster::createMonster(monsterType,
-				worldCoords.x,
-				worldCoords.y,
+				worldCoords.x + offsetFromTopLeft.x,
+				worldCoords.y + offsetFromTopLeft.y,
 				movingObjWidth,
 				movingObjHeight,
 				monsterDamage,
