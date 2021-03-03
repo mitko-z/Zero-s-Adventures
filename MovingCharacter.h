@@ -25,6 +25,8 @@ protected:
 	MovingDirection directionToMove() { return m_directionToMove; }
 	virtual void processWallCollision(GameObject& wall);
 	virtual void processMonsterCollision(GameObject* monster);
+	virtual void processZeroCollision(GameObject& zero);
+	void moveOutsideOfObject(GameObject & gameObject);
 	void setInsideWindow();
 	virtual void updateDirectionToMove();
 	
