@@ -29,9 +29,11 @@ protected:
 	void moveOutsideOfObject(GameObject & gameObject);
 	void setInsideWindow();
 	virtual void updateDirectionToMove();
+	void updateDrawingObject() override;
 	
 	Rectangle m_lastPosition;
 	double m_speed;
 	bool m_goOutsideOfScreen;
 	MovingDirection m_directionToMove;
+	bool m_flipped;
 };

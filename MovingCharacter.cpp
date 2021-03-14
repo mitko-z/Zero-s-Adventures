@@ -5,7 +5,8 @@ MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool is
 	GameObject(x, y, w, h, isAnimating),
 	m_speed(speed),
 	m_lastPosition(x, y, w, h),
-	m_goOutsideOfScreen(false)
+	m_goOutsideOfScreen(false),
+	m_flipped(false)
 {}
 
 void MovingCharacter::update()
@@ -134,4 +135,31 @@ void MovingCharacter::updateDirectionToMove()
 		m_isAnimating = false;
 		break;
 	}
+}
+
+void MovingCharacter::updateDrawingObject()
+{
+	switch (m_directionToMove)
+	{
+		case MovingDirection::DIRECTION_LEFT:
+			if (!m_flipped)
+			{
+				int width = m_drawingObject.sprite.getTextureRect().width;
+				m_drawingObject.sprite.setOrigin(sf::Vector2f(width, 0));
+				m_drawingObject.sprite.scale(-1.f, 1.f);
+				m_flipped = true;
+			}
+		break;
+		case MovingDirection::DIRECTION_RIGHT:
+			if (m_flipped)
+			{
+				m_drawingObject.sprite.setOrigin(sf::Vector2f(0, 0));
+				m_drawingObject.sprite.scale(-1.f, 1.f);
+				m_flipped = false;
+			}
+		break;
+		default:
+		break;
+	}
+	GameObject::updateDrawingObject();
 }

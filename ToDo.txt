@@ -1,5 +1,3 @@
-make Zero/mosnters images flips so they appear to look to the direction they move in case of they move left/right
-
 make background music & sounds
 
 add resume game menu
