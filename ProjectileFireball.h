@@ -10,5 +10,5 @@ public:
 		Projectile(x, y, w, h, speed, damage, angleDirection)
 	{}
 
-	OBJ_TYPE getLoadResourcesCommand() override;
+	OBJ_TYPE getType() override;
 };

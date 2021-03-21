@@ -1,6 +1,7 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #define OBJ_TYPE Definitions::ObjectType
 #define MODE Definitions::Mode
@@ -123,6 +124,12 @@ struct DrawingObject
 	sf::Texture texture;
 	//sf::RectangleShape rectangleShape;
 	sf::Sprite sprite;
+};
+
+struct SoundObject
+{
+	std::vector<sf::SoundBuffer> soundBuffers;
+	std::vector<sf::Sound> sounds;
 };
 
 

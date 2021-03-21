@@ -76,11 +76,11 @@ void ResourcesManager::removeInactiveGameObjects()
 
 void ResourcesManager::loadResources(unsigned int level)
 {
-	// TODO figure out how to read any level defined by the parameter
-	UMAP<OBJ_TYPE, std::string> imagesNames;
+	umapTypeString imagesNames;
 	std::vector<OBJ_TYPE> resCommands;
+	umapTypeVecStrings soundNames;
 
-	loadLevel(level, imagesNames, resCommands);
+	loadLevel(level, imagesNames, resCommands, soundNames);
 
 	// Menu load
 	if (level == 1)
@@ -135,8 +135,9 @@ sf::Vector2u ResourcesManager::calcWorldCoordsFromMapCoords(const sf::Vector2u& 
 }
 
 void ResourcesManager::loadLevel(unsigned int level,
-								 UMAP<OBJ_TYPE, std::string>& imagesNames,
-								 std::vector<OBJ_TYPE>& resCommands)
+								 umapTypeString& imagesNames,
+								 std::vector<OBJ_TYPE>& resCommands,
+								 umapTypeVecStrings& soundsNames)
 {
 	// get Zero's previous stats, if any and if we are not on level one
 	Weapon* ZeroCurrentWeapon = nullptr;
@@ -149,23 +150,25 @@ void ResourcesManager::loadLevel(unsigned int level,
 	m_gameObjects.clear();
 	imagesNames.clear();
 	resCommands.clear();
+	soundsNames.clear();
 	m_animations.clear();
 
 	/// reading infos
 	// read zero info
 	double zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy;
-	getZeroInfo(imagesNames, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy);
+	getZeroInfo(imagesNames, soundsNames, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy);
 
 	// read background info
 	getBackgroundInfo(level, imagesNames);
 
 	// read walls info
 	getWallsInfo(level, imagesNames);
-	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
+
 	// read monsters info
+	MONSTERS_TYPE monsterType = MONSTERS_TYPE::NO_MONSTER_TYPE;
 	double monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed;
 	std::vector<OBJ_TYPE> monsterImmuneFrom;
-	getMonstersInfo(level, monsterType, imagesNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed, monsterImmuneFrom);
+	getMonstersInfo(level, monsterType, imagesNames, soundsNames, monsterDamage, monsterSpeed, monsterHealth, monsterAttackingSpeed, monsterImmuneFrom);
 
 	// read wapons & projectiles info
 	std::vector<OBJ_TYPE> allWeaponsTypes;
@@ -341,7 +344,8 @@ std::ifstream ResourcesManager::getReader(std::string filePath)
 	return reader;
 }
 
-void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, 
+void ResourcesManager::getZeroInfo(umapTypeString& imagesNames, 
+								   umapTypeVecStrings& soundsNames,
 								   double& zeroSpeed, 
 								   double& zeroHealth, 
 								   double& zeroAttcackingSpeed, 
@@ -367,6 +371,7 @@ void ResourcesManager::getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames,
 	std::getline(infoReader, lineRead);	// read ; Zero firing accurracy (in percentages)
 	std::getline(infoReader, lineRead);	// read Zero's firing accurracy
 	zeroFiringAccurracy = std::stod(lineRead);
+	getSounds(infoReader, OBJ_TYPE::ZERO_TYPE, soundsNames);
 	infoReader.close();
 }
 
@@ -413,7 +418,8 @@ void ResourcesManager::getWallsInfo(const unsigned int & level, UMAP<OBJ_TYPE, s
 
 void ResourcesManager::getMonstersInfo(const unsigned int & level, 
 									   MONSTERS_TYPE & monsterType, 
-									   UMAP<OBJ_TYPE, std::string>& imagesNames, 
+									   umapTypeString& imagesNames, 
+									   umapTypeVecStrings& soundsNames,
 									   double& damage, 
 									   double& speed, 
 									   double& health,
@@ -465,6 +471,7 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 			ss >> projectileTypeAsStr;
 			monsterImmuneFrom.push_back(static_cast<OBJ_TYPE>(std::stoi(projectileTypeAsStr)));
 		}
+		getSounds(infoReader, OBJ_TYPE::MONSTER_TYPE, soundsNames);
 	} while (currentLevel != level);
 	infoReader.close();
 }
@@ -636,6 +643,32 @@ void ResourcesManager::setSpeedFactor()
 {
 	m_speedFactor.x = getLevelBlockDimensions().x / m_speedFactroDivider;
 	m_speedFactor.y = getLevelBlockDimensions().y / m_speedFactroDivider;
+}
+
+void ResourcesManager::getSounds(std::ifstream & fileReader, const OBJ_TYPE & gameObjectType, umapTypeVecStrings & soundsNames)
+{
+	std::string lineRead;
+	std::getline(fileReader, lineRead);	// read ; number of sounds
+	std::getline(fileReader, lineRead);	// read how many sounds the object can make
+	int numSounds = std::stoi(lineRead);
+	if (numSounds > 0)
+	{
+		if (soundsNames.find(gameObjectType) == soundsNames.end())
+		{
+			soundsNames[gameObjectType] = std::vector<std::string>();
+		}
+		else
+		{
+			// clear any sounds loaded from the previous level
+			soundsNames[gameObjectType].clear();
+		}
+		std::getline(fileReader, lineRead);	// read ; list of sounds file names
+		for (int i = 0; i < numSounds; ++i)
+		{
+			std::getline(fileReader, lineRead);	// read the file name of the sound
+			soundsNames[gameObjectType].push_back(lineRead);
+		}
+	}
 }
 
 const sf::Vector2f ResourcesManager::getLevelBlockDimensions()

@@ -17,7 +17,7 @@ public:
 		std::string text);
 
 	void loadContent() override;
-	Definitions::ObjectType getLoadResourcesCommand() override;
+	Definitions::ObjectType getType() override;
 	void update() override;
 	void draw(sf::RenderWindow &window) override;
 

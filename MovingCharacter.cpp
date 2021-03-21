@@ -24,7 +24,7 @@ void MovingCharacter::processCollisions()
 {
 	for (auto colidedObj : m_objsColideWith)
 	{
-		switch (colidedObj->getLoadResourcesCommand())
+		switch (colidedObj->getType())
 		{
 			case OBJ_TYPE::WALL_TYPE:
 				processWallCollision(*colidedObj);
@@ -50,13 +50,13 @@ void MovingCharacter::processWallCollision(GameObject & wall)
 
 void MovingCharacter::processMonsterCollision(GameObject* monster)
 {
-	if(this->getLoadResourcesCommand() == OBJ_TYPE::MONSTER_TYPE)
+	if(this->getType() == OBJ_TYPE::MONSTER_TYPE)
 		moveOutsideOfObject(*monster);
 }
 
 void MovingCharacter::processZeroCollision(GameObject & zero)
 {
-	if (this->getLoadResourcesCommand() == OBJ_TYPE::MONSTER_TYPE)
+	if (this->getType() == OBJ_TYPE::MONSTER_TYPE)
 		moveOutsideOfObject(zero);
 }
 

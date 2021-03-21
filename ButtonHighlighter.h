@@ -16,5 +16,5 @@ public:
 		GameObject(x, y, w, h, isAnimating)
 	{}
 
-	Definitions::ObjectType getLoadResourcesCommand() override;
+	Definitions::ObjectType getType() override;
 };

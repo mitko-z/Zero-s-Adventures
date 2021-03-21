@@ -1,7 +1,7 @@
 #include "FinalScreen.h"
 #include "EventsHolder.h"
 
-OBJ_TYPE FinalScreen::getLoadResourcesCommand()
+OBJ_TYPE FinalScreen::getType()
 {
 	return OBJ_TYPE::FINAL_SCREEN;
 }

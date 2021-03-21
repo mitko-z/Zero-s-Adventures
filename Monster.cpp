@@ -10,7 +10,7 @@
 
 #define MAX_DISTANCE_TO_LOOK_FOR_ZERO 3 // 3 blocks
 
-OBJ_TYPE Monster::getLoadResourcesCommand()
+OBJ_TYPE Monster::getType()
 {
 	return OBJ_TYPE::MONSTER_TYPE;
 }

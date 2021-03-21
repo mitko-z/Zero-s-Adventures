@@ -1,5 +1,7 @@
 make background music & sounds
 
+solve the issue with the colliding objects
+
 add resume game menu
 
 add save game menu

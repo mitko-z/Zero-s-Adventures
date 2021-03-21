@@ -18,7 +18,7 @@ void Menu::initialize()
 	}
 }
 
-Definitions::ObjectType Menu::getLoadResourcesCommand()
+Definitions::ObjectType Menu::getType()
 {
 	return Definitions::ObjectType::MENU_TYPE;
 }

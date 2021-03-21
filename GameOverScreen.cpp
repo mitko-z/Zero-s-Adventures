@@ -1,7 +1,7 @@
 #include "GameOverScreen.h"
 #include "EventsHolder.h"
 
-OBJ_TYPE GameOverScreen::getLoadResourcesCommand()
+OBJ_TYPE GameOverScreen::getType()
 {
 	return OBJ_TYPE::GAME_OVER_SCREEN_TYPE;
 }

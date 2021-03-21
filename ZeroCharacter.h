@@ -11,7 +11,7 @@ public:
 	ZeroCharacter() = default;
 	ZeroCharacter(double x, double y, double w, double h, double speed, double health, double attackingSpeed, double firingAccuracy);
 
-	OBJ_TYPE getLoadResourcesCommand() override;
+	OBJ_TYPE getType() override;
 	void initialize() override;
 	void update() override;
 	void processCollisions() override;

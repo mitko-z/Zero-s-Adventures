@@ -43,7 +43,7 @@ void MenuButton::loadContent()
 	text.setPosition(posX, posY);
 }
 
-Definitions::ObjectType MenuButton::getLoadResourcesCommand()
+Definitions::ObjectType MenuButton::getType()
 {
 	return Definitions::ObjectType::MENU_BUTTON_TYPE;
 }

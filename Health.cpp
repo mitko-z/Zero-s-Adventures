@@ -14,7 +14,7 @@ Health::Health(double health, double parentsX, double parentsY, double parentsWi
 {
 }
 
-OBJ_TYPE Health::getLoadResourcesCommand()
+OBJ_TYPE Health::getType()
 {
 	return m_loadResCommand;
 }

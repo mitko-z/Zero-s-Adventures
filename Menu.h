@@ -17,7 +17,7 @@ public:
 
 	virtual void initialize() override;
 	virtual void loadContent() override;
-	Definitions::ObjectType getLoadResourcesCommand() override;
+	Definitions::ObjectType getType() override;
 	virtual void update() override;
 	virtual void draw(sf::RenderWindow &window) override;
 

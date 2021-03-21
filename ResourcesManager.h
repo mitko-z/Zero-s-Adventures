@@ -11,6 +11,9 @@
 
 #include "Definitions.h"		// ObjectType, Animations
 
+typedef UMAP<OBJ_TYPE, std::string> umapTypeString;
+typedef UMAP<OBJ_TYPE, std::vector<std::string> > umapTypeVecStrings;
+
 // fwd declarations
 class GameObject;
 class Menu;
@@ -23,8 +26,8 @@ public:
 	static ResourcesManager* getInstance();
 	void		initialize();
 	void		loadResources(unsigned int level);
-	sf::Texture getTexture(Definitions::ObjectType command);
-	bool        getAnimation(Definitions::ObjectType command, Animation& animation);
+	sf::Texture getTexture(OBJ_TYPE command);
+	bool        getAnimation(OBJ_TYPE command, Animation& animation);
 	void		setWindowDimensions(double w, double h);
 	void		getWindowDimensions(double& w, double& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
 	std::vector<GameObject *>& getGameObjects() { return m_gameObjects; }
@@ -44,12 +47,14 @@ private:
 	sf::Vector2u getGameObjSize();
 	sf::Vector2u calcWorldCoordsFromMapCoords(const sf::Vector2u& mapCoords);
 	void loadLevel(unsigned int level,
-		UMAP<OBJ_TYPE, std::string>& imagesNames,
-		std::vector<OBJ_TYPE>& resCommands);
+					umapTypeString& imagesNames,
+					std::vector<OBJ_TYPE>& resCommands,
+					umapTypeVecStrings& soundsNames);
 	void loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void initMenus(std::vector<OBJ_TYPE>& resCommands);
 	std::ifstream getReader(std::string filePath);
-	void getZeroInfo(UMAP<OBJ_TYPE, std::string>& imagesNames, 
+	void getZeroInfo(umapTypeString& imagesNames, 
+					 umapTypeVecStrings& soundsNames,
 					 double& zeroSpeed, 
 					 double& zeroHealth, 
 					 double& zeroAttcackingSpeed,
@@ -58,7 +63,8 @@ private:
 	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getMonstersInfo(const unsigned int& level, 
 						 MONSTERS_TYPE& monsterType, 
-						 UMAP<OBJ_TYPE, std::string>& imagesNames, 
+						 umapTypeString& imagesNames, 
+						 umapTypeVecStrings& soundsNames,
 						 double& damage, 
 						 double& speed,
 						 double& health,
@@ -80,6 +86,7 @@ private:
 						std::vector<sf::Vector2u>& monstersCoords,
 						std::vector<sf::Vector2u>& weaponsCoords);
 	void setSpeedFactor();
+	void getSounds(std::ifstream& fileReader, const OBJ_TYPE& gameObjectType, umapTypeVecStrings& soundsNames);
 
 	// members
 	static ResourcesManager* m_instance;

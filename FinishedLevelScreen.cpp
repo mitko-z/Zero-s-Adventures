@@ -2,7 +2,7 @@
 
 #include "EventsHolder.h"
 
-OBJ_TYPE FinishedLevelScreen::getLoadResourcesCommand()
+OBJ_TYPE FinishedLevelScreen::getType()
 {
 	return OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE;
 }

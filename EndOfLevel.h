@@ -11,7 +11,7 @@ public:
 		m_isLastLevel(isLastLevel)
 	{}
 
-	OBJ_TYPE getLoadResourcesCommand() override;
+	OBJ_TYPE getType() override;
 	void processCollisions() override;
 
 private:

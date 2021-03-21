@@ -10,3 +10,6 @@ SmileyWalkTighter
 1
 ; Zero firing accurracy (in percentages)
 75
+; number of sounds
+0
+; list of sounds file names 

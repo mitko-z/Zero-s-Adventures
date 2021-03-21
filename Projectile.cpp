@@ -59,7 +59,7 @@ void Projectile::processWallCollision(GameObject & wall)
 void Projectile::processMonsterCollision(GameObject* monster)
 {
 	Monster* monsterLocal = dynamic_cast<Monster*>(monster); 
-	if (!monsterLocal->isImmuneFrom(getLoadResourcesCommand()))
+	if (!monsterLocal->isImmuneFrom(getType()))
 	{
 		monsterLocal->takeDamage(m_damage);
 		m_isActive = false;

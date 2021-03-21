@@ -7,7 +7,7 @@ class Health : public GameObject
 public:
 	Health(double health, double parentsX, double parentsY, double parentsWidth, double parentsHeight, OBJ_TYPE loadResourcesCommand);
 
-	OBJ_TYPE getLoadResourcesCommand() override;
+	OBJ_TYPE getType() override;
 
 	void substractHealth(double substractWith);
 

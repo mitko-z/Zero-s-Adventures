@@ -18,6 +18,8 @@
 0
 ; Monster immune from projectiles
 
+; number of sounds
+0
 ; level no.
 2
 ; index number of the monster type for this level
@@ -38,6 +40,10 @@ Jelly
 0
 ; Monster immune from projectiles
 
+; number of sounds
+1
+; list of sounds file names 
+monster_hraw.wav
 ; level no.
 3
 ; index number of the monster type for this level
@@ -58,6 +64,11 @@ OneEye
 0
 ; Monster immune from projectiles
 
+; number of sounds
+2
+; list of sounds file names 
+monster_urah.wav
+monster_wlqu.wav
 ; level no.
 4
 ; index number of the monster type for this level
@@ -78,3 +89,8 @@ WalkingSquare
 2
 ; Monster immune from projectiles // immune from arrows & fireballs //
 18	19
+; number of sounds
+2
+; list of sounds file names 
+plos.wav
+srp.wav

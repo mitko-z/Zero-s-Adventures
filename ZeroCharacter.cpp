@@ -14,7 +14,7 @@ ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double spee
 {
 }
 
-OBJ_TYPE ZeroCharacter::getLoadResourcesCommand()
+OBJ_TYPE ZeroCharacter::getType()
 {
 	return OBJ_TYPE::ZERO_TYPE;
 }
@@ -156,7 +156,7 @@ void ZeroCharacter::processCollisions()
 {
 	for (auto* colidedObj : m_objsColideWith)
 	{
-		switch (colidedObj->getLoadResourcesCommand())
+		switch (colidedObj->getType())
 		{
 		case OBJ_TYPE::MONSTER_TYPE:
 			takeDamage(dynamic_cast<Monster*>(colidedObj)->getDamage());

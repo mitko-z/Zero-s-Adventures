@@ -1,7 +1,7 @@
 #include "StartScreen.h"
 #include "EventsHolder.h"
 
-OBJ_TYPE StartScreen::getLoadResourcesCommand()
+OBJ_TYPE StartScreen::getType()
 {
 	return OBJ_TYPE::START_SCREEN_TYPE;
 }

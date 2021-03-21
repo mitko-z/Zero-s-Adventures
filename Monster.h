@@ -23,7 +23,7 @@ public:
 	{
 	}
 
-	OBJ_TYPE getLoadResourcesCommand() override;
+	OBJ_TYPE getType() override;
 
 	virtual MONSTERS_TYPE getMonsterType();
 

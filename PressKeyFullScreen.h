@@ -11,7 +11,7 @@ public:
 
 	void initialize() override {} // overriding of menu initialization - we do not want any actions here
 
-	virtual OBJ_TYPE getLoadResourcesCommand() = 0;
+	virtual OBJ_TYPE getType() = 0;
 	void update() override;
 	virtual void setEvent() = 0;
 protected:

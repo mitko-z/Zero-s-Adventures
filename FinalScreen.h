@@ -9,7 +9,7 @@ public:
 		PressKeyFullScreen(x, y, w, h, animating, secondsToWaitBeforeAbleToPressKey) 
 	{}
 
-	OBJ_TYPE getLoadResourcesCommand() override;
+	OBJ_TYPE getType() override;
 
 	void setEvent() override;
 };

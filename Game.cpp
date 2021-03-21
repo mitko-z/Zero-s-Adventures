@@ -5,6 +5,7 @@
 #include "ResourcesManager.h"
 #include "Definitions.h"
 #include "EventsHolder.h"
+#include "AudioPlayer.h"
 
 Game::Game() :
 	window(sf::VideoMode(800, 600), "Zero's Adventures"),
@@ -24,6 +25,14 @@ void Game::initialize()
 
 	extern ResourcesManager* resMan;
 	resMan->setWindowDimensions(window.getSize().x, window.getSize().y);
+
+	std::shared_ptr<AudioPlayer> audioPlayer = AudioPlayer::getInstance();
+	audioPlayer->initialize("Data/Audio/Broccoli On My Plate - The Green Orbs [trimmed].wav");
+
+	if (eventsHolder->toPlayAudio())
+	{
+		AudioPlayer::getInstance()->play();
+	}
 }
 
 void Game::loadContent()

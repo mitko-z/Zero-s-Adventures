@@ -18,15 +18,20 @@ void GameObject::initialize() {}
 void GameObject::loadContent()
 {
 	extern ResourcesManager *resMan;
-	OBJ_TYPE loadCommand = getLoadResourcesCommand();
+	OBJ_TYPE loadCommand = getType();
+
+	// load graphics
 	resMan->getAnimation(loadCommand, m_frames);
 	m_drawingObject.texture = resMan->getTexture(loadCommand);
 	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
 	m_drawingObject.sprite.setTexture(m_drawingObject.texture);
 	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
+
+	// load audio
+	// to do
 }
 
-OBJ_TYPE GameObject::getLoadResourcesCommand()
+OBJ_TYPE GameObject::getType()
 {
 	return OBJ_TYPE::NO_OBJ_TYPE;
 }
