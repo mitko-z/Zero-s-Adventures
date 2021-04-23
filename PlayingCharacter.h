@@ -30,6 +30,8 @@ protected:
 
 	double getCurrentHealth() { return m_health.currentHealth(); }
 
+	virtual void playAttackingSound() {}
+
 private:
 	double m_damage;
 	double m_attackingSpeed;

@@ -44,6 +44,10 @@ Jelly
 1
 ; list of sounds file names 
 monster_hraw.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
 ; level no.
 3
 ; index number of the monster type for this level
@@ -69,6 +73,10 @@ OneEye
 ; list of sounds file names 
 monster_urah.wav
 monster_wlqu.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+2
 ; level no.
 4
 ; index number of the monster type for this level
@@ -94,3 +102,7 @@ WalkingSquare
 ; list of sounds file names 
 plos.wav
 srp.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+2

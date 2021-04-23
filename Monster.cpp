@@ -3,16 +3,19 @@
 #include "MonsterJelly.h"
 #include "MonsterOneEye.h"
 #include "MonsterWalkingSquare.h"
+#include "SoundsPlayer.h"
 #include "ZeroCharacter.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 #define MAX_DISTANCE_TO_LOOK_FOR_ZERO 3 // 3 blocks
 
 OBJ_TYPE Monster::getType()
 {
-	return OBJ_TYPE::MONSTER_TYPE;
+	return OBJ_TYPE::MONSTER_TYPE; 
 }
 
 MONSTERS_TYPE Monster::getMonsterType()
@@ -42,22 +45,25 @@ void Monster::update()
 	{
 		moveTowardsTarget(zeroRect.left, zeroRect.top);
 	}
-	
-	// attack Zero if touching him somehow
-	sf::RectangleShape monsterRect(sf::Vector2f(m_rect.w, m_rect.h));
-	monsterRect.setPosition(sf::Vector2f(m_rect.x, m_rect.y));
-	if (monsterRect.getGlobalBounds().intersects(zeroRect))
-	{
-		startAttack();
-		m_isAnimating = true;
-	}
-	else
-	{
-		stopAttack();
-		m_isAnimating = false;
-	}
 
 	PlayingCharacter::update();
+}
+
+void Monster::playAttackingSound()
+{
+	extern ResourcesManager *resMan;
+
+	std::shared_ptr<SoundsPlayer> soundsPly = SoundsPlayer::getInstance();
+	bool isErr;
+	SoundBuffersHolder *soundBuffersHolder = &resMan->getSoundBuffers(getType(), isErr);
+	if (isErr)
+	{
+		throw "No attack sounds loaded for monster type!";
+	}
+
+	srand(time(NULL));
+	int index = rand() % (soundBuffersHolder->ranges[SOUND_TYPE_ATTACK] + 1);
+	soundsPly->play(soundBuffersHolder->soundBuffers[index]);
 }
 
 Monster* Monster::createMonster(

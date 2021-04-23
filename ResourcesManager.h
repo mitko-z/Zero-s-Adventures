@@ -13,6 +13,15 @@
 
 typedef UMAP<OBJ_TYPE, std::string> umapTypeString;
 typedef UMAP<OBJ_TYPE, std::vector<std::string> > umapTypeVecStrings;
+typedef UMAP<OBJ_TYPE, std::vector<size_t> > umapTypeVecInts;
+struct SoundBuffersHolder
+{
+	std::vector<sf::SoundBuffer> soundBuffers;
+		// specifies the ranges of different sounds for speciffic type, i.e. if ranges[0] == 5 says 
+		// that soundBuffers[0..4] are of type 0. Then if ranges[1] == 3 then 
+		// soundBuffers[ranges[0]..ranges[0] + 3] == ranges[5..7] are of type 1, etc.
+	std::vector<size_t> ranges; 
+};
 
 // fwd declarations
 class GameObject;
@@ -28,6 +37,7 @@ public:
 	void		loadResources(unsigned int level);
 	sf::Texture getTexture(OBJ_TYPE command);
 	bool        getAnimation(OBJ_TYPE command, Animation& animation);
+	SoundBuffersHolder& getSoundBuffers(OBJ_TYPE type, bool& noBuffers);
 	void		setWindowDimensions(double w, double h);
 	void		getWindowDimensions(double& w, double& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
 	std::vector<GameObject *>& getGameObjects() { return m_gameObjects; }
@@ -49,12 +59,14 @@ private:
 	void loadLevel(unsigned int level,
 					umapTypeString& imagesNames,
 					std::vector<OBJ_TYPE>& resCommands,
-					umapTypeVecStrings& soundsNames);
+					umapTypeVecStrings& soundsNames,
+					umapTypeVecInts& soundsRanges);
 	void loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void initMenus(std::vector<OBJ_TYPE>& resCommands);
 	std::ifstream getReader(std::string filePath);
 	void getZeroInfo(umapTypeString& imagesNames, 
 					 umapTypeVecStrings& soundsNames,
+					 umapTypeVecInts& soundsRanges,
 					 double& zeroSpeed, 
 					 double& zeroHealth, 
 					 double& zeroAttcackingSpeed,
@@ -65,6 +77,7 @@ private:
 						 MONSTERS_TYPE& monsterType, 
 						 umapTypeString& imagesNames, 
 						 umapTypeVecStrings& soundsNames,
+						 umapTypeVecInts& soundsRanges,
 						 double& damage, 
 						 double& speed,
 						 double& health,
@@ -86,12 +99,13 @@ private:
 						std::vector<sf::Vector2u>& monstersCoords,
 						std::vector<sf::Vector2u>& weaponsCoords);
 	void setSpeedFactor();
-	void getSounds(std::ifstream& fileReader, const OBJ_TYPE& gameObjectType, umapTypeVecStrings& soundsNames);
+	void readFromFileSoundsFileNames(std::ifstream& fileReader, const OBJ_TYPE& gameObjectType, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges);
 
 	// members
 	static ResourcesManager* m_instance;
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;
 	UMAP<OBJ_TYPE, Animation> m_animations;
+	UMAP<OBJ_TYPE, SoundBuffersHolder > m_soundBuffers;
 	Rectangle m_windowDimensions;
 	sf::Vector2u m_objectsInLevel; // x = how many columns, y = how many rows current level has
 	enum objTypeOnLevelMap

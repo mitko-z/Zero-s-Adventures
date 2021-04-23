@@ -1,6 +1,17 @@
 make background music & sounds
 
-solve the issue with the colliding objects
+optimize: 
+	- remove resCommands
+	- ResourcesManager::getReader
+	- ResourcesManager::getAnimation
+	- ResourcesManager to be taken as shared_ptr
+	
+rename:
+	- PlayingCharacter::setIsActive
+
+solve the issue with the colliding objects - the player is able to push a monster through a wall
+
+make ResourcesManager to ignore lines starting with ";" when reading from file
 
 add resume game menu
 
@@ -27,3 +38,5 @@ Make Zero be able to gain level:
 Make a "Press any key" message appears on the PressKeyFullScreen screens when the waiting time left
 
 Make the same font on the PressKeyFullScreen screes as the one on the main menu screen.
+
+Add more explanatory comments to classes, methods, etc.

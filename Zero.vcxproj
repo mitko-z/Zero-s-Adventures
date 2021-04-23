@@ -118,7 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AudioPlayer.cpp" />
+    <ClCompile Include="BackgroundAudioPlayer.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="ButtonHighlighter.cpp" />
     <ClCompile Include="EndOfLevel.cpp" />
@@ -145,6 +145,7 @@
     <ClCompile Include="ProjectileFireball.cpp" />
     <ClCompile Include="ProjectileStar.cpp" />
     <ClCompile Include="ResourcesManager.cpp" />
+    <ClCompile Include="SoundsPlayer.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -155,7 +156,7 @@
     <ClCompile Include="ZeroCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AudioPlayer.h" />
+    <ClInclude Include="BackgroundAudioPlayer.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="ButtonHighlighter.h" />
     <ClInclude Include="Definitions.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="ProjectileFireball.h" />
     <ClInclude Include="ProjectileStar.h" />
     <ClInclude Include="ResourcesManager.h" />
+    <ClInclude Include="SoundsPlayer.h" />
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Wall.h" />

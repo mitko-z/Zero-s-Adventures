@@ -117,7 +117,10 @@
     <ClCompile Include="FinalScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AudioPlayer.cpp">
+    <ClCompile Include="BackgroundAudioPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundsPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -224,7 +227,10 @@
     <ClInclude Include="FinalScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioPlayer.h">
+    <ClInclude Include="BackgroundAudioPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundsPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

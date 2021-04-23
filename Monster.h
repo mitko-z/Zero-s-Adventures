@@ -29,6 +29,8 @@ public:
 
 	void update() override;
 
+	void playAttackingSound() override;
+
 	static Monster* createMonster(
 		MONSTERS_TYPE type, 
 		double x, 
@@ -49,4 +51,16 @@ private:
 
 	bool m_isTouchingZero;
 	std::vector<OBJ_TYPE> m_immuneFromProjectiles;
+	
+	enum soundTypes
+	{
+		SOUND_TYPE_ATTACK = 0,
+	};
+	struct range
+	{
+		size_t first;
+		size_t second;
+	};
+	UMAP<soundTypes, range> soundsRangesInBuffer;
+	
 };

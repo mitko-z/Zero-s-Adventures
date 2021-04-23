@@ -66,6 +66,10 @@ bool PlayingCharacter::startAttack()
 	{
 		m_attackingTimer.start();
 		startingNow = true;
+
+		playAttackingSound();
+
+		m_isAnimating = true;
 	}
 
 	return startingNow;
@@ -75,6 +79,8 @@ void PlayingCharacter::stopAttack()
 {
 	if(canMakeNextAttack())
 		m_attackingTimer.stop();
+
+	m_isAnimating = false;
 }
 
 bool PlayingCharacter::canMakeNextAttack()
@@ -87,6 +93,10 @@ bool PlayingCharacter::canMakeNextAttack()
 			m_attackingTimer.restart();
 			m_attackingTimer.stop();
 			result = true;
+
+			playAttackingSound();
+
+			m_isAnimating = true;
 		}
 	}
 	return result;
