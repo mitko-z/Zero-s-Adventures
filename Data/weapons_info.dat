@@ -16,6 +16,8 @@
 0
 ; projectiles speed
 0
+; number of sounds
+0
 ; level no.
 2
 ; index number for the type of weapon for this level
@@ -34,6 +36,14 @@ arrow_239_239_thicker
 10
 ; projectiles speed
 10
+; number of sounds
+1
+; list of sounds file names 
+fryu.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
 ; level no.
 3
 ; index number for the type of weapon for this level
@@ -52,6 +62,14 @@ Fireball
 15
 ; projectiles speed
 15
+; number of sounds
+1
+; list of sounds file names 
+fireball.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
 ; level no.
 4
 ; index number for the type of weapon for this level
@@ -70,3 +88,11 @@ StarProjectile
 20
 ; projectiles speed
 20
+; number of sounds
+1
+; list of sounds file names 
+csynik.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1

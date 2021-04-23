@@ -3,13 +3,10 @@
 #include "MonsterJelly.h"
 #include "MonsterOneEye.h"
 #include "MonsterWalkingSquare.h"
-#include "SoundsPlayer.h"
 #include "ZeroCharacter.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
 
 #define MAX_DISTANCE_TO_LOOK_FOR_ZERO 3 // 3 blocks
 
@@ -51,19 +48,7 @@ void Monster::update()
 
 void Monster::playAttackingSound()
 {
-	extern ResourcesManager *resMan;
-
-	std::shared_ptr<SoundsPlayer> soundsPly = SoundsPlayer::getInstance();
-	bool isErr;
-	SoundBuffersHolder *soundBuffersHolder = &resMan->getSoundBuffers(getType(), isErr);
-	if (isErr)
-	{
-		throw "No attack sounds loaded for monster type!";
-	}
-
-	srand(time(NULL));
-	int index = rand() % (soundBuffersHolder->ranges[SOUND_TYPE_ATTACK] + 1);
-	soundsPly->play(soundBuffersHolder->soundBuffers[index]);
+	playSound(OBJ_TYPE::MONSTER_TYPE, monsterSoundTypes::SOUND_TYPE_ATTACK);
 }
 
 Monster* Monster::createMonster(

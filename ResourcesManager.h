@@ -86,7 +86,9 @@ private:
 	void getWeaponsInfo(const unsigned int& level, 
 						std::vector<OBJ_TYPE>& weaponType,
 						std::vector<OBJ_TYPE>& projectilesType,
-						UMAP<OBJ_TYPE, std::string>& imagesNames,
+						umapTypeString& imagesNames,
+						umapTypeVecStrings& soundsNames,
+						umapTypeVecInts& soundsRanges,
 						double& projectilesDamage,
 						double& firingRate,
 						double& projectilesSpeed);

@@ -177,7 +177,6 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.clear();
 	soundsNames.clear();
 	m_animations.clear();
-	m_soundBuffers.clear();
 
 	/// reading infos
 	// read zero info
@@ -200,7 +199,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	std::vector<OBJ_TYPE> allWeaponsTypes;
 	std::vector<OBJ_TYPE> allProjectilesTypes;
 	double weaponAttackSpeed, projectilesDamage, projectilesSpeed;
-	getWeaponsInfo(level, allWeaponsTypes, allProjectilesTypes, imagesNames, projectilesDamage, weaponAttackSpeed, projectilesSpeed);
+	getWeaponsInfo(level, allWeaponsTypes, allProjectilesTypes, imagesNames, soundsNames, soundsRanges, projectilesDamage, weaponAttackSpeed, projectilesSpeed);
 
 	// read end of level info
 	getEndOfLevelInfo(level, imagesNames);
@@ -505,12 +504,14 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 }
 
 void ResourcesManager::getWeaponsInfo(const unsigned int & level,
-					   std::vector<OBJ_TYPE>& weaponsTypes,
-					   std::vector<OBJ_TYPE>& projectilesTypes,
-					   UMAP<OBJ_TYPE, std::string>& imagesNames,
-					   double& projectilesDamage,
-					   double& firingRate,
-					   double& projectilesSpeed)
+									   std::vector<OBJ_TYPE>& weaponsTypes,
+									   std::vector<OBJ_TYPE>& projectilesTypes,
+									   umapTypeString& imagesNames,
+									   umapTypeVecStrings& soundsNames,
+									   umapTypeVecInts& soundsRanges,
+									   double& projectilesDamage,
+									   double& firingRate,
+									   double& projectilesSpeed)
 {
 	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
 	std::string lineRead;
@@ -550,7 +551,7 @@ void ResourcesManager::getWeaponsInfo(const unsigned int & level,
 		std::getline(infoReader, lineRead);	// read ; projectiles speed
 		std::getline(infoReader, lineRead);	// read the projectiles speed
 		projectilesSpeed = std::stod(lineRead);
-
+		readFromFileSoundsFileNames(infoReader, weaponType, soundsNames, soundsRanges);
 	} while (currentLevel != level);
 	infoReader.close();
 }

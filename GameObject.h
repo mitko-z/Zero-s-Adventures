@@ -38,8 +38,8 @@ public :
 protected :
 	virtual void updateDrawingObject();
 	virtual void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased);
-
 	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
+	void playSound(OBJ_TYPE gameObjType, int rangeType);
 
 	// graphics
 	Rectangle m_rect;

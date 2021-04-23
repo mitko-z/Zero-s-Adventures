@@ -42,4 +42,8 @@ private:
 	double m_projectilesSpeed;
 	bool m_isOwned;
 	std::vector<Projectile*> m_projectiles;
+	enum weaponSoundTypes
+	{
+		WEAPON_SOUND_TYPE_ATTACK = 0,
+	};
 };

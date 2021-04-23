@@ -46,6 +46,8 @@ void Weapon::fire(double angle)
 		angle));
 	std::vector<GameObject*> gameObjects = resMan->getGameObjects();
 	gameObjects[gameObjects.size() - 1]->loadContent();
+
+	playSound(getType(), weaponSoundTypes::WEAPON_SOUND_TYPE_ATTACK);
 }
 
 void Weapon::update()

@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include "EventsHolder.h"
+#include "SoundsPlayer.h"
 
 GameObject::~GameObject() {}
 
@@ -121,5 +122,22 @@ void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, s
 	sf::Vector2f factor{ factor1,factor2 };
 	sprite.setScale(factor);
 	//sprite.scale(factor);
+}
+
+void GameObject::playSound(OBJ_TYPE gameObjType, int rangeType)
+{
+	extern ResourcesManager *resMan;
+	std::shared_ptr<SoundsPlayer> soundsPly = SoundsPlayer::getInstance();
+	bool isErr;
+	SoundBuffersHolder *soundBuffersHolder = &resMan->getSoundBuffers(gameObjType, isErr);
+	if (isErr)
+	{
+		std::string throwMessage = "Can't play sound for type " + gameObjType;
+		throw throwMessage;
+	}
+
+	srand(time(NULL));
+	int index = rand() % (soundBuffersHolder->ranges[rangeType]);
+	soundsPly->play(soundBuffersHolder->soundBuffers[index]);
 }
 
