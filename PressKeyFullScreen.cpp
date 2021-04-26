@@ -2,7 +2,7 @@
 #include "EventsHolder.h"
 
 PressKeyFullScreen::PressKeyFullScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey) :
-	Menu(x, y, w, h, animating),
+	Menu(x, y, w, h, animating, ""),
 	m_keyIsPressed(false),
 	m_secondsToWaitBeforeAbleToPressKey(secondsToWaitBeforeAbleToPressKey)
 {}

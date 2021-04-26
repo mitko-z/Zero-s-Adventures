@@ -8,5 +8,6 @@ void MainMenu::initialize()
 		Definitions::ButtonType::EXIT_GAME_BUTTON
 	};
 	setAndInsertButtons(buttonTypes);
+
 	Menu::initialize();
 }

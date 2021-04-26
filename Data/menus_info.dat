@@ -4,6 +4,8 @@ MenuButtonEmptyWide
 frame-transparent
 ; name of the menus background texture 
 MenuBackgroundRectangle
+; name of the background music for menus
+Snack Time - The Green Orbs - [trimmed].wav
 ; name of the start screen texture 
 StartScreen
 ; name of the finished level screen texture 

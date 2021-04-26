@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "BackgroundAudioPlayer.h"
 #include "EventsHolder.h"
 
 void Menu::initialize()
@@ -10,12 +11,14 @@ void Menu::initialize()
 	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Space, false));	// Choice
 	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Return, false));	// Choice
 	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Escape, false));	// Return to previous
-	activeButtonIndex = 0;
-	if (buttons.size() > 0)
+	m_activeButtonIndex = 0;
+	if (m_buttons.size() > 0)
 	{
-		buttons[activeButtonIndex]->activate(); // make start button active
+		m_buttons[m_activeButtonIndex]->activate(); // make start button active
 		setHighlighter(0);
 	}
+
+
 }
 
 Definitions::ObjectType Menu::getType()
@@ -40,62 +43,67 @@ void Menu::update()
 	}
 	if (m_controllingKeys[sf::Keyboard::Space] || m_controllingKeys[sf::Keyboard::Return])
 	{
-		buttons[activeButtonIndex]->press();
+		m_buttons[m_activeButtonIndex]->press();
 		m_controllingKeys[sf::Keyboard::Space] = false;
 		m_controllingKeys[sf::Keyboard::Return] = false;
 	}
 
-	for (auto button : buttons)
+	for (auto button : m_buttons)
 	{
 		button->update();
 	}
 
-	highlighter.update();
+	m_highlighter.update();
 }
 
 void Menu::activatePrevButton()
 {
-	buttons[activeButtonIndex]->deactivate();
-	activeButtonIndex--;
-	if (activeButtonIndex < 0)
-		activeButtonIndex = buttons.size() - 1;
-	buttons[activeButtonIndex]->activate();
+	m_buttons[m_activeButtonIndex]->deactivate();
+	m_activeButtonIndex--;
+	if (m_activeButtonIndex < 0)
+		m_activeButtonIndex = m_buttons.size() - 1;
+	m_buttons[m_activeButtonIndex]->activate();
 
-	setHighlighter(activeButtonIndex);
+	setHighlighter(m_activeButtonIndex);
 }
 
 void Menu::activateNextButton()
 {
-	buttons[activeButtonIndex]->deactivate();
-	activeButtonIndex++;
-	if (activeButtonIndex >= buttons.size())
-		activeButtonIndex = 0;
-	buttons[activeButtonIndex]->activate();
+	m_buttons[m_activeButtonIndex]->deactivate();
+	m_activeButtonIndex++;
+	if (m_activeButtonIndex >= m_buttons.size())
+		m_activeButtonIndex = 0;
+	m_buttons[m_activeButtonIndex]->activate();
 
-	setHighlighter(activeButtonIndex);
+	setHighlighter(m_activeButtonIndex);
 }
 
 void Menu::draw(sf::RenderWindow &window)
 {
 	GameObject::draw(window);
 
-	for (auto button : buttons)
+	for (auto button : m_buttons)
 	{
 		button->draw(window);
 	}
 
-	highlighter.draw(window);
+	m_highlighter.draw(window);
+}
+
+void Menu::playBackgroundMusic()
+{
+	BackgroundAudioPlayer::getInstance()->play(m_backgroundMusicFilename);
 }
 
 void Menu::loadContent()
 {
 	GameObject::loadContent();
-	for (auto button : buttons)
+	for (auto button : m_buttons)
 	{
 		button->loadContent();
 	}
 
-	highlighter.loadContent();
+	m_highlighter.loadContent();
 
 }
 
@@ -113,7 +121,7 @@ void Menu::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)
 	}
 }
 
-void Menu::setAndInsertButtons(const std::vector<Definitions::ButtonType>& buttonTypes)
+void Menu::setAndInsertButtons(const std::vector<BUTTON_TYPE>& buttonTypes)
 {
 	if (buttonTypes.size() > 0)
 	{
@@ -138,21 +146,21 @@ void Menu::setAndInsertButtons(const std::vector<Definitions::ButtonType>& butto
 				break;
 			}
 			double y = (2 * i + 1) * h;
-			buttons.push_back(new MenuButton(x, y, w, h, false, buttonTypes[i], text));
+			m_buttons.push_back(new MenuButton(x, y, w, h, false, buttonTypes[i], text));
 		}
 	}
 }
 
 void Menu::setHighlighter(size_t buttonIndex)
 {
-	if (buttons.size() > 0)
+	if (m_buttons.size() > 0)
 	{
 		const double scale = 1.05;
-		const Rectangle buttonRect = buttons[buttonIndex]->getRect();
+		const Rectangle buttonRect = m_buttons[buttonIndex]->getRect();
 		const double w = buttonRect.w * scale;
 		const double h = buttonRect.h * scale;
 		const double x = buttonRect.x - (w - buttonRect.w) / 2;
 		const double y = buttonRect.y - (h - buttonRect.h) / 2;
-		highlighter.setRect(Rectangle(x, y, w, h));
+		m_highlighter.setRect(Rectangle(x, y, w, h));
 	}
 }

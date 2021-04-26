@@ -1,5 +1,7 @@
 #include "BackgroundAudioPlayer.h"
 
+#include "EventsHolder.h"
+
 sf::Music BackgroundAudioPlayer::player;
 
 std::shared_ptr<BackgroundAudioPlayer> BackgroundAudioPlayer::getInstance()
@@ -31,7 +33,10 @@ void BackgroundAudioPlayer::play(const std::string& pathToFile)
 		stop();
 	}
 	initialize(pathToFile);
-	play();
+	if (EventsHolder::getInstnce()->toPlayAudio())
+	{
+		play();
+	}
 }
 
 

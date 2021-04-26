@@ -26,6 +26,8 @@ public:
 	void nullEvents();
 	bool toPlayAudio() { return m_toPlayAudio; }
 	void setToPlayAudio(bool ifToPlay) { m_toPlayAudio = ifToPlay; }
+	bool toChangeAudio() { return m_changeAudio; }
+	void setToChangeAudio(bool shoudChangeAudio) { m_changeAudio = shoudChangeAudio; }
 private:
 	EventsHolder() {}
 
@@ -40,4 +42,5 @@ private:
 
 	// audio
 	bool m_toPlayAudio;
+	bool m_changeAudio;
 };

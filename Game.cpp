@@ -27,12 +27,7 @@ void Game::initialize()
 	resMan->setWindowDimensions(window.getSize().x, window.getSize().y);
 
 	std::shared_ptr<BackgroundAudioPlayer> audioPlayer = BackgroundAudioPlayer::getInstance();
-	audioPlayer->initialize("Data/Audio/Broccoli On My Plate - The Green Orbs [trimmed].wav");
-
-	if (eventsHolder->toPlayAudio())
-	{
-		BackgroundAudioPlayer::getInstance()->play();
-	}
+	BackgroundAudioPlayer::getInstance()->play("Data/Audio/Broccoli On My Plate - The Green Orbs [trimmed].wav");
 }
 
 void Game::loadContent()
@@ -209,7 +204,14 @@ void Game::update()
 		case MODE::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-			menus[eventsHolder->getRunningMenuState()]->update();
+			RUN_MENU_STATE st = eventsHolder->getRunningMenuState();
+			Menu* activeMenu = menus[eventsHolder->getRunningMenuState()];
+			if (eventsHolder->toChangeAudio())
+			{
+				activeMenu->playBackgroundMusic();
+				eventsHolder->setToChangeAudio(false);
+			}
+			activeMenu->update();
 		}
 		break;
 		default:

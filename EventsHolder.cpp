@@ -14,6 +14,7 @@ void EventsHolder::initialize()
 	m_previousRunningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
 
 	m_toPlayAudio = true;
+	m_changeAudio = false;
 }
 
 void EventsHolder::addPressedKey(sf::Keyboard::Key key)
@@ -49,6 +50,7 @@ void EventsHolder::setEventByButton(BUTTON_TYPE buttonType)
 
 void EventsHolder::setEventByGameCommand(COMMAND command)
 {
+	setToChangeAudio(true);
 	switch (command)
 	{
 		case COMMAND::EXIT_COMMAND:

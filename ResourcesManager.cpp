@@ -15,6 +15,7 @@
 #include "Health.h"
 #include "Weapon.h"
 
+// file reading defines
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
 #define WALLS_INFO_FILE_PATH		"Data/walls_info.dat"
 #define BACKGROUND_INFO_FILE_PATH	"Data/background_info.dat"
@@ -24,6 +25,9 @@
 #define END_OF_LEVEL_INFO_FILE_PATH "Data/end_of_level_info.dat"
 #define HEALTH_INFO_FILE_PATH		"Data/health_info.dat"
 #define MENUS_INFO_FILE_PATH		"Data/menus_info.dat"
+#define IMAGES_FOLDER				"Data/Images/"
+#define SOUNDS_FOLDER				"Data/Audio/sounds/"
+#define AUDIO_FOLDER				"Data/Audio/"
 
 // TODO - move these below to a settings file (when one is available)
 #define START_SCREEN_SECONDS_TO_WAIT			0
@@ -80,20 +84,21 @@ void ResourcesManager::loadResources(unsigned int level)
 	std::vector<OBJ_TYPE> resCommands;
 	umapTypeVecStrings soundNames;
 	umapTypeVecInts soundsRanges;
+	umapTypeString musicBackgroundNames;
 
 	loadLevel(level, imagesNames, resCommands, soundNames, soundsRanges);
 
 	// Menu load
 	if (level == 1)
 	{
-		loadMenus(imagesNames);
-		initMenus(resCommands);
+		loadMenus(imagesNames, musicBackgroundNames);
+		initMenus(resCommands, musicBackgroundNames);
 	}
 
 	for (auto command : resCommands)
 	{
 		sf::Texture texture;
-		std::string loadPath("Data/Images/");
+		std::string loadPath(IMAGES_FOLDER);
 		loadPath += imagesNames[command];
 		if (!texture.loadFromFile(loadPath))
 		{
@@ -108,7 +113,7 @@ void ResourcesManager::loadResources(unsigned int level)
 		for (auto& soundName : typeSoundsNames.second)
 		{
 			sf::SoundBuffer buf;
-			if (!buf.loadFromFile("Data/Audio/sounds/" + soundName))
+			if (!buf.loadFromFile(SOUNDS_FOLDER + soundName))
 			{
 				std::string throwMessage = "Cannot load sound " + soundName;
 				throw throwMessage;
@@ -305,19 +310,22 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
 }
 
-void ResourcesManager::loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames)
 {
 	std::ifstream infoReader = getReader(MENUS_INFO_FILE_PATH);
 	std::string lineRead;
 	std::getline(infoReader, lineRead);	// read "; name of the buttons texture (without the extension of the file)"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
+	std::getline(infoReader, lineRead);	// read the name of the texture for buttons
 	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = lineRead + ".png";
 	std::getline(infoReader, lineRead);	// read "; name of the buttons highlighter texture"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
+	std::getline(infoReader, lineRead);	// read name of the texture for the highlighter
 	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = lineRead + ".png";
 	std::getline(infoReader, lineRead);	// read "; name of the menus background texture"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
+	std::getline(infoReader, lineRead);	// read the name of the texture for the background
 	imagesNames[OBJ_TYPE::MENU_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the background music for menus"
+	std::getline(infoReader, lineRead);	// read "; name of the music file
+	musicNames[OBJ_TYPE::MENU_TYPE] = lineRead;
 
 	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"
 	std::getline(infoReader, lineRead);	// read "; name of the texture
@@ -336,13 +344,13 @@ void ResourcesManager::loadMenus(UMAP<OBJ_TYPE, std::string>& imagesNames)
 	imagesNames[OBJ_TYPE::FINAL_SCREEN] = lineRead + ".png";
 }
 
-void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands)
+void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeString& musicNames)
 {
 	resCommands.push_back(OBJ_TYPE::MENU_BUTTON_TYPE);
 	resCommands.push_back(OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE);
 	resCommands.push_back(OBJ_TYPE::MENU_TYPE);
 	m_menus[RUN_MENU_STATE::MAIN_MENU_STATE] =
-		new MainMenu(0, 0, m_windowDimensions.w, m_windowDimensions.h, false);
+		new MainMenu(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
 	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::START_SCREEN_STATE] =
 		new StartScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, START_SCREEN_SECONDS_TO_WAIT);

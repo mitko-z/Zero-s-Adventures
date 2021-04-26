@@ -6,8 +6,8 @@ class MainMenu : public Menu
 {
 public:
 	MainMenu() : Menu() {}
-	MainMenu(double x, double y, double w, double h, bool isAnimating) :
-		Menu(x, y, w, h, isAnimating) {}
+	MainMenu(double x, double y, double w, double h, bool isAnimating, std::string backgroundMusicFilename) :
+		Menu(x, y, w, h, isAnimating, backgroundMusicFilename) {}
 	void initialize() override;
 private:
 	
