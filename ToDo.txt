@@ -1,15 +1,18 @@
 make background music & sounds
 
+solve the issue with the colliding objects - the player is able to push a monster through a wall
+
 optimize: 
 	- remove resCommands
 	- ResourcesManager::getReader
 	- ResourcesManager::getAnimation
 	- ResourcesManager to be taken as shared_ptr
 	
-rename:
-	- PlayingCharacter::setIsActive
+rename PlayingCharacter::setIsActive
+	
+refactor: resource manager should be responsible only for holding resources - make new class(es) responsible for reading from file and for initializing the game objects
 
-solve the issue with the colliding objects - the player is able to push a monster through a wall
+rename the EventsHolder class to StateMachine or something more meaningfull
 
 make ResourcesManager to ignore lines starting with ";" when reading from file
 

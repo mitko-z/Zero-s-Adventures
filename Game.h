@@ -59,9 +59,14 @@ private:
 	void update();
 
 	/// <summary>
-	/// This is called when the game should draw on screen objects (also playing sounds)
+	/// This is called when the game should draw on screen objects
 	/// </summary>
 	void draw();
+
+	/// <summary>
+	/// playing sounds from various objects
+	/// </summary>
+	void playAudio();
 #pragma endregion
 
 #pragma region members

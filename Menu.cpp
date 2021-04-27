@@ -90,6 +90,11 @@ void Menu::draw(sf::RenderWindow &window)
 	m_highlighter.draw(window);
 }
 
+void Menu::playAudio()
+{
+	playBackgroundMusic();
+}
+
 void Menu::playBackgroundMusic()
 {
 	BackgroundAudioPlayer::getInstance()->play(m_backgroundMusicFilename);

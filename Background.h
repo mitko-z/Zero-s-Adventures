@@ -5,7 +5,14 @@ class Background : public GameObject
 {
 public:
 	Background() : GameObject(0, 0, 0, 0, false) {}
-	Background(double x, double y, double w, double h, bool animating) : GameObject(x, y, w, h, animating) {}
+	Background(double x, double y, double w, double h, bool animating, std::string backgroundMusicFileName) : 
+		GameObject(x, y, w, h, animating),
+		m_backgroundMusicFileName(backgroundMusicFileName)
+	{}
 
 	Definitions::ObjectType getType() override;
+
+	void playAudio() override;
+private:
+	std::string m_backgroundMusicFileName;
 };

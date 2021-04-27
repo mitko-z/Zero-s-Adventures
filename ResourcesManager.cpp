@@ -189,7 +189,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 	getZeroInfo(imagesNames, soundsNames, soundsRanges, zeroSpeed, zeroHealth, zeroAttcackingSpeed, zeroFiringAccurracy);
 
 	// read background info
-	getBackgroundInfo(level, imagesNames);
+	std::string backgroundMusicFileName;
+	getBackgroundInfo(level, imagesNames, backgroundMusicFileName);
 
 	// read walls info
 	getWallsInfo(level, imagesNames);
@@ -220,7 +221,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	std::vector<sf::Vector2u> weaponsCoords;
 	getGeneralInfo(level, numbersOfLevels, wallsCoords, endOfLevelCoords, monstersCoords, weaponsCoords);
 
-	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false));
+	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, AUDIO_FOLDER + backgroundMusicFileName));
 	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
 	// initialize Zero 
@@ -314,6 +315,7 @@ void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& mu
 {
 	std::ifstream infoReader = getReader(MENUS_INFO_FILE_PATH);
 	std::string lineRead;
+	// regular menu
 	std::getline(infoReader, lineRead);	// read "; name of the buttons texture (without the extension of the file)"
 	std::getline(infoReader, lineRead);	// read the name of the texture for buttons
 	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = lineRead + ".png";
@@ -324,24 +326,40 @@ void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& mu
 	std::getline(infoReader, lineRead);	// read the name of the texture for the background
 	imagesNames[OBJ_TYPE::MENU_TYPE] = lineRead + ".png";
 	std::getline(infoReader, lineRead);	// read "; name of the background music for menus"
-	std::getline(infoReader, lineRead);	// read "; name of the music file
+	std::getline(infoReader, lineRead);	// read the name of the music file
 	musicNames[OBJ_TYPE::MENU_TYPE] = lineRead;
 
+	// start screen
 	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
+	std::getline(infoReader, lineRead);	// read the name of the texture
 	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the background music the start screen"
+	std::getline(infoReader, lineRead);	// read the name of the music file
+	musicNames[OBJ_TYPE::START_SCREEN_TYPE] = lineRead;
 
+	// finished level screen
 	std::getline(infoReader, lineRead);	// read "; name of the finished level screen texture"
 	std::getline(infoReader, lineRead);	// read "; name of the texture
 	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the background music the finished level screen"
+	std::getline(infoReader, lineRead);	// read the name of the music file
+	musicNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = lineRead;
 
+	// game over screen
 	std::getline(infoReader, lineRead);	// read "; name of the game over screen texture"
 	std::getline(infoReader, lineRead);	// read "; name of the texture
 	imagesNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the background music the game over screen"
+	std::getline(infoReader, lineRead);	// read the name of the music file
+	musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = lineRead;
 
+	// final screen
 	std::getline(infoReader, lineRead);	// read "; name of the final screen texture"
 	std::getline(infoReader, lineRead);	// read "; name of the texture
 	imagesNames[OBJ_TYPE::FINAL_SCREEN] = lineRead + ".png";
+	std::getline(infoReader, lineRead);	// read "; name of the background music the final screen"
+	std::getline(infoReader, lineRead);	// read the name of the music file
+	musicNames[OBJ_TYPE::FINAL_SCREEN] = lineRead;
 }
 
 void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeString& musicNames)
@@ -350,19 +368,38 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeStr
 	resCommands.push_back(OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE);
 	resCommands.push_back(OBJ_TYPE::MENU_TYPE);
 	m_menus[RUN_MENU_STATE::MAIN_MENU_STATE] =
-		new MainMenu(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
+		new MainMenu(
+			0, 0, 
+			m_windowDimensions.w, m_windowDimensions.h, 
+			false, 
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
 	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::START_SCREEN_STATE] =
-		new StartScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, START_SCREEN_SECONDS_TO_WAIT);
+		new StartScreen(
+			0, 0, 
+			m_windowDimensions.w, m_windowDimensions.h, 
+			false, START_SCREEN_SECONDS_TO_WAIT, 
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::START_SCREEN_TYPE]);
 	resCommands.push_back(OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE] =
-		new FinishedLevelScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT);
+		new FinishedLevelScreen(
+			0, 0, 
+			m_windowDimensions.w, m_windowDimensions.h, 
+			false, FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT, 
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE]);
 	resCommands.push_back(OBJ_TYPE::GAME_OVER_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::GAME_OVER_SCREEN_STATE] = 
-		new GameOverScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, GAME_OVER_SCREEN_SECONDS_TO_WAIT);
+		new GameOverScreen(
+			0, 0, 
+			m_windowDimensions.w, m_windowDimensions.h, 
+			false, GAME_OVER_SCREEN_SECONDS_TO_WAIT, 
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE]);
 	resCommands.push_back(OBJ_TYPE::FINAL_SCREEN);
 	m_menus[RUN_MENU_STATE::FINAL_SCREEN_STATE] =
-		new FinalScreen(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, GAME_OVER_SCREEN_SECONDS_TO_WAIT);
+		new FinalScreen(0, 0, 
+			m_windowDimensions.w, m_windowDimensions.h, 
+			false, GAME_OVER_SCREEN_SECONDS_TO_WAIT,
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINAL_SCREEN]);
 }
 
 std::ifstream ResourcesManager::getReader(std::string filePath)
@@ -409,7 +446,7 @@ void ResourcesManager::getZeroInfo(umapTypeString& imagesNames,
 	infoReader.close();
 }
 
-void ResourcesManager::getBackgroundInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getBackgroundInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames, std::string& backgroundMusicFileName)
 {
 	std::ifstream infoReader = getReader(BACKGROUND_INFO_FILE_PATH);
 	std::string lineRead;
@@ -425,6 +462,9 @@ void ResourcesManager::getBackgroundInfo(const unsigned int & level, UMAP<OBJ_TY
 		std::getline(infoReader, lineRead);	// read "; name for the texture of the background"
 		std::getline(infoReader, lineRead);	// read the name for the texture of the background
 		imagesNames[OBJ_TYPE::BACKGROUND_TYPE] = lineRead + ".png";
+		std::getline(infoReader, lineRead);	// read "; name of the background music the game over screen"
+		std::getline(infoReader, lineRead);	// read the name of the music file
+		backgroundMusicFileName = lineRead;
 	} while (currentLevel != level);
 	infoReader.close();
 }

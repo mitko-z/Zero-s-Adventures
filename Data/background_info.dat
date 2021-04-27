@@ -2,15 +2,23 @@
 1
 ; name for the texture of the background (without the extension of the file)
 backgroundLv1
+; name of the background music
+Robot Boogie - Quincas Moreira [midle-loop ready].wav
 ; level no.
 2
 ; name for the texture of the background
 grassdirt-big-faded
+; name of the background music
+Robot Boogie - Quincas Moreira [midle-loop ready].wav
 ; level no.
 3
 ; name for the texture of the background
 grassdirt-big-faded
+; name of the background music
+Robot Boogie - Quincas Moreira [midle-loop ready].wav
 ; level no.
 4
-; name for the texture of the background (without the extension of the file)
+; name for the texture of the background
 GrassTopView2
+; name of the background music
+Robot Boogie - Quincas Moreira [midle-loop ready].wav

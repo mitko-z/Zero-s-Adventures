@@ -8,9 +8,17 @@ MenuBackgroundRectangle
 Snack Time - The Green Orbs - [trimmed].wav
 ; name of the start screen texture 
 StartScreen
+; name of the background music for the start screen
+Robot Boogie - Quincas Moreira [intro-outro].wav
 ; name of the finished level screen texture 
 finished level screen image
+; name of the background music for the finished level screen
+Robot Boogie - Quincas Moreira [mid-outro].wav
 ; name of the game over screen texture 
 game over screen image
+; name of the background music for the game over screen
+80's Video Game Death - Sir Cubworth [intro].wav
 ; name of the final screen texture 
 final screen image
+; name of the background music for the final screen
+Robot Boogie - Quincas Moreira [longer intro-outro].wav

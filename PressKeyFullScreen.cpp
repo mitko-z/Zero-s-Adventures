@@ -1,8 +1,9 @@
 #include "PressKeyFullScreen.h"
+#include "BackgroundAudioPlayer.h"
 #include "EventsHolder.h"
 
-PressKeyFullScreen::PressKeyFullScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey) :
-	Menu(x, y, w, h, animating, ""),
+PressKeyFullScreen::PressKeyFullScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey, std::string backgroundMusicFilename) :
+	Menu(x, y, w, h, animating, backgroundMusicFilename),
 	m_keyIsPressed(false),
 	m_secondsToWaitBeforeAbleToPressKey(secondsToWaitBeforeAbleToPressKey)
 {}
@@ -22,6 +23,11 @@ void PressKeyFullScreen::update()
 			setEvent();
 		}
 	}
+}
+
+void PressKeyFullScreen::playBackgroundMusic()
+{
+	BackgroundAudioPlayer::getInstance()->play(m_backgroundMusicFilename, false);
 }
 
 void PressKeyFullScreen::updateKeys(const MAP_KEYS & keysPressed, const MAP_KEYS & keysReleased)

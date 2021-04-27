@@ -10,14 +10,14 @@ std::shared_ptr<BackgroundAudioPlayer> BackgroundAudioPlayer::getInstance()
 	return instance;
 }
 
-void BackgroundAudioPlayer::initialize(const std::string& pathToFile)
+void BackgroundAudioPlayer::initialize(const std::string& pathToFile, bool looped)
 {
 	if (!player.openFromFile(pathToFile))
 	{
 		std::string throwMessage = "Could not open audio file " + pathToFile;
 		throw(throwMessage);
 	}
-	player.setLoop(true);
+	player.setLoop(looped);
 }
 
 void BackgroundAudioPlayer::play()
@@ -26,16 +26,21 @@ void BackgroundAudioPlayer::play()
 		player.play();
 }
 
-void BackgroundAudioPlayer::play(const std::string& pathToFile)
+void BackgroundAudioPlayer::play(const std::string& pathToFile, bool looped)
 {
-	if (player.getStatus() == sf::SoundSource::Playing)
+	auto eventsHolder = EventsHolder::getInstnce();
+	if (eventsHolder->toChangeAudio())
 	{
-		stop();
-	}
-	initialize(pathToFile);
-	if (EventsHolder::getInstnce()->toPlayAudio())
-	{
-		play();
+		if (player.getStatus() == sf::SoundSource::Playing)
+		{
+			stop();
+		}
+		initialize(pathToFile, looped);
+		if (eventsHolder->toPlayAudio())
+		{
+			play();
+		}
+		eventsHolder->setToChangeAudio(false);
 	}
 }
 

@@ -21,6 +21,7 @@ public:
 	Definitions::ObjectType getType() override;
 	virtual void update() override;
 	virtual void draw(sf::RenderWindow &window) override;
+	void playAudio() override;
 	virtual void playBackgroundMusic();
 protected:
 	void activatePrevButton();

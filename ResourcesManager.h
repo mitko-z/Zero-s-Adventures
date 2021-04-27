@@ -71,7 +71,7 @@ private:
 					 double& zeroHealth, 
 					 double& zeroAttcackingSpeed,
 					 double& zeroFiringAccurracy);
-	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames, std::string& backgroundMusicFileName);
 	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getMonstersInfo(const unsigned int& level, 
 						 MONSTERS_TYPE& monsterType, 

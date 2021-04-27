@@ -33,6 +33,7 @@ public :
 	virtual const Rectangle getRect() const { return m_rect; }
 	virtual void update();
 	virtual void draw(sf::RenderWindow &window);
+	virtual void playAudio() {}
 	virtual const bool	isActive() const { return m_isActive; }
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
 protected :

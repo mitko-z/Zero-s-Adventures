@@ -25,9 +25,6 @@ void Game::initialize()
 
 	extern ResourcesManager* resMan;
 	resMan->setWindowDimensions(window.getSize().x, window.getSize().y);
-
-	std::shared_ptr<BackgroundAudioPlayer> audioPlayer = BackgroundAudioPlayer::getInstance();
-	BackgroundAudioPlayer::getInstance()->play("Data/Audio/Broccoli On My Plate - The Green Orbs [trimmed].wav");
 }
 
 void Game::loadContent()
@@ -204,14 +201,7 @@ void Game::update()
 		case MODE::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-			RUN_MENU_STATE st = eventsHolder->getRunningMenuState();
-			Menu* activeMenu = menus[eventsHolder->getRunningMenuState()];
-			if (eventsHolder->toChangeAudio())
-			{
-				activeMenu->playBackgroundMusic();
-				eventsHolder->setToChangeAudio(false);
-			}
-			activeMenu->update();
+			menus[eventsHolder->getRunningMenuState()]->update();
 		}
 		break;
 		default:
@@ -249,6 +239,32 @@ void Game::draw()
 	window.display();
 }
 
+void Game::playAudio()
+{
+	extern ResourcesManager *resMan;
+	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	switch (eventsHolder->getMode())
+	{
+	case Definitions::Mode::GAME_MODE:
+	{
+		auto gameObjects = resMan->getGameObjects();
+		for (auto& gameObj : gameObjects)
+		{
+			gameObj->playAudio();
+		}
+	}
+	break;
+	case Definitions::Mode::MENU_MODE:
+	{
+		UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
+		menus[eventsHolder->getRunningMenuState()]->playAudio();
+	}
+	break;
+	default:
+		break;
+	}
+}
+
 void Game::run()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
@@ -258,5 +274,6 @@ void Game::run()
 		update();
 		processColisions();
 		draw();
+		playAudio();
 	}
 }
