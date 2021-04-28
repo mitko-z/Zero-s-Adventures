@@ -65,6 +65,8 @@ void Menu::activatePrevButton()
 	m_buttons[m_activeButtonIndex]->activate();
 
 	setHighlighter(m_activeButtonIndex);
+
+	playSound(OBJ_TYPE::MENU_TYPE, menuSoundTypes::MENU_SOUND_TYPE_NEXT_BUTTON);
 }
 
 void Menu::activateNextButton()
@@ -76,6 +78,8 @@ void Menu::activateNextButton()
 	m_buttons[m_activeButtonIndex]->activate();
 
 	setHighlighter(m_activeButtonIndex);
+
+	playSound(OBJ_TYPE::MENU_TYPE, menuSoundTypes::MENU_SOUND_TYPE_NEXT_BUTTON);
 }
 
 void Menu::draw(sf::RenderWindow &window)

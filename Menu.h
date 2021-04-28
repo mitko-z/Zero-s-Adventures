@@ -35,4 +35,9 @@ protected:
 	std::string m_backgroundMusicFilename;
 private:
 	void setHighlighter(size_t buttonIndex);
+
+	enum menuSoundTypes
+	{
+		MENU_SOUND_TYPE_NEXT_BUTTON = 0,
+	};
 };

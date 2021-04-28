@@ -91,7 +91,7 @@ void ResourcesManager::loadResources(unsigned int level)
 	// Menu load
 	if (level == 1)
 	{
-		loadMenus(imagesNames, musicBackgroundNames);
+		loadMenus(imagesNames, musicBackgroundNames, soundNames, soundsRanges);
 		initMenus(resCommands, musicBackgroundNames);
 	}
 
@@ -311,7 +311,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resCommands.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
 }
 
-void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames)
+void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
 {
 	std::ifstream infoReader = getReader(MENUS_INFO_FILE_PATH);
 	std::string lineRead;
@@ -319,6 +319,7 @@ void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& mu
 	std::getline(infoReader, lineRead);	// read "; name of the buttons texture (without the extension of the file)"
 	std::getline(infoReader, lineRead);	// read the name of the texture for buttons
 	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = lineRead + ".png";
+	readFromFileSoundsFileNames(infoReader, OBJ_TYPE::MENU_BUTTON_TYPE, soundsNames, soundsRanges);
 	std::getline(infoReader, lineRead);	// read "; name of the buttons highlighter texture"
 	std::getline(infoReader, lineRead);	// read name of the texture for the highlighter
 	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = lineRead + ".png";
@@ -328,6 +329,7 @@ void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& mu
 	std::getline(infoReader, lineRead);	// read "; name of the background music for menus"
 	std::getline(infoReader, lineRead);	// read the name of the music file
 	musicNames[OBJ_TYPE::MENU_TYPE] = lineRead;
+	readFromFileSoundsFileNames(infoReader, OBJ_TYPE::MENU_TYPE, soundsNames, soundsRanges);
 
 	// start screen
 	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"

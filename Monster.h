@@ -54,6 +54,6 @@ private:
 	
 	enum monsterSoundTypes
 	{
-		SOUND_TYPE_ATTACK = 0,
+		MONSTER_SOUND_TYPE_ATTACK = 0,
 	};	
 };

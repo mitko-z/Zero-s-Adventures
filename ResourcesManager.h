@@ -61,7 +61,7 @@ private:
 					std::vector<OBJ_TYPE>& resCommands,
 					umapTypeVecStrings& soundsNames,
 					umapTypeVecInts& soundsRanges);
-	void loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames);
+	void loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges);
 	void initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeString& musicNames);
 	std::ifstream getReader(std::string filePath);
 	void getZeroInfo(umapTypeString& imagesNames, 

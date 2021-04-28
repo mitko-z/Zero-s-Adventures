@@ -127,7 +127,6 @@ void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, s
 void GameObject::playSound(OBJ_TYPE gameObjType, int rangeType)
 {
 	extern ResourcesManager *resMan;
-	std::shared_ptr<SoundsPlayer> soundsPly = SoundsPlayer::getInstance();
 	bool isErr;
 	SoundBuffersHolder *soundBuffersHolder = &resMan->getSoundBuffers(gameObjType, isErr);
 	if (isErr)
@@ -138,6 +137,6 @@ void GameObject::playSound(OBJ_TYPE gameObjType, int rangeType)
 
 	srand(time(NULL));
 	int index = rand() % (soundBuffersHolder->ranges[rangeType]);
-	soundsPly->play(soundBuffersHolder->soundBuffers[index]);
+	SoundsPlayer::getInstance()->play(soundBuffersHolder->soundBuffers[index]);
 }
 

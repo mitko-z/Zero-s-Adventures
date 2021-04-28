@@ -48,7 +48,7 @@ void Monster::update()
 
 void Monster::playAttackingSound()
 {
-	playSound(OBJ_TYPE::MONSTER_TYPE, monsterSoundTypes::SOUND_TYPE_ATTACK);
+	playSound(OBJ_TYPE::MONSTER_TYPE, monsterSoundTypes::MONSTER_SOUND_TYPE_ATTACK);
 }
 
 Monster* Monster::createMonster(

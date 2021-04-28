@@ -1,11 +1,27 @@
 ; name of the buttons texture (without the extension of the file)
 MenuButtonEmptyWide
+; number of sounds in buttons
+1
+; list of sounds file names 
+tyn.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
 ; name of the buttons highlighter texture 
 frame-transparent
 ; name of the menus background texture 
 MenuBackgroundRectangle
 ; name of the background music for menus
 Snack Time - The Green Orbs - [trimmed].wav
+; number of sounds in menus
+1
+; list of sounds file names 
+ta.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
 ; name of the start screen texture 
 StartScreen
 ; name of the background music for the start screen

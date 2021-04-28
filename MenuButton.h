@@ -34,4 +34,8 @@ private:
 	sf::Font font;
 	sf::Text text;
 	Definitions::ButtonType type;
+	enum menubuttonSoundType
+	{
+		MENUBUTTON_SOUND_TYPE_PRESSED = 0,
+	};
 };

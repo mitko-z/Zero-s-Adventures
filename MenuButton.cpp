@@ -68,4 +68,6 @@ void MenuButton::draw(sf::RenderWindow &window)
 void MenuButton::press()
 {
 	isPressed_ = true;
+
+	playSound(OBJ_TYPE::MENU_BUTTON_TYPE, menubuttonSoundType::MENUBUTTON_SOUND_TYPE_PRESSED);
 }
