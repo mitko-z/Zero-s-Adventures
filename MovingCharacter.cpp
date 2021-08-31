@@ -50,14 +50,14 @@ void MovingCharacter::processWallCollision(GameObject & wall)
 
 void MovingCharacter::processMonsterCollision(GameObject* monster)
 {
-	if(this->getType() == OBJ_TYPE::MONSTER_TYPE)
-		moveOutsideOfObject(*monster);
+	/*if(this->getType() == OBJ_TYPE::MONSTER_TYPE)
+		moveOutsideOfObject(*monster);*/
 }
 
 void MovingCharacter::processZeroCollision(GameObject & zero)
 {
-	if (this->getType() == OBJ_TYPE::MONSTER_TYPE)
-		moveOutsideOfObject(zero);
+	/*if (this->getType() == OBJ_TYPE::MONSTER_TYPE)
+		moveOutsideOfObject(zero);*/
 }
 
 void MovingCharacter::moveOutsideOfObject(GameObject & gameObj)

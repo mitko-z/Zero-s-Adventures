@@ -1,6 +1,5 @@
-make background music & sounds
-
-solve the issue with the colliding objects - the player is able to push a monster through a wall
+optimize:
+	MovingCharacter::processCollisions() should be rewritten: it calls specific child classes instead they to call an overriten function.
 
 optimize: 
 	- remove resCommands
