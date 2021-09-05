@@ -1,5 +1,4 @@
-optimize:
-	MovingCharacter::processCollisions() should be rewritten: it calls specific child classes instead they to call an overriten function.
+optimize how two objects colide - now Zero is able to "push" the monsters when moving towards them
 
 optimize: 
 	- remove resCommands

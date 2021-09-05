@@ -50,19 +50,19 @@ void MovingCharacter::processWallCollision(GameObject & wall)
 
 void MovingCharacter::processMonsterCollision(GameObject* monster)
 {
-	/*if(this->getType() == OBJ_TYPE::MONSTER_TYPE)
-		moveOutsideOfObject(*monster);*/
+	if(this->getType() == OBJ_TYPE::MONSTER_TYPE)
+		moveOutsideOfObject(*monster);
 }
 
 void MovingCharacter::processZeroCollision(GameObject & zero)
 {
-	/*if (this->getType() == OBJ_TYPE::MONSTER_TYPE)
-		moveOutsideOfObject(zero);*/
+	if (this->getType() == OBJ_TYPE::MONSTER_TYPE)
+		moveOutsideOfObject(zero);
 }
 
 void MovingCharacter::moveOutsideOfObject(GameObject & gameObj)
 {
-	switch (m_directionToMove)
+	/*switch (m_directionToMove)
 	{
 	case MovingDirection::DIRECTION_RIGHT:
 		m_rect.x = gameObj.getRect().x - m_rect.w - 1;
@@ -78,9 +78,9 @@ void MovingCharacter::moveOutsideOfObject(GameObject & gameObj)
 		break;
 	default:
 		break;
-	}
-	// move a little bit of outside of the wall
-	if (m_rect.x == (gameObj.getRect().x + gameObj.getRect().w))
+	}*/
+	// move a little bit of outside of the object
+	/*if (m_rect.x == (gameObj.getRect().x + gameObj.getRect().w))
 	{
 		m_rect.x++;
 	}
@@ -95,6 +95,42 @@ void MovingCharacter::moveOutsideOfObject(GameObject & gameObj)
 	else if ((m_rect.y + m_rect.h) == gameObj.getRect().y)
 	{
 		m_rect.y--;
+	}*/
+
+	Rectangle rect1 = this->m_rect;
+	Rectangle rect2 = gameObj.getRect();
+	double x1 = rect1.x; double y1 = rect1.y;
+	double xw1 = x1 + rect1.w; double yh1 = y1 + rect1.h;
+	double x2 = rect2.x; double y2 = rect2.y;
+	double xw2 = x2 + rect2.w; double yh2 = y2 + rect2.h;
+
+	if ((xw1 > x2) && (yh1 > y2) && (xw1 < xw2) && (yh1 < yh2)) // rect1 intercects at top left corner rect2
+	{ 
+		if ((xw1 - x2) < (yh1 - y2)) 
+			m_rect.x = rect2.x - m_rect.w - 1;
+		else 
+			m_rect.y = rect2.y - m_rect.h - 1;
+	} 
+	else if ((x1 > x2) && (yh1 > y2) && (x1 < xw2) && (yh1 < yh2)) // rect1 intercects at top right corner rect2
+	{
+		if ((x2 - x1) < (yh1 - y2))
+			m_rect.x = xw2 + 1;
+		else
+			m_rect.y = rect2.y - m_rect.h - 1;
+	}
+	else if ((xw1 > x2) && (y1 > y2) && (xw1 < xw2) && (y1 < yh2)) // rect1 intercects at bottom left corner rect2
+	{
+		if ((xw1 - x2) < (y2 - y1))
+			m_rect.x = rect2.x - m_rect.w - 1;
+		else
+			m_rect.y = yh2 + 1;
+	}
+	else if ((x1 > x2) && (y1 > y2) && (x1 < xw2) && (y1 < yh2)) // rect1 intercects at bottom right corner rect2
+	{
+		if ((x2 - x1) < (y2 - y1))
+			m_rect.x = xw2 + 1;
+		else
+			m_rect.y = yh2 + 1;
 	}
 }
 
