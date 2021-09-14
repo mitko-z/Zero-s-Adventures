@@ -46,7 +46,7 @@ void Projectile::update()
 void Projectile::updateDirectionToMove()
 {
 	m_isAnimating = true; // projectiles always move
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	m_rect.x += m_speed * cos(m_angleDirection * M_PI / 180) * resMan->getSpeedFactor().x;
 	m_rect.y += m_speed * sin(m_angleDirection * M_PI / 180) * resMan->getSpeedFactor().y;
 }
@@ -69,7 +69,7 @@ void Projectile::processMonsterCollision(GameObject* monster)
 bool Projectile::isOutsideOfScreen()
 {
 	double windowW, windowH;
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	resMan->getWindowDimensions(windowW, windowH);
 	if (m_rect.x < 0 ||
 		m_rect.y < 0 ||

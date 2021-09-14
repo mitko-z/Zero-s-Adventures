@@ -18,7 +18,7 @@ void GameObject::initialize() {}
 
 void GameObject::loadContent()
 {
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	OBJ_TYPE gameObjType = getType();
 
 	// load graphics
@@ -79,7 +79,7 @@ void GameObject::update()
 
 void GameObject::draw(sf::RenderWindow &window) 
 {
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	window.draw(m_drawingObject.sprite);
 }
 
@@ -126,7 +126,7 @@ void GameObject::scaleSpriteTo(double w, double h, const sf::Texture& texture, s
 
 void GameObject::playSound(OBJ_TYPE gameObjType, int rangeType)
 {
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	bool isErr;
 	SoundBuffersHolder *soundBuffersHolder = &resMan->getSoundBuffers(gameObjType, isErr);
 	if (isErr)

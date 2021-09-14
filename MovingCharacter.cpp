@@ -138,7 +138,7 @@ void MovingCharacter::moveOutsideOfObject(GameObject & gameObj)
 void MovingCharacter::setInsideWindow()
 {
 	double windowW, windowH;
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	resMan->getWindowDimensions(windowW, windowH);
 	if (m_rect.x < 0) m_rect.x = 0;
 	if (m_rect.y < 0) m_rect.y = 0;
@@ -152,7 +152,7 @@ void MovingCharacter::setInsideWindow()
 void MovingCharacter::updateDirectionToMove()
 {
 	m_isAnimating = true;
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	switch (m_directionToMove)
 	{
 	case MovingDirection::DIRECTION_UP:

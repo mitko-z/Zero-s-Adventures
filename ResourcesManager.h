@@ -6,6 +6,7 @@
 #include <fstream>				// read from file "levels" which textures to load
 #include <string>				// strings manipulations while reading data 
 #include <sstream>				// a string line read from file to be converted to ints
+#include <memory>
 
 #include <SFML\Graphics.hpp>	// sf::Texture, sf::Sprite
 
@@ -32,7 +33,7 @@ class ResourcesManager
 private:
 	const double m_speedFactroDivider = 100;
 public:
-	static ResourcesManager* getInstance();
+	static std::shared_ptr <ResourcesManager> getInstance();
 	void		initialize();
 	void		loadResources(unsigned int level);
 	sf::Texture getTexture(OBJ_TYPE command);
@@ -46,8 +47,6 @@ public:
 	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
 	const sf::Vector2f getSpeedFactor() const { return m_speedFactor; }
 	const sf::Vector2f getLevelBlockDimensions();
-
-	~ResourcesManager();
 private:
 	// private methods
 	ResourcesManager() {};
@@ -104,7 +103,6 @@ private:
 	void readFromFileSoundsFileNames(std::ifstream& fileReader, const OBJ_TYPE& gameObjectType, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges);
 
 	// members
-	static ResourcesManager* m_instance;
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;
 	UMAP<OBJ_TYPE, Animation> m_animations;
 	UMAP<OBJ_TYPE, SoundBuffersHolder > m_soundBuffers;

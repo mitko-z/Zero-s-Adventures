@@ -23,13 +23,13 @@ void Game::initialize()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	extern ResourcesManager* resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	resMan->setWindowDimensions(window.getSize().x, window.getSize().y);
 }
 
 void Game::loadContent()
 {
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	resMan->loadResources(m_currentLevel);
 
 	std::vector<GameObject *> gameObjects = resMan->getGameObjects();
@@ -87,7 +87,7 @@ void Game::eventsCapture()
 #pragma endregion
 
 #pragma region update events of game objects
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	switch (eventsHolder->getMode())
 	{
 		case MODE::GAME_MODE:
@@ -127,7 +127,7 @@ void Game::eventsCapture()
 void Game::processColisions()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	switch (eventsHolder->getMode())
 	{
 		case MODE::GAME_MODE:
@@ -185,7 +185,7 @@ bool Game::twoObjsColide(const GameObject & obj1, const GameObject & obj2)
 void Game::update()
 {
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	switch (eventsHolder->getMode())
 	{
 		case MODE::GAME_MODE:
@@ -213,7 +213,7 @@ void Game::draw()
 {
 	window.clear();
 
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 	switch (eventsHolder->getMode())
 	{
@@ -241,7 +241,7 @@ void Game::draw()
 
 void Game::playAudio()
 {
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
 	switch (eventsHolder->getMode())
 	{

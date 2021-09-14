@@ -34,7 +34,7 @@ Weapon * Weapon::createWeapon(OBJ_TYPE weaponType,
 
 void Weapon::fire(double angle)
 {
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	resMan->addGameObject(Projectile::createProjectile(
 		m_projectilesType, 
 		m_rect.center_x(), 

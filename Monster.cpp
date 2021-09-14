@@ -29,7 +29,7 @@ void Monster::update()
 
 	// look if Zero is around
 	bool foundZero = false;
-	extern ResourcesManager *resMan;
+	extern std::shared_ptr <ResourcesManager> resMan;
 	std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 	const ZeroCharacter* zeroCharacter = dynamic_cast<ZeroCharacter*>(gameObjects[1]); 
 	if (!zeroCharacter) // by def 0th is background, 1st is zero character. But make a check for make sure ;)

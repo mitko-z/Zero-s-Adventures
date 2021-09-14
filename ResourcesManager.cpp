@@ -34,15 +34,10 @@
 #define FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT	2
 #define GAME_OVER_SCREEN_SECONDS_TO_WAIT		5
 
-ResourcesManager* ResourcesManager::m_instance = nullptr;
-
-ResourcesManager* ResourcesManager::getInstance()
+std::shared_ptr <ResourcesManager> ResourcesManager::getInstance()
 {
-	if (!m_instance)
-	{
-		m_instance = new ResourcesManager;
-	}
-	return m_instance;
+	static std::shared_ptr<ResourcesManager> instance{ new ResourcesManager };
+	return instance;
 }
 
 void ResourcesManager::initialize()
@@ -51,11 +46,6 @@ void ResourcesManager::initialize()
 	m_menus.clear();
 	m_textures.clear();
 	m_animations.clear();
-}
-
-ResourcesManager::~ResourcesManager()
-{
-	delete m_instance;
 }
 
 void ResourcesManager::setWindowDimensions(double w, double h)

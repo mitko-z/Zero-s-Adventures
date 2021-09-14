@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "ResourcesManager.h"
 
-extern ResourcesManager *resMan = ResourcesManager::getInstance();
+extern std::shared_ptr<ResourcesManager> resMan = ResourcesManager::getInstance();
 
 int main()
 {

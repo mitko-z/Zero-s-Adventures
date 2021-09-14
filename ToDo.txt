@@ -3,7 +3,6 @@ optimize how two objects colide - now Zero is able to "push" the monsters when m
 optimize: 
 	- ResourcesManager::getReader
 	- ResourcesManager::getAnimation
-	- ResourcesManager to be taken as shared_ptr
 	
 rename PlayingCharacter::setIsActive
 	
