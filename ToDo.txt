@@ -1,7 +1,6 @@
 optimize how two objects colide - now Zero is able to "push" the monsters when moving towards them
 
 optimize: 
-	- remove resCommands
 	- ResourcesManager::getReader
 	- ResourcesManager::getAnimation
 	- ResourcesManager to be taken as shared_ptr

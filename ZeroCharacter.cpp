@@ -159,7 +159,7 @@ void ZeroCharacter::processCollisions()
 		switch (colidedObj->getType())
 		{
 		case OBJ_TYPE::MONSTER_TYPE:
-			//takeDamage(dynamic_cast<Monster*>(colidedObj)->getDamage());
+			takeDamage(dynamic_cast<Monster*>(colidedObj)->getDamage());
 			break;
 		case OBJ_TYPE::BOW_WEAPON_TYPE:
 		case OBJ_TYPE::FIREBALL_WEAPON_TYPE:

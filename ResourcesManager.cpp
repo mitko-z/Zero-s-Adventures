@@ -81,32 +81,32 @@ void ResourcesManager::removeInactiveGameObjects()
 void ResourcesManager::loadResources(unsigned int level)
 {
 	umapTypeString imagesNames;
-	std::vector<OBJ_TYPE> resCommands;
+	std::vector<OBJ_TYPE> resourcesTypes;
 	umapTypeVecStrings soundNames;
 	umapTypeVecInts soundsRanges;
 	umapTypeString musicBackgroundNames;
 
-	loadLevel(level, imagesNames, resCommands, soundNames, soundsRanges);
+	loadLevel(level, imagesNames, resourcesTypes, soundNames, soundsRanges);
 
 	// Menu load
 	if (level == 1)
 	{
 		loadMenus(imagesNames, musicBackgroundNames, soundNames, soundsRanges);
-		initMenus(resCommands, musicBackgroundNames);
+		initMenus(resourcesTypes, musicBackgroundNames);
 	}
 
-	for (auto command : resCommands)
+	for (auto resType : resourcesTypes)
 	{
 		sf::Texture texture;
 		std::string loadPath(IMAGES_FOLDER);
-		loadPath += imagesNames[command];
+		loadPath += imagesNames[resType];
 		if (!texture.loadFromFile(loadPath))
 		{
 			std::string throwMessage = "Cannot load image " + loadPath;
 			throw throwMessage;
 		}
-		m_textures[command] = texture;
-	} // end for each command
+		m_textures[resType] = texture;
+	} // end for each resType
 
 	for (auto& typeSoundsNames : soundNames)
 	{
@@ -165,7 +165,7 @@ sf::Vector2u ResourcesManager::calcWorldCoordsFromMapCoords(const sf::Vector2u& 
 
 void ResourcesManager::loadLevel(unsigned int level,
 								 umapTypeString& imagesNames,
-								 std::vector<OBJ_TYPE>& resCommands,
+								 std::vector<OBJ_TYPE>& resourcesTypes,
 								 umapTypeVecStrings& soundsNames,
 								 umapTypeVecInts& soundsRanges)
 {
@@ -179,7 +179,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	// clear all objects so they can be loaded freshly
 	m_gameObjects.clear();
 	imagesNames.clear();
-	resCommands.clear();
+	resourcesTypes.clear();
 	soundsNames.clear();
 	m_animations.clear();
 
@@ -222,7 +222,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	getGeneralInfo(level, numbersOfLevels, wallsCoords, endOfLevelCoords, monstersCoords, weaponsCoords);
 
 	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, AUDIO_FOLDER + backgroundMusicFileName));
-	resCommands.push_back(OBJ_TYPE::BACKGROUND_TYPE);
+	resourcesTypes.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
 	// initialize Zero 
 	double movingObjWidth = getGameObjSize().x / 2;
@@ -238,7 +238,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 			zeroHealth, 
 			zeroAttcackingSpeed, 
 			zeroFiringAccurracy));
-	resCommands.push_back(OBJ_TYPE::ZERO_TYPE);
+	resourcesTypes.push_back(OBJ_TYPE::ZERO_TYPE);
 	dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->setWeapon(ZeroCurrentWeapon);
 
 	// init walls
@@ -247,7 +247,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 		sf::Vector2u worldCoords = calcWorldCoordsFromMapCoords(wallCoord);
 		m_gameObjects.push_back(new Wall(worldCoords.x, worldCoords.y, getGameObjSize().x, getGameObjSize().y, false));
 	}
-	resCommands.push_back(OBJ_TYPE::WALL_TYPE);
+	resourcesTypes.push_back(OBJ_TYPE::WALL_TYPE);
 
 	// init monsters
 	if (monstersCoords.size() > 0)
@@ -266,7 +266,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 				monsterAttackingSpeed,
 				monsterImmuneFrom));
 		}
-		resCommands.push_back(OBJ_TYPE::MONSTER_TYPE);
+		resourcesTypes.push_back(OBJ_TYPE::MONSTER_TYPE);
 	}
 
 	// init weapons
@@ -286,11 +286,11 @@ void ResourcesManager::loadLevel(unsigned int level,
 	}
 	for (auto& type : allWeaponsTypes)
 	{
-		resCommands.push_back(type);
+		resourcesTypes.push_back(type);
 	}
 	for (auto& type : allProjectilesTypes)
 	{
-		resCommands.push_back(type);
+		resourcesTypes.push_back(type);
 	}
 	if (ZeroCurrentWeapon)
 		m_gameObjects.push_back(ZeroCurrentWeapon);
@@ -304,11 +304,11 @@ void ResourcesManager::loadLevel(unsigned int level,
 											getGameObjSize().y, 
 											false, 
 											(level == numbersOfLevels)));
-	resCommands.push_back(OBJ_TYPE::END_OF_LEVEL_TYPE);
+	resourcesTypes.push_back(OBJ_TYPE::END_OF_LEVEL_TYPE);
 
 	// init health
-	resCommands.push_back(OBJ_TYPE::HEALTH_TYPE);
-	resCommands.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
+	resourcesTypes.push_back(OBJ_TYPE::HEALTH_TYPE);
+	resourcesTypes.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
 }
 
 void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
@@ -764,9 +764,9 @@ const sf::Vector2f ResourcesManager::getLevelBlockDimensions()
 	return sf::Vector2f(m_windowDimensions.w / m_objectsInLevel.x, m_windowDimensions.h / m_objectsInLevel.y);
 }
 
-sf::Texture ResourcesManager::getTexture(OBJ_TYPE command)
+sf::Texture ResourcesManager::getTexture(OBJ_TYPE objType)
 {
-	return m_textures[command];
+	return m_textures[objType];
 }
 
 bool ResourcesManager::getAnimation(OBJ_TYPE command, Animation& animation)
