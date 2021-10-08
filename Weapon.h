@@ -6,13 +6,14 @@
 class Weapon : public GameObject
 {
 public:
-	Weapon() : GameObject(0, 0, 0, 0, false) {}
+	Weapon() = default;
 	Weapon(double x, double y, double w, double h, bool isAnimating, double firingRate, OBJ_TYPE projectilesType, double projectilesDamage, double projectilesSpeed) : 
 		GameObject(x, y, w, h, isAnimating),
 		m_firingRate(firingRate),
 		m_projectilesType(projectilesType),
 		m_projectilesDamage(projectilesDamage),
-		m_projectilesSpeed(projectilesSpeed)
+		m_projectilesSpeed(projectilesSpeed),
+		m_isOwned(false)
 	{}
 
 	static Weapon* createWeapon(OBJ_TYPE weaponType,

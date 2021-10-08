@@ -7,11 +7,11 @@ class PressKeyFullScreen : public Menu
 {
 public:
 	PressKeyFullScreen() : Menu(), m_keyIsPressed(false) {}
-	PressKeyFullScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeNextLevel, std::string backgroundMusicFilename);
+	PressKeyFullScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeNextLevel, const std::string& backgroundMusicFilename);
 
 	void initialize() override {} // overriding of menu initialization - we do not want any actions here
 
-	virtual OBJ_TYPE getType() = 0;
+	virtual OBJ_TYPE getType() override = 0;
 	void update() override;
 	virtual void setEvent() = 0;
 	void playBackgroundMusic() override;

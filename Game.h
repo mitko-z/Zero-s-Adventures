@@ -73,17 +73,6 @@ private:
 	// windows
 	sf::RenderWindow window;
 
-	// display text on screen variables
-	sf::Font font;
-	std::vector<std::string> finishedLevelStrings;
-
-	// time management
-	// difne how many miliseconds to show the screen between the levels before to advance to the next level
-	// the pause is necessary to avoid any keys pressed in the previous level
-	const int timePauseBetweenLevels;
-	// how miliseconds left before checking whether any key is pressed to advance to the next level
-	int timeElapsedBetweenLevels;
-
 	// events
 	sf::Event event;
 

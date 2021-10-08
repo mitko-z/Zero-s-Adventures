@@ -12,7 +12,7 @@ int main()
 		game.loadContent();
 		game.run();
 	}
-	catch (std::string ex)
+	catch (std::string& ex)
 	{
 		std::cerr << ex;
 		std::getchar();

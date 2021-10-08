@@ -11,5 +11,5 @@ public:
 		Weapon(x, y, w, h, isAnimating, firingRate, projectilesType, projectilesDamage, projectilesSpeed)
 	{}
 
-	OBJ_TYPE getType();
+	OBJ_TYPE getType() override;
 };

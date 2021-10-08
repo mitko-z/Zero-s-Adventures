@@ -1,5 +1,10 @@
 #include "EventsHolder.h"
 
+EventsHolder::EventsHolder()
+{
+	this->initialize();
+}
+
 std::shared_ptr<EventsHolder> EventsHolder::getInstnce()
 {
 	static std::shared_ptr<EventsHolder> instance{ new EventsHolder };

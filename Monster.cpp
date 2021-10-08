@@ -23,12 +23,7 @@ MONSTERS_TYPE Monster::getMonsterType()
 void Monster::update()
 {
 
-	//// check if Zero can be seen around
-	// define and places where the creature to look to
-	std::vector<sf::RectangleShape> placesToLookTo; 
-
-	// look if Zero is around
-	bool foundZero = false;
+	// check if Zero can be seen around
 	extern std::shared_ptr <ResourcesManager> resMan;
 	std::vector<GameObject *> gameObjects = resMan->getGameObjects();
 	const ZeroCharacter* zeroCharacter = dynamic_cast<ZeroCharacter*>(gameObjects[1]); 

@@ -5,7 +5,7 @@
 class FinalScreen : public PressKeyFullScreen
 {
 public:
-	FinalScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey, std::string backgroundMusicFilename) :
+	FinalScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey, const std::string& backgroundMusicFilename) :
 		PressKeyFullScreen(x, y, w, h, animating, secondsToWaitBeforeAbleToPressKey, backgroundMusicFilename) 
 	{}
 

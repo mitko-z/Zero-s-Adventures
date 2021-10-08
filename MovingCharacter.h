@@ -26,7 +26,7 @@ protected:
 	virtual void processWallCollision(GameObject& wall);
 	virtual void processMonsterCollision(GameObject* monster);
 	virtual void processZeroCollision(GameObject& zero);
-	void moveOutsideOfObject(GameObject & gameObject);
+	void moveOutsideOfObject(const GameObject & gameObject);
 	void setInsideWindow();
 	virtual void updateDirectionToMove();
 	void updateDrawingObject() override;

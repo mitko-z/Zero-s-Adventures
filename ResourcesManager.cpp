@@ -122,7 +122,7 @@ void ResourcesManager::loadResources(unsigned int level)
 	}
 }
 
-Animation ResourcesManager::getAnimationFromString(std::string strData)
+Animation ResourcesManager::getAnimationFromString(const std::string& strData)
 {
 	int x, y;
 	std::stringstream ss;
@@ -610,20 +610,6 @@ void ResourcesManager::getEndOfLevelInfo(const unsigned int & level, UMAP<OBJ_TY
 void ResourcesManager::getHealthInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
 {
 	std::ifstream infoReader = getReader(HEALTH_INFO_FILE_PATH);
-	std::string lineRead;
-
-	std::getline(infoReader, lineRead);	// read "; name of texture for the health object withot the .png extension"
-	std::getline(infoReader, lineRead);	// read the name for the texture
-	imagesNames[OBJ_TYPE::HEALTH_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of texture for the background health object withot the .png extension"
-	std::getline(infoReader, lineRead);	// read the name for the texture
-	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE] = lineRead + ".png";
-	infoReader.close();
-}
-
-void ResourcesManager::getWeaponInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
-{
-	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
 	std::string lineRead;
 
 	std::getline(infoReader, lineRead);	// read "; name of texture for the health object withot the .png extension"

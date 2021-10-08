@@ -9,8 +9,6 @@
 
 Game::Game() :
 	window(sf::VideoMode(800, 600), "Zero's Adventures"),
-	timePauseBetweenLevels(1000),
-	timeElapsedBetweenLevels(0),
 	m_currentLevel(1)
 {
 }

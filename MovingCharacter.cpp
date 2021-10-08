@@ -6,7 +6,8 @@ MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool is
 	m_speed(speed),
 	m_lastPosition(x, y, w, h),
 	m_goOutsideOfScreen(false),
-	m_flipped(false)
+	m_flipped(false),
+	m_directionToMove(MovingDirection::DIRECTION_NONE)
 {}
 
 void MovingCharacter::update()
@@ -60,7 +61,7 @@ void MovingCharacter::processZeroCollision(GameObject & zero)
 		moveOutsideOfObject(zero);
 }
 
-void MovingCharacter::moveOutsideOfObject(GameObject & gameObj)
+void MovingCharacter::moveOutsideOfObject(const GameObject & gameObj)
 {
 	/*switch (m_directionToMove)
 	{

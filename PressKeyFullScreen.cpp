@@ -2,7 +2,14 @@
 #include "BackgroundAudioPlayer.h"
 #include "EventsHolder.h"
 
-PressKeyFullScreen::PressKeyFullScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey, std::string backgroundMusicFilename) :
+PressKeyFullScreen::PressKeyFullScreen(
+								double x, 
+								double y, 
+								double w, 
+								double h, 
+								bool animating, 
+								double secondsToWaitBeforeAbleToPressKey, 
+								const std::string& backgroundMusicFilename) :
 	Menu(x, y, w, h, animating, backgroundMusicFilename),
 	m_keyIsPressed(false),
 	m_secondsToWaitBeforeAbleToPressKey(secondsToWaitBeforeAbleToPressKey)

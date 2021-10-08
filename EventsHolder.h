@@ -29,7 +29,7 @@ public:
 	bool toChangeAudio() { return m_changeAudio; }
 	void setToChangeAudio(bool shoudChangeAudio) { m_changeAudio = shoudChangeAudio; }
 private:
-	EventsHolder() {}
+	EventsHolder();
 
 	UMAP<sf::Keyboard::Key, bool> m_keysPressed;
 	UMAP<sf::Keyboard::Key, bool> m_keysReleased;

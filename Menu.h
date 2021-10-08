@@ -8,11 +8,12 @@
 class Menu : public GameObject
 {
 public:
-	Menu() : GameObject(0, 0, 0, 0, false) {}
-	Menu(double x, double y, double w, double h, bool isAnimating, std::string backgroundMusicFilename) :
+	Menu() = default;
+	Menu(double x, double y, double w, double h, bool isAnimating, const std::string& backgroundMusicFilename) :
 		m_highlighter(10, 10, 10, 10, false),
 		m_backgroundMusicFilename(backgroundMusicFilename),
-		GameObject(x, y, w, h, isAnimating)
+		GameObject(x, y, w, h, isAnimating),
+		m_activeButtonIndex(0)
 	{
 	}
 

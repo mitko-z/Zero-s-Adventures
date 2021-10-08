@@ -52,7 +52,7 @@ private:
 	ResourcesManager() {};
 	ResourcesManager(ResourcesManager const&);
 	void operator= (ResourcesManager const&);
-	Animation getAnimationFromString(std::string strData);
+	Animation getAnimationFromString(const std::string& strData);
 	sf::Vector2u getGameObjSize();
 	sf::Vector2u calcWorldCoordsFromMapCoords(const sf::Vector2u& mapCoords);
 	void loadLevel(unsigned int level,
@@ -93,7 +93,6 @@ private:
 						double& projectilesSpeed);
 	void getEndOfLevelInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getHealthInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
-	void getWeaponInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
 	void getGeneralInfo(const unsigned int& level, 
 						unsigned int& numbersOfLevels, std::vector<sf::Vector2u>& wallsCoords,
 						sf::Vector2u& endOfLevelCoords,

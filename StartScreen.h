@@ -6,7 +6,7 @@ class StartScreen : public PressKeyFullScreen
 {
 public:
 	StartScreen() : PressKeyFullScreen() {}
-	StartScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey, std::string backgroundMusicFilename) :
+	StartScreen(double x, double y, double w, double h, bool animating, double secondsToWaitBeforeAbleToPressKey, const std::string& backgroundMusicFilename) :
 		PressKeyFullScreen(x, y, w, h, animating, secondsToWaitBeforeAbleToPressKey, backgroundMusicFilename)
 	{}
 
