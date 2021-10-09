@@ -122,7 +122,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="ButtonHighlighter.cpp" />
     <ClCompile Include="EndOfLevel.cpp" />
-    <ClCompile Include="EventsHolder.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="FinalScreen.cpp" />
     <ClCompile Include="FinishedLevelScreen.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="ButtonHighlighter.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="EndOfLevel.h" />
-    <ClInclude Include="EventsHolder.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="FinalScreen.h" />
     <ClInclude Include="FinishedLevelScreen.h" />
     <ClInclude Include="Game.h" />

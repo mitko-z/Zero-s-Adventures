@@ -1,6 +1,6 @@
 #include "MenuButton.h"
 
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 MenuButton::MenuButton(	double x, 
 						double y, 
@@ -52,7 +52,7 @@ Definitions::ObjectType MenuButton::getType()
 
 void MenuButton::update()
 {
-	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> eventHolder = StateMachine::getInstnce();
 	if (m_isPressed)
 	{
 		eventHolder->setEventByButton(m_type);

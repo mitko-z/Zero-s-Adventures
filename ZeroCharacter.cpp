@@ -1,6 +1,6 @@
 #include "ZeroCharacter.h"
 #include "Monster.h"
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -56,12 +56,12 @@ void ZeroCharacter::initialize()
 
 void ZeroCharacter::setIsActive()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 	int health = static_cast<int>(getCurrentHealth());
 	if (health <= 0)
 	{
-		eventsHolder->setEventByGameCommand(COMMAND::MENU_COMMAND);
-		eventsHolder->setEventByGameCommand(COMMAND::GAME_OVER_COMMAND);
+		stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
+		stateMachine->setEventByGameCommand(COMMAND::GAME_OVER_COMMAND);
 	}
 }
 

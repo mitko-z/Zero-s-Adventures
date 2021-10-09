@@ -1,6 +1,6 @@
 #include "FinishedLevelScreen.h"
 
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 OBJ_TYPE FinishedLevelScreen::getType()
 {
@@ -9,6 +9,6 @@ OBJ_TYPE FinishedLevelScreen::getType()
 
 void FinishedLevelScreen::setEvent()
 {
-	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> eventHolder = StateMachine::getInstnce();
 	eventHolder->setEventByGameCommand(COMMAND::NEXT_LEVEL_COMMAND);
 }

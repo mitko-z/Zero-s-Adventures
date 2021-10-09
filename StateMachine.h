@@ -7,10 +7,10 @@
 
 #include "Definitions.h"
 
-class EventsHolder
+class StateMachine
 {
 public:
-	static std::shared_ptr<EventsHolder> getInstnce();
+	static std::shared_ptr<StateMachine> getInstnce();
 
 	void initialize();
 	const UMAP<sf::Keyboard::Key, bool>& getPressedKeys() { return m_keysPressed; }
@@ -29,7 +29,7 @@ public:
 	bool toChangeAudio() { return m_changeAudio; }
 	void setToChangeAudio(bool shoudChangeAudio) { m_changeAudio = shoudChangeAudio; }
 private:
-	EventsHolder();
+	StateMachine();
 
 	UMAP<sf::Keyboard::Key, bool> m_keysPressed;
 	UMAP<sf::Keyboard::Key, bool> m_keysReleased;

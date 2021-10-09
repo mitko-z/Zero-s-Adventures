@@ -1,14 +1,4 @@
-optimize how two objects colide - now Zero is able to "push" the monsters when moving towards them
-
-optimize: 
-	- ResourcesManager::getReader
-	- ResourcesManager::getAnimation
-	
-rename PlayingCharacter::setIsActive
-	
 refactor: resource manager should be responsible only for holding resources - make new class(es) responsible for reading from file and for initializing the game objects
-
-rename the EventsHolder class to StateMachine or something more meaningfull
 
 make ResourcesManager to ignore lines starting with ";" when reading from file
 

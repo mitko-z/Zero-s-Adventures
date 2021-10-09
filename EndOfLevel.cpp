@@ -1,6 +1,6 @@
 #include "EndOfLevel.h"
 
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 OBJ_TYPE EndOfLevel::getType()
 {
@@ -9,16 +9,16 @@ OBJ_TYPE EndOfLevel::getType()
 
 void EndOfLevel::processCollisions()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 	for (auto colidedObj : m_objsColideWith)
 	{
 		if (colidedObj->getType() == OBJ_TYPE::ZERO_TYPE)
 		{
-			eventsHolder->setEventByGameCommand(COMMAND::MENU_COMMAND);
+			stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
 			COMMAND setScreenCommand = m_isLastLevel ? 
 										COMMAND::FINAL_SCREEN_COMMAND : 
 										COMMAND::FINISHED_LEVEL_SCREEN_COMMAND;
-			eventsHolder->setEventByGameCommand(setScreenCommand);
+			stateMachine->setEventByGameCommand(setScreenCommand);
 		}
 	}
 }

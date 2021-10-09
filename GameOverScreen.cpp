@@ -1,5 +1,5 @@
 #include "GameOverScreen.h"
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 OBJ_TYPE GameOverScreen::getType()
 {
@@ -8,6 +8,6 @@ OBJ_TYPE GameOverScreen::getType()
 
 void GameOverScreen::setEvent()
 {
-	std::shared_ptr<EventsHolder> eventHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> eventHolder = StateMachine::getInstnce();
 	eventHolder->setEventByGameCommand(COMMAND::START_SCREEN_COMMAND);
 }

@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-#include "EventsHolder.h"
+#include "StateMachine.h"
 #include "SoundsPlayer.h"
 
 GameObject::~GameObject() {}
@@ -39,9 +39,9 @@ OBJ_TYPE GameObject::getType()
 
 void GameObject::updateEvents()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	MAP_KEYS keysPressed = eventsHolder->getPressedKeys();
-	MAP_KEYS keysReleased = eventsHolder->getReleasedKeys();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	MAP_KEYS keysPressed = stateMachine->getPressedKeys();
+	MAP_KEYS keysReleased = stateMachine->getReleasedKeys();
 	updateKeys(keysPressed, keysReleased);
 }
 

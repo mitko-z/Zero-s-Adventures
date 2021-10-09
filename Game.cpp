@@ -4,7 +4,7 @@
 
 #include "ResourcesManager.h"
 #include "Definitions.h"
-#include "EventsHolder.h"
+#include "StateMachine.h"
 #include "BackgroundAudioPlayer.h"
 
 Game::Game() :
@@ -15,8 +15,8 @@ Game::Game() :
 
 void Game::initialize()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	eventsHolder->initialize();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	stateMachine->initialize();
 
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
@@ -48,34 +48,34 @@ void Game::loadContent()
 void Game::eventsCapture()
 {
 #pragma region capture gameplay events
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		{
-			if (eventsHolder->getMode() == MODE::GAME_MODE)
+			if (stateMachine->getMode() == MODE::GAME_MODE)
 			{
-				eventsHolder->setEventByGameCommand(COMMAND::MENU_COMMAND);
-				eventsHolder->setEventByGameCommand(COMMAND::MIAN_MENU_COMMAND);
+				stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
+				stateMachine->setEventByGameCommand(COMMAND::MIAN_MENU_COMMAND);
 			}
 			else
 			{
-				eventsHolder->setEventByGameCommand(COMMAND::GAME_COMMAND);
+				stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND);
 			}
 		}
 		else if (event.type == sf::Event::Closed)
 		{
-			eventsHolder->setEventByGameCommand(COMMAND::EXIT_COMMAND);
+			stateMachine->setEventByGameCommand(COMMAND::EXIT_COMMAND);
 		}
 		else
 		{
 			switch (event.type)
 			{
 				case sf::Event::KeyPressed:
-					eventsHolder->addPressedKey(event.key.code);
+					stateMachine->addPressedKey(event.key.code);
 				break;
 				case sf::Event::KeyReleased:
-					eventsHolder->addReleasedKey(event.key.code);
+					stateMachine->addReleasedKey(event.key.code);
 				break;
 				default:
 				break;
@@ -86,7 +86,7 @@ void Game::eventsCapture()
 
 #pragma region update events of game objects
 	extern std::shared_ptr <ResourcesManager> resMan;
-	switch (eventsHolder->getMode())
+	switch (stateMachine->getMode())
 	{
 		case MODE::GAME_MODE:
 		{
@@ -100,16 +100,16 @@ void Game::eventsCapture()
 		case MODE::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-			menus[eventsHolder->getRunningMenuState()]->updateEvents();
+			menus[stateMachine->getRunningMenuState()]->updateEvents();
 		}
 		break;
 		case MODE::NEXT_LEVEL_MODE:
 			m_currentLevel++;
 			loadContent();
-			eventsHolder->setEventByGameCommand(COMMAND::GAME_COMMAND);
+			stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND);
 		break;
 		case MODE::INITIALIZE_MODE:
-			eventsHolder->initialize();
+			stateMachine->initialize();
 			m_currentLevel = 1;
 			loadContent();
 		break;
@@ -119,14 +119,14 @@ void Game::eventsCapture()
 #pragma endregion
 
 	// clear the events
-	eventsHolder->nullEvents();
+	stateMachine->nullEvents();
 }
 
 void Game::processColisions()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 	extern std::shared_ptr <ResourcesManager> resMan;
-	switch (eventsHolder->getMode())
+	switch (stateMachine->getMode())
 	{
 		case MODE::GAME_MODE:
 		{
@@ -182,9 +182,9 @@ bool Game::twoObjsColide(const GameObject & obj1, const GameObject & obj2)
 
 void Game::update()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 	extern std::shared_ptr <ResourcesManager> resMan;
-	switch (eventsHolder->getMode())
+	switch (stateMachine->getMode())
 	{
 		case MODE::GAME_MODE:
 		{
@@ -199,7 +199,7 @@ void Game::update()
 		case MODE::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-			menus[eventsHolder->getRunningMenuState()]->update();
+			menus[stateMachine->getRunningMenuState()]->update();
 		}
 		break;
 		default:
@@ -212,8 +212,8 @@ void Game::draw()
 	window.clear();
 
 	extern std::shared_ptr <ResourcesManager> resMan;
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	switch (eventsHolder->getMode())
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	switch (stateMachine->getMode())
 	{
 		case Definitions::Mode::GAME_MODE:
 		{
@@ -228,7 +228,7 @@ void Game::draw()
 		case Definitions::Mode::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-			menus[eventsHolder->getRunningMenuState()]->draw(window);
+			menus[stateMachine->getRunningMenuState()]->draw(window);
 		}
 		break;
 		default:
@@ -240,8 +240,8 @@ void Game::draw()
 void Game::playAudio()
 {
 	extern std::shared_ptr <ResourcesManager> resMan;
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	switch (eventsHolder->getMode())
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	switch (stateMachine->getMode())
 	{
 	case Definitions::Mode::GAME_MODE:
 	{
@@ -255,7 +255,7 @@ void Game::playAudio()
 	case Definitions::Mode::MENU_MODE:
 	{
 		UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-		menus[eventsHolder->getRunningMenuState()]->playAudio();
+		menus[stateMachine->getRunningMenuState()]->playAudio();
 	}
 	break;
 	default:
@@ -265,8 +265,8 @@ void Game::playAudio()
 
 void Game::run()
 {
-	std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-	while (eventsHolder->getMode() != Definitions::Mode::EXIT_MODE)
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	while (stateMachine->getMode() != Definitions::Mode::EXIT_MODE)
 	{
 		eventsCapture();
 		update();

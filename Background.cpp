@@ -1,6 +1,6 @@
 #include "Background.h"
 #include "BackgroundAudioPlayer.h"
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 
 Definitions::ObjectType Background::getType()

@@ -1,17 +1,17 @@
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
-EventsHolder::EventsHolder()
+StateMachine::StateMachine()
 {
 	this->initialize();
 }
 
-std::shared_ptr<EventsHolder> EventsHolder::getInstnce()
+std::shared_ptr<StateMachine> StateMachine::getInstnce()
 {
-	static std::shared_ptr<EventsHolder> instance{ new EventsHolder };
+	static std::shared_ptr<StateMachine> instance{ new StateMachine };
 	return instance;
 }
 
-void EventsHolder::initialize()
+void StateMachine::initialize()
 {
 	m_mode = MODE::MENU_MODE;
 	m_runningGameState = RUN_GAME_STATE::PLAYING_STATE;
@@ -22,23 +22,23 @@ void EventsHolder::initialize()
 	m_changeAudio = true;
 }
 
-void EventsHolder::addPressedKey(sf::Keyboard::Key key)
+void StateMachine::addPressedKey(sf::Keyboard::Key key)
 {
 	m_keysPressed[key] = true;
 }
 
-void EventsHolder::addReleasedKey(sf::Keyboard::Key key)
+void StateMachine::addReleasedKey(sf::Keyboard::Key key)
 {
 	m_keysReleased[key] = true;
 }
 
-void EventsHolder::nullEvents()
+void StateMachine::nullEvents()
 {
 	m_keysPressed.clear();
 	m_keysReleased.clear();
 }
 
-void EventsHolder::setEventByButton(BUTTON_TYPE buttonType)
+void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 {
 	switch (buttonType)
 	{
@@ -54,7 +54,7 @@ void EventsHolder::setEventByButton(BUTTON_TYPE buttonType)
 	}
 }
 
-void EventsHolder::setEventByGameCommand(COMMAND command)
+void StateMachine::setEventByGameCommand(COMMAND command)
 {
 	setToChangeAudio(true);
 	switch (command)

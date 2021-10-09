@@ -1,6 +1,6 @@
 #include "BackgroundAudioPlayer.h"
 
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 sf::Music BackgroundAudioPlayer::player;
 
@@ -28,19 +28,19 @@ void BackgroundAudioPlayer::play()
 
 void BackgroundAudioPlayer::play(const std::string& pathToFile, bool looped)
 {
-	auto eventsHolder = EventsHolder::getInstnce();
-	if (eventsHolder->toChangeAudio())
+	auto stateMachine = StateMachine::getInstnce();
+	if (stateMachine->toChangeAudio())
 	{
 		if (player.getStatus() == sf::SoundSource::Playing)
 		{
 			stop();
 		}
 		initialize(pathToFile, looped);
-		if (eventsHolder->toPlayAudio())
+		if (stateMachine->toPlayAudio())
 		{
 			play();
 		}
-		eventsHolder->setToChangeAudio(false);
+		stateMachine->setToChangeAudio(false);
 	}
 }
 

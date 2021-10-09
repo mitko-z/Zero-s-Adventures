@@ -1,6 +1,6 @@
 #include "PressKeyFullScreen.h"
 #include "BackgroundAudioPlayer.h"
-#include "EventsHolder.h"
+#include "StateMachine.h"
 
 PressKeyFullScreen::PressKeyFullScreen(
 								double x, 
@@ -49,9 +49,9 @@ void PressKeyFullScreen::updateEvents()
 {
 	if (m_timer.isStarted() && (m_timer.elapsedSeconds() > m_secondsToWaitBeforeAbleToPressKey))
 	{
-		std::shared_ptr<EventsHolder> eventsHolder = EventsHolder::getInstnce();
-		MAP_KEYS keysPressed = eventsHolder->getPressedKeys();
-		MAP_KEYS keysReleased = eventsHolder->getReleasedKeys();
+		std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+		MAP_KEYS keysPressed = stateMachine->getPressedKeys();
+		MAP_KEYS keysReleased = stateMachine->getReleasedKeys();
 		updateKeys(keysPressed, keysReleased);
 	}
 }
