@@ -1,47 +1,47 @@
 ; level no.
-1
+levelNum=1
 ; index number of the monster type for this level
-0
+monsterType=0
 ; name for the texture of monsters (without the extension of the file)
-
+texture=
 ; Monster texture frames y, x
-0	0
+animationFrames=0	0
 ; Monster damage
-0
+damage=0
 ; Monster speed
-0
+speed=0
 ; Monster health
-0
+health=0
 ; Monster attacking speed (in seconds)
-0
+attackingSpeed=0
 ; Number of projectiles types monster immune from
-0
+numImmuneFromProjectiles=0
 ; Monster immune from projectiles
-
+immuneFromProjectilesList=
 ; number of sounds
-0
+numberOfSoundsLv1=0
 ; level no.
-2
+levelNum=2
 ; index number of the monster type for this level
-1
+monsterType=1
 ; name for the texture of monsters (without the extension of the file)
-Jelly
+texture=Jelly.png
 ; Monster texture frames y, x
-2	2
+animationFrames=2	2
 ; Monster damage
-15
+damage=15
 ; Monster speed
-3
+speed=3
 ; Monster health
-100
+health=100
 ; Monster attacking speed (in seconds)
-1
+attackingSpeed=1
 ; Number of projectiles types monster immune from
-0
+numImmuneFromProjectiles=0
 ; Monster immune from projectiles
-
+immuneFromProjectilesList=
 ; number of sounds
-1
+numberOfSoundsLv2=1
 ; list of sounds file names 
 monster_hraw.wav
 ; list of numbers sounds ranges
@@ -49,27 +49,27 @@ monster_hraw.wav
 ; list of sounds ranges
 1
 ; level no.
-3
+levelNum=3
 ; index number of the monster type for this level
-2
+monsterType=2
 ; name for the texture of monsters (without the extension of the file)
-OneEye
+texture=OneEye.png
 ; Monster texture frames y, x
-1	7
+animationFrames=1	7
 ; Monster damage
-30
+damage=30
 ; Monster speed
-5
+speed=5
 ; Monster health
-100
+health=100
 ; Monster attacking speed (in seconds)
-0.7
+attackingSpeed=0.7
 ; Number of projectiles types monster immune from
-0
+numImmuneFromProjectiles=0
 ; Monster immune from projectiles
-
+immuneFromProjectilesList=
 ; number of sounds
-2
+numberOfSoundsLv3=2
 ; list of sounds file names 
 monster_urah.wav
 monster_wlqu.wav
@@ -78,27 +78,27 @@ monster_wlqu.wav
 ; list of sounds ranges
 2
 ; level no.
-4
+levelNum=4
 ; index number of the monster type for this level
-3
+monsterType=3
 ; name for the texture of monsters (without the extension of the file)
-WalkingSquare
+texture=WalkingSquare.png
 ; Monster texture frames y, x
-1	5
+animationFrames=1	5
 ; Monster damage
-100
+damage=100
 ; Monster speed
-7
+speed=7
 ; Monster health
-300
+health=300
 ; Monster attacking speed (in seconds)
-0.3
+attackingSpeed=0.3
 ; Number of projectiles types monster immune from
-2
+numImmuneFromProjectiles=2
 ; Monster immune from projectiles // immune from arrows & fireballs //
-18	19
+immuneFromProjectilesList=18	19
 ; number of sounds
-2
+numberOfSoundsLv4=2
 ; list of sounds file names 
 plos.wav
 srp.wav

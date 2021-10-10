@@ -1,2 +1,2 @@
-; name of texture for the end of level object withot the .png extension
-mushroomHouse
+; name of texture for the end of level object
+texture=mushroomHouse.png

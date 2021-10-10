@@ -1,7 +1,3 @@
-refactor: resource manager should be responsible only for holding resources - make new class(es) responsible for reading from file and for initializing the game objects
-
-make ResourcesManager to ignore lines starting with ";" when reading from file
-
 add resume game menu
 
 add save game menu
@@ -29,3 +25,5 @@ Make a "Press any key" message appears on the PressKeyFullScreen screens when th
 Make the same font on the PressKeyFullScreen screes as the one on the main menu screen.
 
 Add more explanatory comments to classes, methods, etc.
+
+Make the info files to be in xml format

@@ -1,43 +1,43 @@
 ; level no.
-1
+levelNum=1
 ; index number for the type of weapon for this level
-0
-; name for the texture of the weapon (without the extension of the file)
-
+weaponType=0
+; name for the texture of the weapon
+weaponTexture=
 ; Weapon texture frames y, x
-0	0
+weaponAnimFrames=0	0
 ; firing rate of the weapon (in seconds)
-0
+firingRate=0
 ; index number for the type of projectile for this level
-0
-; name for the texture of the projectile (without the extension of the file)
-
+projectileType=0
+; name for the texture of the projectile
+projectileTexture=
 ; projectiles damage
-0
+projectilesDamage=0
 ; projectiles speed
-0
+projectilesSpeed=0
 ; number of sounds
-0
+numberOfSoundsLv1=0
 ; level no.
-2
+levelNum=2
 ; index number for the type of weapon for this level
-1
-; name for the texture of the weapon (without the extension of the file)
-cartoon-bow-and-arrow
+weaponType=1
+; name for the texture of the weapon
+weaponTexture=cartoon-bow-and-arrow.png
 ; Weapon texture frames y, x
-1	1
+weaponAnimFrames=1	1
 ; firing rate of the weapon (in seconds)
-3
+firingRate=3
 ; index number for the type of projectile for this level
-1
-; name for the texture of the projectile (without the extension of the file)
-arrow_239_239_thicker
+projectileType=1
+; name for the texture of the projectile
+projectileTexture=arrow_239_239_thicker.png
 ; projectile damage
-10
+projectilesDamage=10
 ; projectiles speed
-10
+projectilesSpeed=10
 ; number of sounds
-1
+numberOfSoundsLv2=1
 ; list of sounds file names 
 fryu.wav
 ; list of numbers sounds ranges
@@ -45,25 +45,25 @@ fryu.wav
 ; list of sounds ranges
 1
 ; level no.
-3
+levelNum=3
 ; index number for the type of weapon for this level
-2
-; name for the texture of the weapon (without the extension of the file)
-Fireball
+weaponType=2
+; name for the texture of the weapon
+weaponTexture=Fireball.png
 ; Weapon texture frames y, x
-1	1
+weaponAnimFrames=1	1
 ; firing rate of the weapon (in seconds)
-2
+firingRate=2
 ; index number for the type of projectile for this level
-2
-; name for the texture of the projectile (without the extension of the file)
-Fireball
+projectileType=2
+; name for the texture of the projectile
+projectileTexture=Fireball.png
 ; projectile damage
-15
+projectilesDamage=15
 ; projectiles speed
-15
+projectilesSpeed=15
 ; number of sounds
-1
+numberOfSoundsLv3=1
 ; list of sounds file names 
 fireball.wav
 ; list of numbers sounds ranges
@@ -71,25 +71,25 @@ fireball.wav
 ; list of sounds ranges
 1
 ; level no.
-4
+levelNum=4
 ; index number for the type of weapon for this level
-3
-; name for the texture of the weapon (without the extension of the file)
-StarsWeapon
+weaponType=3
+; name for the texture of the weapon
+weaponTexture=StarsWeapon.png
 ; Weapon texture frames y, x
-1	1
+weaponAnimFrames=1	1
 ; firing rate of the weapon (in seconds)
-1
+firingRate=1
 ; index number for the type of projectile for this level
-3
-; name for the texture of the projectile (without the extension of the file)
-StarProjectile
+projectileType=3
+; name for the texture of the projectile
+projectileTexture=StarProjectile.png
 ; projectile damage
-20
+projectilesDamage=20
 ; projectiles speed
-20
+projectilesSpeed=20
 ; number of sounds
-1
+numberOfSoundsLv4=1
 ; list of sounds file names 
 csynik.wav
 ; list of numbers sounds ranges

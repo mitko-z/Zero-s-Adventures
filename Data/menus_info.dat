@@ -1,7 +1,7 @@
 ; name of the buttons texture (without the extension of the file)
-MenuButtonEmptyWide
+buttonsTexture=MenuButtonEmptyWide.png
 ; number of sounds in buttons
-1
+numOfButtonsSounds=1
 ; list of sounds file names 
 tyn.wav
 ; list of numbers sounds ranges
@@ -9,13 +9,13 @@ tyn.wav
 ; list of sounds ranges
 1
 ; name of the buttons highlighter texture 
-frame-transparent
+highlighterTexture=frame-transparent.png
 ; name of the menus background texture 
-MenuBackgroundRectangle
+menuTexture=MenuBackgroundRectangle.png
 ; name of the background music for menus
-Snack Time - The Green Orbs - [trimmed].wav
+menuBackgroundMusic=Snack Time - The Green Orbs - [trimmed].wav
 ; number of sounds in menus
-1
+numOfMenuSounds=1
 ; list of sounds file names 
 ta.wav
 ; list of numbers sounds ranges
@@ -23,18 +23,18 @@ ta.wav
 ; list of sounds ranges
 1
 ; name of the start screen texture 
-StartScreen
+startScreenTexture=StartScreen.png
 ; name of the background music for the start screen
-Robot Boogie - Quincas Moreira [intro-outro].wav
+startScreenBckgrMusic=Robot Boogie - Quincas Moreira [intro-outro].wav
 ; name of the finished level screen texture 
-finished level screen image
+finishedLevelTexture=finished level screen image.png
 ; name of the background music for the finished level screen
-Robot Boogie - Quincas Moreira [mid-outro].wav
+finishedLevelBckgrMusic=Robot Boogie - Quincas Moreira [mid-outro].wav
 ; name of the game over screen texture 
-game over screen image
+gameOverTexture=game over screen image.png
 ; name of the background music for the game over screen
-80's Video Game Death - Sir Cubworth [intro].wav
+gameOverBckgrMusic=80's Video Game Death - Sir Cubworth [intro].wav
 ; name of the final screen texture 
-final screen image
+finalScreenTexture=final screen image.png
 ; name of the background music for the final screen
-Robot Boogie - Quincas Moreira [longer intro-outro].wav
+finalScreenBckgrMusic=Robot Boogie - Quincas Moreira [longer intro-outro].wav

@@ -12,6 +12,19 @@
 #define MONSTERS_TYPE Definitions::MonstersType
 
 #define UMAP std::unordered_map
+#define umapTypeString UMAP<OBJ_TYPE, std::string> 
+#define umapTypeVecStrings UMAP<OBJ_TYPE, std::vector<std::string> > 
+#define umapTypeVecInts UMAP<OBJ_TYPE, std::vector<size_t> > 
+#define mapStrStr std::map<std::string, std::string>
+
+struct SoundBuffersHolder
+{
+	std::vector<sf::SoundBuffer> soundBuffers;
+	// specifies the ranges of different sounds for speciffic type, i.e. if ranges[0] == 5 says 
+	// that soundBuffers[0..4] are of type 0. Then if ranges[1] == 3 then 
+	// soundBuffers[ranges[0]..ranges[0] + 3] == ranges[5..7] are of type 1, etc.
+	std::vector<size_t> ranges;
+};
 
 namespace Definitions
 {

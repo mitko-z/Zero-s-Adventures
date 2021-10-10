@@ -122,6 +122,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="ButtonHighlighter.cpp" />
     <ClCompile Include="EndOfLevel.cpp" />
+    <ClCompile Include="FileReadTools.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="FinalScreen.cpp" />
     <ClCompile Include="FinishedLevelScreen.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="ButtonHighlighter.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="EndOfLevel.h" />
+    <ClInclude Include="FileReadTools.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="FinalScreen.h" />
     <ClInclude Include="FinishedLevelScreen.h" />

@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include <vector>
-#include <fstream>				// read from file "levels" which textures to load
 #include <string>				// strings manipulations while reading data 
 #include <sstream>				// a string line read from file to be converted to ints
 #include <memory>
@@ -12,17 +11,6 @@
 
 #include "Definitions.h"		// ObjectType, Animations
 
-typedef UMAP<OBJ_TYPE, std::string> umapTypeString;
-typedef UMAP<OBJ_TYPE, std::vector<std::string> > umapTypeVecStrings;
-typedef UMAP<OBJ_TYPE, std::vector<size_t> > umapTypeVecInts;
-struct SoundBuffersHolder
-{
-	std::vector<sf::SoundBuffer> soundBuffers;
-		// specifies the ranges of different sounds for speciffic type, i.e. if ranges[0] == 5 says 
-		// that soundBuffers[0..4] are of type 0. Then if ranges[1] == 3 then 
-		// soundBuffers[ranges[0]..ranges[0] + 3] == ranges[5..7] are of type 1, etc.
-	std::vector<size_t> ranges; 
-};
 
 // fwd declarations
 class GameObject;
@@ -62,7 +50,6 @@ private:
 					umapTypeVecInts& soundsRanges);
 	void loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges);
 	void initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeString& musicNames);
-	std::ifstream getReader(std::string filePath);
 	void getZeroInfo(umapTypeString& imagesNames, 
 					 umapTypeVecStrings& soundsNames,
 					 umapTypeVecInts& soundsRanges,
@@ -70,8 +57,8 @@ private:
 					 double& zeroHealth, 
 					 double& zeroAttcackingSpeed,
 					 double& zeroFiringAccurracy);
-	void getBackgroundInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames, std::string& backgroundMusicFileName);
-	void getWallsInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getBackgroundInfo(const unsigned int& level, umapTypeString& imagesNames, std::string& backgroundMusicFileName);
+	void getWallsInfo(const unsigned int& level, umapTypeString& imagesNames);
 	void getMonstersInfo(const unsigned int& level, 
 						 MONSTERS_TYPE& monsterType, 
 						 umapTypeString& imagesNames, 
@@ -91,15 +78,14 @@ private:
 						double& projectilesDamage,
 						double& firingRate,
 						double& projectilesSpeed);
-	void getEndOfLevelInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
-	void getHealthInfo(const unsigned int& level, UMAP<OBJ_TYPE, std::string>& imagesNames);
+	void getEndOfLevelInfo(const unsigned int& level, umapTypeString& imagesNames);
+	void getHealthInfo(const unsigned int& level, umapTypeString& imagesNames);
 	void getGeneralInfo(const unsigned int& level, 
 						unsigned int& numbersOfLevels, std::vector<sf::Vector2u>& wallsCoords,
 						sf::Vector2u& endOfLevelCoords,
 						std::vector<sf::Vector2u>& monstersCoords,
 						std::vector<sf::Vector2u>& weaponsCoords);
 	void setSpeedFactor();
-	void readFromFileSoundsFileNames(std::ifstream& fileReader, const OBJ_TYPE& gameObjectType, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges);
 
 	// members
 	UMAP<OBJ_TYPE, sf::Texture> m_textures;

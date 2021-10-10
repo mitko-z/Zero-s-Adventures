@@ -14,6 +14,7 @@
 #include "Monster.h"
 #include "Health.h"
 #include "Weapon.h"
+#include "FileReadTools.h"
 
 // file reading defines
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
@@ -303,55 +304,31 @@ void ResourcesManager::loadLevel(unsigned int level,
 
 void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
 {
-	std::ifstream infoReader = getReader(MENUS_INFO_FILE_PATH);
-	std::string lineRead;
-	// regular menu
-	std::getline(infoReader, lineRead);	// read "; name of the buttons texture (without the extension of the file)"
-	std::getline(infoReader, lineRead);	// read the name of the texture for buttons
-	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = lineRead + ".png";
-	readFromFileSoundsFileNames(infoReader, OBJ_TYPE::MENU_BUTTON_TYPE, soundsNames, soundsRanges);
-	std::getline(infoReader, lineRead);	// read "; name of the buttons highlighter texture"
-	std::getline(infoReader, lineRead);	// read name of the texture for the highlighter
-	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of the menus background texture"
-	std::getline(infoReader, lineRead);	// read the name of the texture for the background
-	imagesNames[OBJ_TYPE::MENU_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of the background music for menus"
-	std::getline(infoReader, lineRead);	// read the name of the music file
-	musicNames[OBJ_TYPE::MENU_TYPE] = lineRead;
-	readFromFileSoundsFileNames(infoReader, OBJ_TYPE::MENU_TYPE, soundsNames, soundsRanges);
+	mapStrStr fileCommandsToResources;
+	FileReadTools::extractFileCommandsAndResources(MENUS_INFO_FILE_PATH, fileCommandsToResources);
+	//// regular menu
+	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = fileCommandsToResources["buttonsTexture"];
+	FileReadTools::extractSoundsFileNames(MENUS_INFO_FILE_PATH, OBJ_TYPE::MENU_BUTTON_TYPE, soundsNames, soundsRanges, "numOfButtonsSounds");
+	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = fileCommandsToResources["highlighterTexture"];
+	imagesNames[OBJ_TYPE::MENU_TYPE] = fileCommandsToResources["menuTexture"];
+	musicNames[OBJ_TYPE::MENU_TYPE] = fileCommandsToResources["menuBackgroundMusic"];
+	FileReadTools::extractSoundsFileNames(MENUS_INFO_FILE_PATH, OBJ_TYPE::MENU_TYPE, soundsNames, soundsRanges, "numOfButtonsSounds");
 
-	// start screen
-	std::getline(infoReader, lineRead);	// read "; name of the start screen texture"
-	std::getline(infoReader, lineRead);	// read the name of the texture
-	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of the background music the start screen"
-	std::getline(infoReader, lineRead);	// read the name of the music file
-	musicNames[OBJ_TYPE::START_SCREEN_TYPE] = lineRead;
+	//// start screen
+	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = fileCommandsToResources["startScreenTexture"];
+	musicNames[OBJ_TYPE::START_SCREEN_TYPE] = fileCommandsToResources["startScreenBckgrMusic"];
 
-	// finished level screen
-	std::getline(infoReader, lineRead);	// read "; name of the finished level screen texture"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
-	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of the background music the finished level screen"
-	std::getline(infoReader, lineRead);	// read the name of the music file
-	musicNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = lineRead;
+	//// finished level screen
+	imagesNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = fileCommandsToResources["finishedLevelTexture"];
+	musicNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE] = fileCommandsToResources["finishedLevelBckgrMusic"];
 
-	// game over screen
-	std::getline(infoReader, lineRead);	// read "; name of the game over screen texture"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
-	imagesNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of the background music the game over screen"
-	std::getline(infoReader, lineRead);	// read the name of the music file
-	musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = lineRead;
+	//// game over
+	imagesNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = fileCommandsToResources["gameOverTexture"];
+	musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = fileCommandsToResources["gameOverBckgrMusic"];
 
-	// final screen
-	std::getline(infoReader, lineRead);	// read "; name of the final screen texture"
-	std::getline(infoReader, lineRead);	// read "; name of the texture
-	imagesNames[OBJ_TYPE::FINAL_SCREEN] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of the background music the final screen"
-	std::getline(infoReader, lineRead);	// read the name of the music file
-	musicNames[OBJ_TYPE::FINAL_SCREEN] = lineRead;
+	//// final screen
+	imagesNames[OBJ_TYPE::FINAL_SCREEN] = fileCommandsToResources["finalScreenTexture"];
+	musicNames[OBJ_TYPE::FINAL_SCREEN] = fileCommandsToResources["finalScreenBckgrMusic"];
 }
 
 void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeString& musicNames)
@@ -394,18 +371,6 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeStr
 			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINAL_SCREEN]);
 }
 
-std::ifstream ResourcesManager::getReader(std::string filePath)
-{
-	std::string loadPath(filePath);
-	std::ifstream reader(loadPath);
-	if (!reader)
-	{
-		std::string throwMessage = "Cannot load levels info file: " + loadPath;
-		throw throwMessage;
-	}
-	return reader;
-}
-
 void ResourcesManager::getZeroInfo(umapTypeString& imagesNames, 
 								   umapTypeVecStrings& soundsNames,
 								   umapTypeVecInts& soundsRanges,
@@ -414,72 +379,30 @@ void ResourcesManager::getZeroInfo(umapTypeString& imagesNames,
 								   double& zeroAttcackingSpeed, 
 								   double& zeroFiringAccurracy)
 {
-	std::ifstream infoReader = getReader(ZERO_INFO_FILE_PATH);
-	std::string lineRead;
-	std::getline(infoReader, lineRead);	// read "; name of Zero's texture.."
-	std::getline(infoReader, lineRead);	// read the name of the texture
-	imagesNames[OBJ_TYPE::ZERO_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; Zero texture frames x, y"
-	std::getline(infoReader, lineRead);	// read the frames upon x and y
-	m_animations[OBJ_TYPE::ZERO_TYPE] = getAnimationFromString(lineRead);
-	std::getline(infoReader, lineRead);	// read ; Zero speed
-	std::getline(infoReader, lineRead);	// read Zero's speed
-	zeroSpeed = std::stod(lineRead);
-	std::getline(infoReader, lineRead);	// read ; Zero health
-	std::getline(infoReader, lineRead);	// read Zero's health
-	zeroHealth = std::stod(lineRead);
-	std::getline(infoReader, lineRead);	// read ; Zero attacking speed (in seconds)
-	std::getline(infoReader, lineRead);	// read Zero's attacking speed
-	zeroAttcackingSpeed = std::stod(lineRead);
-	std::getline(infoReader, lineRead);	// read ; Zero firing accurracy (in percentages)
-	std::getline(infoReader, lineRead);	// read Zero's firing accurracy
-	zeroFiringAccurracy = std::stod(lineRead);
-	readFromFileSoundsFileNames(infoReader, OBJ_TYPE::ZERO_TYPE, soundsNames, soundsRanges);
-	infoReader.close();
+	mapStrStr fileCommandsAndResources;
+	FileReadTools::extractFileCommandsAndResources(ZERO_INFO_FILE_PATH, fileCommandsAndResources);
+	imagesNames[OBJ_TYPE::ZERO_TYPE]	=						 fileCommandsAndResources["texture"];
+	m_animations[OBJ_TYPE::ZERO_TYPE]	= getAnimationFromString(fileCommandsAndResources["animation"]);
+	zeroSpeed							=			   std::stod(fileCommandsAndResources["speed"]);
+	zeroHealth							=			   std::stod(fileCommandsAndResources["health"]);
+	zeroAttcackingSpeed					=			   std::stod(fileCommandsAndResources["attackingSpeed"]);
+	zeroFiringAccurracy					=			   std::stod(fileCommandsAndResources["firingAccuracy"]);
+	FileReadTools::extractSoundsFileNames(ZERO_INFO_FILE_PATH, OBJ_TYPE::ZERO_TYPE, soundsNames, soundsRanges);
 }
 
-void ResourcesManager::getBackgroundInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames, std::string& backgroundMusicFileName)
+void ResourcesManager::getBackgroundInfo(const unsigned int & level, umapTypeString& imagesNames, std::string& backgroundMusicFileName)
 {
-	std::ifstream infoReader = getReader(BACKGROUND_INFO_FILE_PATH);
-	std::string lineRead;
-	unsigned int currentLevel = 0;
-	do
-	{
-		// read level info
-		std::getline(infoReader, lineRead);	// read "; level no."
-		std::getline(infoReader, lineRead);	// read the level no
-		currentLevel = std::stoi(lineRead);
-
-		// read background info 
-		std::getline(infoReader, lineRead);	// read "; name for the texture of the background"
-		std::getline(infoReader, lineRead);	// read the name for the texture of the background
-		imagesNames[OBJ_TYPE::BACKGROUND_TYPE] = lineRead + ".png";
-		std::getline(infoReader, lineRead);	// read "; name of the background music the game over screen"
-		std::getline(infoReader, lineRead);	// read the name of the music file
-		backgroundMusicFileName = lineRead;
-	} while (currentLevel != level);
-	infoReader.close();
+	mapStrStr fileCommandsAndResources;
+	FileReadTools::extractFileCommandsAndResources(BACKGROUND_INFO_FILE_PATH, fileCommandsAndResources, level);
+	imagesNames[OBJ_TYPE::BACKGROUND_TYPE]	= fileCommandsAndResources["texture"];
+	backgroundMusicFileName					= fileCommandsAndResources["backgroundMusic"];
 }
 
-void ResourcesManager::getWallsInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getWallsInfo(const unsigned int & level, umapTypeString& imagesNames)
 {
-	std::ifstream infoReader = getReader(WALLS_INFO_FILE_PATH);
-	std::string lineRead;
-	unsigned int currentLevel = 0;
-	do
-	{
-		// read level info
-		std::getline(infoReader, lineRead);	// read "; level no."
-		std::getline(infoReader, lineRead);	// read the level no
-		currentLevel = std::stoi(lineRead);
-
-		// read walls info
-		std::getline(infoReader, lineRead);	// read  ; name for the texture of walls (without the extension of the file)
-		std::getline(infoReader, lineRead);	// read  the name for the texture of walls
-		imagesNames[OBJ_TYPE::WALL_TYPE] = lineRead + ".png";
-	} 
-	while (currentLevel != level);
-	infoReader.close();
+	mapStrStr fileCommandsAndResources;
+	FileReadTools::extractFileCommandsAndResources(WALLS_INFO_FILE_PATH, fileCommandsAndResources, level);
+	imagesNames[OBJ_TYPE::WALL_TYPE] = fileCommandsAndResources["texture"];
 }
 
 void ResourcesManager::getMonstersInfo(const unsigned int & level, 
@@ -493,54 +416,29 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 									   double& attackingSpeed,
 									   std::vector<OBJ_TYPE>& monsterImmuneFrom)
 {
-	std::ifstream infoReader = getReader(MONSTERS_INFO_FILE_PATH);
-	std::string lineRead;
-	unsigned int currentLevel = 0;
-	do
+	mapStrStr fileCommandsToResources;
+	FileReadTools::extractFileCommandsAndResources(MONSTERS_INFO_FILE_PATH, fileCommandsToResources, level);
+	monsterType								= static_cast<MONSTERS_TYPE>(std::stoi(fileCommandsToResources["monsterType"]));
+	imagesNames[OBJ_TYPE::MONSTER_TYPE]		=									   fileCommandsToResources["texture"];
+	m_animations[OBJ_TYPE::MONSTER_TYPE]	=			    getAnimationFromString(fileCommandsToResources["animationFrames"]);
+	damage									=							 std::stod(fileCommandsToResources["damage"]);
+	speed									=							 std::stod(fileCommandsToResources["speed"]);
+	health									=							 std::stod(fileCommandsToResources["health"]);
+	attackingSpeed							=							 std::stod(fileCommandsToResources["attackingSpeed"]);
+	int numProjTypes						=							 std::stod(fileCommandsToResources["numImmuneFromProjectiles"]);
+	if (numProjTypes > 0)
 	{
-		// read level info
-		std::getline(infoReader, lineRead);	// read "; level no."
-		std::getline(infoReader, lineRead);	// read the level no
-		currentLevel = std::stoi(lineRead);
-
-		// read monsters info
-		std::getline(infoReader, lineRead);	// read ; index number of the monster type for this level
-		std::getline(infoReader, lineRead);	// read the index number of the monster type for this level
-		monsterType = static_cast<MONSTERS_TYPE>(std::stoi(lineRead));
-		std::getline(infoReader, lineRead);	// read  ; name for the texture of monsters (without the extension of the file)
-		std::getline(infoReader, lineRead);	// read  the name for the texture of monsters
-		imagesNames[OBJ_TYPE::MONSTER_TYPE] = lineRead + ".png";
-		std::getline(infoReader, lineRead);	// read "Monster texture frames x, y"
-		std::getline(infoReader, lineRead);	// read the frames upon y and x
-		m_animations[OBJ_TYPE::MONSTER_TYPE] = getAnimationFromString(lineRead);
-		std::getline(infoReader, lineRead);	// read ; Monster damage
-		std::getline(infoReader, lineRead);	// read the monster damage
-		damage = std::stod(lineRead);
-		std::getline(infoReader, lineRead);	// read ; Monster speed
-		std::getline(infoReader, lineRead);	// read the monster speed
-		speed = std::stod(lineRead);
-		std::getline(infoReader, lineRead);	// read ; Monster health
-		std::getline(infoReader, lineRead);	// read the monster health
-		health = std::stod(lineRead);
-		std::getline(infoReader, lineRead);	// read ; Monster attacking speed
-		std::getline(infoReader, lineRead);	// read the monster attacking speed
-		attackingSpeed = std::stod(lineRead);
-		std::getline(infoReader, lineRead);	// read ; Number of projectiles types monster immune from
-		std::getline(infoReader, lineRead);	// read the number of projectiles types monster immune from
-		int numProjTypes = std::stoi(lineRead);
-		std::getline(infoReader, lineRead);	// read ; Monster immune from projectiles
-		std::getline(infoReader, lineRead);	// read the list of projectiles which monster is immune of
+		std::string immuneFromProjectilesListAsStr = fileCommandsToResources["immuneFromProjectilesList"];
 		std::stringstream ss;
-		ss << lineRead;
+		ss << immuneFromProjectilesListAsStr;
 		std::string projectileTypeAsStr;
 		for(int i = 0; i < numProjTypes; i++)
 		{
 			ss >> projectileTypeAsStr;
 			monsterImmuneFrom.push_back(static_cast<OBJ_TYPE>(std::stoi(projectileTypeAsStr)));
 		}
-		readFromFileSoundsFileNames(infoReader, OBJ_TYPE::MONSTER_TYPE, soundsNames, soundsRanges);
-	} while (currentLevel != level);
-	infoReader.close();
+	}
+	FileReadTools::extractSoundsFileNames(MONSTERS_INFO_FILE_PATH, OBJ_TYPE::MONSTER_TYPE, soundsNames, soundsRanges, "numberOfSoundsLv" + std::to_string(level));
 }
 
 void ResourcesManager::getWeaponsInfo(const unsigned int & level,
@@ -553,72 +451,44 @@ void ResourcesManager::getWeaponsInfo(const unsigned int & level,
 									   double& firingRate,
 									   double& projectilesSpeed)
 {
-	std::ifstream infoReader = getReader(WEAPONS_INFO_FILE_PATH);
-	std::string lineRead;
-	unsigned int currentLevel = 0;
-	do
+	mapStrStr filesCommandsToResources;
+	FileReadTools::extractFileCommandsAndResources(WEAPONS_INFO_FILE_PATH, filesCommandsToResources, level);
+	OBJ_TYPE weaponType = 
+		static_cast<OBJ_TYPE>(
+			std::stoi(filesCommandsToResources["weaponType"]) + 
+			static_cast<int>(OBJ_TYPE::WEAPONS_TYPES_START));
+	bool hasWeapon = (weaponType != OBJ_TYPE::WEAPONS_TYPES_START);
+	if (hasWeapon)
 	{
-		// read level info
-		std::getline(infoReader, lineRead);	// read "; level no."
-		std::getline(infoReader, lineRead);	// read the level no
-		currentLevel = std::stoi(lineRead);
-
-		// read weapon info
-		std::getline(infoReader, lineRead);	// read ; index number for the type of weapon for this level
-		std::getline(infoReader, lineRead);	// read the index number for the type of weapon 
-		OBJ_TYPE weaponType = static_cast<OBJ_TYPE>(std::stoi(lineRead) + static_cast<int>(OBJ_TYPE::WEAPONS_TYPES_START));
-		bool noWeapon = (weaponType == OBJ_TYPE::WEAPONS_TYPES_START);
-		if(!noWeapon) weaponsTypes.push_back(weaponType);
-		std::getline(infoReader, lineRead);	// read ; name for the texture of the weapon (without the extension of the file)
-		std::getline(infoReader, lineRead);	// read the name for the texture of the weapon
-		if (!noWeapon) imagesNames[weaponType] = lineRead + ".png";
-		std::getline(infoReader, lineRead);	// read ; Weapon texture frames y, x
-		std::getline(infoReader, lineRead);	// read the Weapon animation texture frames
-		if (!noWeapon) m_animations[weaponType] = getAnimationFromString(lineRead);
-		std::getline(infoReader, lineRead);	// read ; firing rate of the weapon (in seconds)
-		std::getline(infoReader, lineRead);	// read the firing rate 
-		firingRate = std::stod(lineRead);
-		std::getline(infoReader, lineRead);	// read ; index number for the type of projectile for this level
-		std::getline(infoReader, lineRead);	// read the type of projectile
-		OBJ_TYPE projectilesType = static_cast<OBJ_TYPE>(std::stoi(lineRead) + static_cast<int>(OBJ_TYPE::PROJECTILES_TYPES_START));
-		if (!noWeapon) projectilesTypes.push_back(projectilesType);
-		std::getline(infoReader, lineRead);	// read ; name for the texture of the projectile (without the extension of the file)
-		std::getline(infoReader, lineRead);	// read the name for the texture of the projectile
-		if (!noWeapon) imagesNames[projectilesType] = lineRead + ".png";
-		std::getline(infoReader, lineRead);	// read ; projectiles damage
-		std::getline(infoReader, lineRead);	// read the projectiles damage
-		projectilesDamage = std::stod(lineRead);
-		std::getline(infoReader, lineRead);	// read ; projectiles speed
-		std::getline(infoReader, lineRead);	// read the projectiles speed
-		projectilesSpeed = std::stod(lineRead);
-		readFromFileSoundsFileNames(infoReader, weaponType, soundsNames, soundsRanges);
-	} while (currentLevel != level);
-	infoReader.close();
+		weaponsTypes.push_back(weaponType);
+		imagesNames[weaponType]		=						 filesCommandsToResources["weaponTexture"];
+		m_animations[weaponType]	= getAnimationFromString(filesCommandsToResources["weaponAnimFrames"]);
+		firingRate					=			   std::stod(filesCommandsToResources["firingRate"]);
+		OBJ_TYPE projectilesType =
+			static_cast<OBJ_TYPE>(
+				std::stoi(filesCommandsToResources["projectileType"]) +
+				static_cast<int>(OBJ_TYPE::PROJECTILES_TYPES_START));
+		projectilesTypes.push_back(projectilesType);
+		imagesNames[projectilesType]	=			filesCommandsToResources["projectileTexture"];
+		projectilesDamage				= std::stod(filesCommandsToResources["projectilesDamage"]);
+		projectilesSpeed				= std::stod(filesCommandsToResources["projectilesSpeed"]);
+		FileReadTools::extractSoundsFileNames(WEAPONS_INFO_FILE_PATH, weaponType, soundsNames, soundsRanges, "numberOfSoundsLv" + std::to_string(level));
+	}
 }
 
-void ResourcesManager::getEndOfLevelInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getEndOfLevelInfo(const unsigned int & level, umapTypeString& imagesNames)
 {
-	std::ifstream infoReader = getReader(END_OF_LEVEL_INFO_FILE_PATH);
-	std::string lineRead;
-
-	std::getline(infoReader, lineRead);	// read "; name of texture for the end of level object withot the .png extension"
-	std::getline(infoReader, lineRead);	// read the name for the texture
-	imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = lineRead + ".png";
-	infoReader.close();
+	mapStrStr filesCommandsToResources;
+	FileReadTools::extractFileCommandsAndResources(END_OF_LEVEL_INFO_FILE_PATH, filesCommandsToResources);
+	imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = filesCommandsToResources["texture"];
 }
 
-void ResourcesManager::getHealthInfo(const unsigned int & level, UMAP<OBJ_TYPE, std::string>& imagesNames)
+void ResourcesManager::getHealthInfo(const unsigned int & level, umapTypeString& imagesNames)
 {
-	std::ifstream infoReader = getReader(HEALTH_INFO_FILE_PATH);
-	std::string lineRead;
-
-	std::getline(infoReader, lineRead);	// read "; name of texture for the health object withot the .png extension"
-	std::getline(infoReader, lineRead);	// read the name for the texture
-	imagesNames[OBJ_TYPE::HEALTH_TYPE] = lineRead + ".png";
-	std::getline(infoReader, lineRead);	// read "; name of texture for the background health object withot the .png extension"
-	std::getline(infoReader, lineRead);	// read the name for the texture
-	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE] = lineRead + ".png";
-	infoReader.close();
+	mapStrStr filesCommandsToResources;
+	FileReadTools::extractFileCommandsAndResources(HEALTH_INFO_FILE_PATH, filesCommandsToResources);
+	imagesNames[OBJ_TYPE::HEALTH_TYPE]				= filesCommandsToResources["healthTexture"];
+	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE]	= filesCommandsToResources["healthBackgroundTexture"];
 }
 
 void ResourcesManager::getGeneralInfo(const unsigned int & level, 
@@ -628,68 +498,52 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 									  std::vector<sf::Vector2u>& monstersCoords,
 									  std::vector<sf::Vector2u>& weaponsCoords)
 {
-	std::ifstream generalInfoReader = getReader(GENERAL_INFO_FILE_PATH);
-	std::string lineRead;
-	std::getline(generalInfoReader, lineRead);	// read "; number of levels"
-	std::getline(generalInfoReader, lineRead);	// read the number of levels
-	numbersOfLevels = std::stoi(lineRead);
+	mapStrStr fileCommandsToResources;
+	// 1. get the whole info because numbersOfLevels is out of any level
+	FileReadTools::extractFileCommandsAndResources(GENERAL_INFO_FILE_PATH, fileCommandsToResources); 
+	numbersOfLevels = std::stoi(fileCommandsToResources["numOfLevels"]);
+	// 2. get level specific info
+	fileCommandsToResources.clear();
+	FileReadTools::extractFileCommandsAndResources(GENERAL_INFO_FILE_PATH, fileCommandsToResources, level);
+	
+	// clear the coordinates form the previous level if there were any
+	wallsCoords.clear();
+	monstersCoords.clear();
+	weaponsCoords.clear();
 
-	unsigned int currentLevel = 0;
-	do
+	// get stage info
+	m_objectsInLevel.x = std::stoi(fileCommandsToResources["columnsNum"]);
+	m_objectsInLevel.y = std::stoi(fileCommandsToResources["rowsNum"]);
+	std::string currentRow = "";
+	for (unsigned int i = 0; i < m_objectsInLevel.y; ++i) // rows, i.e. y
 	{
-		// clear the coordinates form the previous level if there were any
-		wallsCoords.clear();
-		monstersCoords.clear();
-		weaponsCoords.clear();
-
-		// read from file
-
-		// read level info
-		std::getline(generalInfoReader, lineRead);	// read "; level no."
-		std::getline(generalInfoReader, lineRead);	// read the level no
-		currentLevel = std::stoi(lineRead);
-
-		// read stage info
-		std::getline(generalInfoReader, lineRead);	// read ; number of columns for the level
-		std::getline(generalInfoReader, lineRead);	// read the number of columns for the level
-		m_objectsInLevel.x = std::stoi(lineRead);
-		std::getline(generalInfoReader, lineRead);	// read ; number of rows for the level
-		std::getline(generalInfoReader, lineRead);	// read the number of rows for the level
-		m_objectsInLevel.y = std::stoi(lineRead);
-		std::getline(generalInfoReader, lineRead);	// read ; table of the level; legend: 0 - empty space, 1 - wall, 2 - monster; 9 - end of level
-
-		for (unsigned int i = 0; i < m_objectsInLevel.y; ++i) // rows, i.e. y
+		currentRow = fileCommandsToResources["row" + std::to_string(i)];
+		std::stringstream ss;
+		ss << currentRow;
+		for (unsigned int j = 0; j < m_objectsInLevel.x; ++j) // cols, i.e. x
 		{
-			std::getline(generalInfoReader, lineRead);
-			std::stringstream ss;
-			ss << lineRead;
-			for (unsigned int j = 0; j < m_objectsInLevel.x; ++j) // cols, i.e. x
+			std::string typeOfObjStr;
+			ss >> typeOfObjStr;
+			objTypeOnLevelMap typeOfObjInt = static_cast<objTypeOnLevelMap>(std::stoi(typeOfObjStr));
+			switch (typeOfObjInt)
 			{
-				std::string typeOfObjStr;
-				ss >> typeOfObjStr;
-				objTypeOnLevelMap typeOfObjInt = static_cast<objTypeOnLevelMap>(std::stoi(typeOfObjStr));
-				switch (typeOfObjInt)
-				{
-					case objTypeOnLevelMap::MAP_WALL_OBJ:
-						wallsCoords.push_back(sf::Vector2u(j, i));
-						break;
-					case objTypeOnLevelMap::MAP_MONSTER_OBJ:
-						monstersCoords.push_back(sf::Vector2u(j, i));
-						break;
-					case objTypeOnLevelMap::MAP_WEAPON_OBJ:
-						weaponsCoords.push_back(sf::Vector2u(j, i));
-						break;
-					case objTypeOnLevelMap::MAP_END_OF_LEVEL_OBJ:
-						endOfLevelCoords = sf::Vector2u(j, i);
-						break;
-					default:
-						break;
-				}
+				case objTypeOnLevelMap::MAP_WALL_OBJ:
+					wallsCoords.push_back(sf::Vector2u(j, i));
+					break;
+				case objTypeOnLevelMap::MAP_MONSTER_OBJ:
+					monstersCoords.push_back(sf::Vector2u(j, i));
+					break;
+				case objTypeOnLevelMap::MAP_WEAPON_OBJ:
+					weaponsCoords.push_back(sf::Vector2u(j, i));
+					break;
+				case objTypeOnLevelMap::MAP_END_OF_LEVEL_OBJ:
+					endOfLevelCoords = sf::Vector2u(j, i);
+					break;
+				default:
+					break;
 			}
 		}
-	} while (currentLevel != level);
-
-	generalInfoReader.close();
+	}
 
 	setSpeedFactor();
 }
@@ -697,43 +551,9 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 void ResourcesManager::setSpeedFactor()
 {
 	m_speedFactor.x = getLevelBlockDimensions().x / m_speedFactroDivider;
-	m_speedFactor.y = getLevelBlockDimensions().y / m_speedFactroDivider;
+	m_speedFactor.y = getLevelBlockDimensions().y / m_speedFactroDivider; 
 }
 
-void ResourcesManager::readFromFileSoundsFileNames(std::ifstream & fileReader, const OBJ_TYPE & gameObjectType, umapTypeVecStrings & soundsNames, umapTypeVecInts& soundsRanges)
-{
-	std::string lineRead;
-	std::getline(fileReader, lineRead);	// read ; number of sounds
-	std::getline(fileReader, lineRead);	// read how many sounds the object can make
-	int numSounds = std::stoi(lineRead);
-	if (numSounds > 0)
-	{
-		if (soundsNames.find(gameObjectType) == soundsNames.end())
-		{
-			soundsNames[gameObjectType] = std::vector<std::string>();
-		}
-		else
-		{
-			// clear any sounds loaded from the previous level
-			soundsNames[gameObjectType].clear();
-		}
-		std::getline(fileReader, lineRead);	// read ; list of sounds file names
-		for (int i = 0; i < numSounds; ++i)
-		{
-			std::getline(fileReader, lineRead);	// read the file name of the sound
-			soundsNames[gameObjectType].push_back(lineRead);
-		}
-		std::getline(fileReader, lineRead); // read ; list of numbers sounds ranges
-		std::getline(fileReader, lineRead); // read the numbers sounds ranges
-		int numRanges = std::stoi(lineRead);
-		std::getline(fileReader, lineRead); // read ; list of sounds ranges
-		for (int i = 0; i < numRanges; ++i)
-		{
-			std::getline(fileReader, lineRead);
-			soundsRanges[gameObjectType].push_back(std::stoi(lineRead));
-		}
-	}
-}
 
 const sf::Vector2f ResourcesManager::getLevelBlockDimensions()
 {

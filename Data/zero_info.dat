@@ -1,15 +1,15 @@
 ; name of Zero's texture (without the extension of the file)
-SmileyWalkTighter
+texture=SmileyWalkTighter.png
 ; Zero texture frames x, y
-4	4
+animation=4	4
 ; Zero speed
-7
+speed=7
 ; Zero health
-100
+health=100
 ; Zero attacking speed (in seconds)
-1
+attackingSpeed=1
 ; Zero firing accurracy (in percentages)
-75
+firingAccuracy=75
 ; number of sounds
-0
+numberOfSounds=0
 ; list of sounds file names 
