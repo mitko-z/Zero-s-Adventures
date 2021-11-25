@@ -8,7 +8,7 @@
 #include "BackgroundAudioPlayer.h"
 
 Game::Game() :
-	window(sf::VideoMode(800, 600), "Zero's Adventures"),
+	window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Zero's Adventures", sf::Style::Fullscreen),
 	m_currentLevel(1)
 {
 }
