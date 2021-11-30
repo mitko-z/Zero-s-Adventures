@@ -60,7 +60,6 @@ void ZeroCharacter::setIsActive()
 	int health = static_cast<int>(getCurrentHealth());
 	if (health <= 0)
 	{
-		stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
 		stateMachine->setEventByGameCommand(COMMAND::GAME_OVER_COMMAND);
 	}
 }

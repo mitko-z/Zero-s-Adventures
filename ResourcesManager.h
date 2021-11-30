@@ -80,6 +80,7 @@ private:
 						double& projectilesSpeed);
 	void getEndOfLevelInfo(const unsigned int& level, umapTypeString& imagesNames);
 	void getHealthInfo(const unsigned int& level, umapTypeString& imagesNames);
+	void getTimerLevelInfo(const unsigned int& level, double& timeDuration, umapTypeVecStrings& soundNames, umapTypeVecInts& soundRanges);
 	void getGeneralInfo(const unsigned int& level, 
 						unsigned int& numbersOfLevels, std::vector<sf::Vector2u>& wallsCoords,
 						sf::Vector2u& endOfLevelCoords,

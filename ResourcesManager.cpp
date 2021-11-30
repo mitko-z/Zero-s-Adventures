@@ -15,6 +15,7 @@
 #include "Health.h"
 #include "Weapon.h"
 #include "FileReadTools.h"
+#include "LevelTimer.h"
 
 // file reading defines
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
@@ -25,6 +26,7 @@
 #define WEAPONS_INFO_FILE_PATH		"Data/weapons_info.dat"
 #define END_OF_LEVEL_INFO_FILE_PATH "Data/end_of_level_info.dat"
 #define HEALTH_INFO_FILE_PATH		"Data/health_info.dat"
+#define TIMER_LEVEL_FILE_PATH		"Data/timerLevel_info.dat"
 #define MENUS_INFO_FILE_PATH		"Data/menus_info.dat"
 #define IMAGES_FOLDER				"Data/Images/"
 #define SOUNDS_FOLDER				"Data/Audio/sounds/"
@@ -204,6 +206,9 @@ void ResourcesManager::loadLevel(unsigned int level,
 	// read health info
 	getHealthInfo(level, imagesNames);
 
+	double timerLevelDuration;
+	getTimerLevelInfo(level, timerLevelDuration, soundsNames, soundsRanges);
+
 	/// initialize objects
 	unsigned int numbersOfLevels = 0;
 	std::vector<sf::Vector2u> wallsCoords;
@@ -300,6 +305,11 @@ void ResourcesManager::loadLevel(unsigned int level,
 	// init health
 	resourcesTypes.push_back(OBJ_TYPE::HEALTH_TYPE);
 	resourcesTypes.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
+
+	// init level timer
+	offsetFromTopLeft.x = m_windowDimensions.w / 2;
+	offsetFromTopLeft.y = 0; // getLevelBlockDimensions().y / 40;
+	m_gameObjects.push_back(new LevelTimer(offsetFromTopLeft.x, offsetFromTopLeft.y, getGameObjSize().x / 2, getGameObjSize().y / 2, timerLevelDuration));
 }
 
 void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
@@ -327,8 +337,8 @@ void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& mu
 	musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE] = fileCommandsToResources["gameOverBckgrMusic"];
 
 	//// final screen
-	imagesNames[OBJ_TYPE::FINAL_SCREEN] = fileCommandsToResources["finalScreenTexture"];
-	musicNames[OBJ_TYPE::FINAL_SCREEN] = fileCommandsToResources["finalScreenBckgrMusic"];
+	imagesNames[OBJ_TYPE::FINAL_SCREEN_TYPE] = fileCommandsToResources["finalScreenTexture"];
+	musicNames[OBJ_TYPE::FINAL_SCREEN_TYPE] = fileCommandsToResources["finalScreenBckgrMusic"];
 }
 
 void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeString& musicNames)
@@ -363,12 +373,12 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeStr
 			m_windowDimensions.w, m_windowDimensions.h, 
 			false, GAME_OVER_SCREEN_SECONDS_TO_WAIT, 
 			AUDIO_FOLDER + musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE]);
-	resCommands.push_back(OBJ_TYPE::FINAL_SCREEN);
+	resCommands.push_back(OBJ_TYPE::FINAL_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::FINAL_SCREEN_STATE] =
 		new FinalScreen(0, 0, 
 			m_windowDimensions.w, m_windowDimensions.h, 
 			false, GAME_OVER_SCREEN_SECONDS_TO_WAIT,
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINAL_SCREEN]);
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINAL_SCREEN_TYPE]);
 }
 
 void ResourcesManager::getZeroInfo(umapTypeString& imagesNames, 
@@ -489,6 +499,14 @@ void ResourcesManager::getHealthInfo(const unsigned int & level, umapTypeString&
 	FileReadTools::extractFileCommandsAndResources(HEALTH_INFO_FILE_PATH, filesCommandsToResources);
 	imagesNames[OBJ_TYPE::HEALTH_TYPE]				= filesCommandsToResources["healthTexture"];
 	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE]	= filesCommandsToResources["healthBackgroundTexture"];
+}
+
+void ResourcesManager::getTimerLevelInfo(const unsigned int& level, double& timeDuration, umapTypeVecStrings& soundNames, umapTypeVecInts& soundRanges)
+{
+	mapStrStr filesCommandsToResources;
+	FileReadTools::extractFileCommandsAndResources(TIMER_LEVEL_FILE_PATH, filesCommandsToResources, level);
+	timeDuration = std::stod(filesCommandsToResources["timeDuration"]);
+	FileReadTools::extractSoundsFileNames(TIMER_LEVEL_FILE_PATH, OBJ_TYPE::LEVEL_TIMER_TYPE, soundNames, soundRanges);
 }
 
 void ResourcesManager::getGeneralInfo(const unsigned int & level, 

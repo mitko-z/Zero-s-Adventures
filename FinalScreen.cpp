@@ -3,7 +3,7 @@
 
 OBJ_TYPE FinalScreen::getType()
 {
-	return OBJ_TYPE::FINAL_SCREEN;
+	return OBJ_TYPE::FINAL_SCREEN_TYPE;
 }
 
 void FinalScreen::setEvent()

@@ -81,6 +81,7 @@ void StateMachine::setEventByGameCommand(COMMAND command)
 			m_runningMenuState = RUN_MENU_STATE::FINAL_SCREEN_STATE;
 		break;
 		case COMMAND::GAME_OVER_COMMAND:
+			m_mode = MODE::MENU_MODE;
 			m_runningMenuState = RUN_MENU_STATE::GAME_OVER_SCREEN_STATE;
 		break;
 		case COMMAND::START_SCREEN_COMMAND:

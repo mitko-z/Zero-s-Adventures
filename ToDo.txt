@@ -1,5 +1,3 @@
-add timer for which time the player to finish the level. The remaining time should be displayed on the top of the screen
-
 show on the top of the screen the Zero's weapon and life bar
 
 add resume game menu
@@ -33,3 +31,5 @@ Add more explanatory comments to classes, methods, etc.
 Make the info files to be in xml format
 
 Make the ResourceManager class to not be responsible for the initialization of the objects but a separate class.
+
+Export the buttons text from Menu::setAndInsertButtons() to a text file and thus to be ensured easier switch between languages
