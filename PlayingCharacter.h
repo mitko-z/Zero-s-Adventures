@@ -25,10 +25,10 @@ public:
 
 	bool canMakeNextAttack();
 
+	double getCurrentHealth() { return m_health.currentHealth(); }
+
 protected:
 	virtual void setIsActive();
-
-	double getCurrentHealth() { return m_health.currentHealth(); }
 
 	virtual void playAttackingSound() {}
 

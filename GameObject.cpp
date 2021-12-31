@@ -20,16 +20,11 @@ void GameObject::loadContent()
 {
 	extern std::shared_ptr <ResourcesManager> resMan;
 	OBJ_TYPE gameObjType = getType();
-
-	// load graphics
 	resMan->getAnimation(gameObjType, m_frames);
 	m_drawingObject.texture = resMan->getTexture(gameObjType);
 	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
 	m_drawingObject.sprite.setTexture(m_drawingObject.texture);
 	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
-
-	// load audio
-	// to do
 }
 
 OBJ_TYPE GameObject::getType()

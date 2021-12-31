@@ -36,6 +36,9 @@ public:
 	void update() override;
 
 	void draw(sf::RenderWindow &window) override;
+
+	sf::Sprite getWeaponSprite() { return m_drawingObject.sprite; }
+
 private:
 	OBJ_TYPE m_projectilesType;
 	double m_firingRate;

@@ -91,7 +91,7 @@ namespace Definitions
 		STAR_PROJECTILE_TYPE = 20,
 		GAME_OVER_SCREEN_TYPE = 21,
 		FINAL_SCREEN_TYPE = 22,
-		LEVEL_TIMER_TYPE = 23,
+		LEVEL_HEADER_TYPE = 23,
 	};
 
 	enum MonstersType

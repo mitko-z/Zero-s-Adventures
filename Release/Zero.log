@@ -1,0 +1,13 @@
+﻿  LevelHeader.cpp
+e:\programirane\zero\zero\levelheader.cpp(22): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+e:\programirane\zero\zero\levelheader.cpp(23): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\programirane\zero\zero\levelheader.cpp(27): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+e:\programirane\zero\zero\levelheader.cpp(28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\programirane\zero\zero\levelheader.cpp(85): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\programirane\zero\zero\levelheader.cpp(100): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating code
+  2 of 3436 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Zero.vcxproj -> E:\programirane\Zero\Release\Zero.exe

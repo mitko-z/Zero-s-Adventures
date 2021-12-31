@@ -15,7 +15,7 @@
 #include "Health.h"
 #include "Weapon.h"
 #include "FileReadTools.h"
-#include "LevelTimer.h"
+#include "LevelHeader.h"
 
 // file reading defines
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
@@ -307,9 +307,12 @@ void ResourcesManager::loadLevel(unsigned int level,
 	resourcesTypes.push_back(OBJ_TYPE::HEALTH_BACKGROUND_TYPE);
 
 	// init level timer
-	offsetFromTopLeft.x = m_windowDimensions.w / 2;
-	offsetFromTopLeft.y = 0; // getLevelBlockDimensions().y / 40;
-	m_gameObjects.push_back(new LevelTimer(offsetFromTopLeft.x, offsetFromTopLeft.y, getGameObjSize().x / 2, getGameObjSize().y / 2, timerLevelDuration));
+	m_gameObjects.push_back(new LevelHeader(
+		offsetFromTopLeft.x, 
+		0, 
+		m_windowDimensions.w - offsetFromTopLeft.x, 
+		getGameObjSize().y / 2, 
+		timerLevelDuration));
 }
 
 void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
@@ -506,7 +509,7 @@ void ResourcesManager::getTimerLevelInfo(const unsigned int& level, double& time
 	mapStrStr filesCommandsToResources;
 	FileReadTools::extractFileCommandsAndResources(TIMER_LEVEL_FILE_PATH, filesCommandsToResources, level);
 	timeDuration = std::stod(filesCommandsToResources["timeDuration"]);
-	FileReadTools::extractSoundsFileNames(TIMER_LEVEL_FILE_PATH, OBJ_TYPE::LEVEL_TIMER_TYPE, soundNames, soundRanges);
+	FileReadTools::extractSoundsFileNames(TIMER_LEVEL_FILE_PATH, OBJ_TYPE::LEVEL_HEADER_TYPE, soundNames, soundRanges);
 }
 
 void ResourcesManager::getGeneralInfo(const unsigned int & level, 

@@ -126,7 +126,7 @@
     <ClCompile Include="FileReadTools.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelTimer.cpp">
+    <ClCompile Include="LevelHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,7 +242,7 @@
     <ClInclude Include="FileReadTools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LevelTimer.h">
+    <ClInclude Include="LevelHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

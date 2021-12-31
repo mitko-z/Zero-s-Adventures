@@ -35,13 +35,13 @@ public:
 	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
 	const sf::Vector2f getSpeedFactor() const { return m_speedFactor; }
 	const sf::Vector2f getLevelBlockDimensions();
+	sf::Vector2u getGameObjSize();
 private:
-	// private methods
 	ResourcesManager() {};
 	ResourcesManager(ResourcesManager const&);
 	void operator= (ResourcesManager const&);
+
 	Animation getAnimationFromString(const std::string& strData);
-	sf::Vector2u getGameObjSize();
 	sf::Vector2u calcWorldCoordsFromMapCoords(const sf::Vector2u& mapCoords);
 	void loadLevel(unsigned int level,
 					umapTypeString& imagesNames,
