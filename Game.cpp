@@ -6,11 +6,18 @@
 #include "Definitions.h"
 #include "StateMachine.h"
 #include "BackgroundAudioPlayer.h"
+#include "FileReadTools.h"
 
 Game::Game() :
-	window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Zero's Adventures", sf::Style::Fullscreen),
+	m_window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Zero's Adventures", sf::Style::Fullscreen),
 	m_currentLevel(1)
 {
+	FileReadTools::writeToFile("game_is_running.inf", 1); // warn the external world that the game has been started
+} 
+
+Game::~Game()
+{
+	FileReadTools::writeToFile("game_is_running.inf", 0); // say to the external world that the game has been ended
 }
 
 void Game::initialize()
@@ -18,11 +25,11 @@ void Game::initialize()
 	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 	stateMachine->initialize();
 
-	window.setFramerateLimit(60);
-	window.setKeyRepeatEnabled(false);
+	m_window.setFramerateLimit(60);
+	m_window.setKeyRepeatEnabled(false);
 
 	extern std::shared_ptr <ResourcesManager> resMan;
-	resMan->setWindowDimensions(window.getSize().x, window.getSize().y);
+	resMan->setWindowDimensions(m_window.getSize().x, m_window.getSize().y);
 }
 
 void Game::loadContent()
@@ -49,9 +56,9 @@ void Game::eventsCapture()
 {
 #pragma region capture gameplay events
 	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
-	while (window.pollEvent(event))
+	while (m_window.pollEvent(m_event))
 	{
-		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+		if (m_event.type == sf::Event::KeyPressed && m_event.key.code == sf::Keyboard::Escape)
 		{
 			if (stateMachine->getMode() == MODE::GAME_MODE)
 			{
@@ -63,19 +70,19 @@ void Game::eventsCapture()
 				stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND);
 			}
 		}
-		else if (event.type == sf::Event::Closed)
+		else if (m_event.type == sf::Event::Closed)
 		{
 			stateMachine->setEventByGameCommand(COMMAND::EXIT_COMMAND);
 		}
 		else
 		{
-			switch (event.type)
+			switch (m_event.type)
 			{
 				case sf::Event::KeyPressed:
-					stateMachine->addPressedKey(event.key.code);
+					stateMachine->addPressedKey(m_event.key.code);
 				break;
 				case sf::Event::KeyReleased:
-					stateMachine->addReleasedKey(event.key.code);
+					stateMachine->addReleasedKey(m_event.key.code);
 				break;
 				default:
 				break;
@@ -209,7 +216,7 @@ void Game::update()
 
 void Game::draw()
 {
-	window.clear();
+	m_window.clear();
 
 	extern std::shared_ptr <ResourcesManager> resMan;
 	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
@@ -221,20 +228,20 @@ void Game::draw()
 			for (auto gameObject : 
 				gameObjects)
 			{
-				gameObject->draw(window);
+				gameObject->draw(m_window);
 			}
 		}
 		break;
 		case Definitions::Mode::MENU_MODE:
 		{
 			UMAP<RUN_MENU_STATE, Menu*> menus = resMan->getMenus();
-			menus[stateMachine->getRunningMenuState()]->draw(window);
+			menus[stateMachine->getRunningMenuState()]->draw(m_window);
 		}
 		break;
 		default:
 		break;
 	}
-	window.display();
+	m_window.display();
 }
 
 void Game::playAudio()

@@ -115,3 +115,11 @@ void FileReadTools::extractSoundsFileNames(	const std::string& filePath,
 		}
 	}
 }
+
+void FileReadTools::writeToFile(const std::string& filePath, const int value)
+{
+	std::ofstream fileReader;
+	fileReader.open(filePath, std::ios::out | std::ios::trunc);
+	fileReader << value;
+	fileReader.close();
+}

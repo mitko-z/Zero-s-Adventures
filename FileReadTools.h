@@ -18,6 +18,7 @@ public:
 										umapTypeVecStrings & soundsNames,
 										umapTypeVecInts& soundsRanges,
 										std::string commandForNumOfSounds = "numberOfSounds");
+	static void writeToFile(const std::string& filePath, const int value);
 private:
 	static std::ifstream getReader(std::string filePath);
 };

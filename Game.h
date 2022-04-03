@@ -17,11 +17,10 @@ class Game
 {
 public:
 
-#pragma region constructor(s)
-	Game();
-#pragma endregion
-
 #pragma region public methods
+	Game();
+
+	~Game();
 
 	/// <summary>
 	/// initialize() - allows the game to perform any initialization it needs to before starting to run.
@@ -71,10 +70,10 @@ private:
 
 #pragma region members
 	// windows
-	sf::RenderWindow window;
+	sf::RenderWindow m_window;
 
 	// events
-	sf::Event event;
+	sf::Event m_event;
 
 	unsigned int m_currentLevel;
 
