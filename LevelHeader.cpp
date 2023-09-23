@@ -98,7 +98,7 @@ void LevelHeader::updateZeroWeapon()
 		OBJ_TYPE weaponType = zeroWeapon->getType();
 		Animation frames;
 		resMan->getAnimation(weaponType, frames);
-		sf::Texture weaponTexture = resMan->getTexture(weaponType);
+		sf::Texture weaponTexture = resMan->getTexture(weaponType).second;
 		m_zeroWeaponSprite = m_zero->getCurrentWeapon()->getWeaponSprite();
 		scaleSpriteTo(
 			resMan->getGameObjSize().x / 4,

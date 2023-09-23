@@ -1,6 +1,10 @@
+#pragma once
+
 #include "Menu.h"
 #include "BackgroundAudioPlayer.h"
 #include "StateMachine.h"
+#include "MenuButton.h"
+#include "SaveSlotButton.h"
 
 void Menu::initialize()
 {
@@ -139,23 +143,21 @@ void Menu::setAndInsertButtons(const std::vector<BUTTON_TYPE>& buttonTypes)
 		const double x = (m_rect.w - w) / 2;
 		const size_t buttonsNum = buttonTypes.size();
 		const int allSpaces = 2 * buttonsNum + 1;
-		const double h = m_rect.h / allSpaces;
+		double h = m_rect.h / allSpaces;
+		double y = h;
 		for (size_t i = 0; i < buttonsNum; ++i)
 		{
-			std::string text;
-			switch (buttonTypes[i])
+			if (buttonTypes[i] == BUTTON_TYPE::SAVE_SLOT)
 			{
-				case Definitions::ButtonType::START_GAME_BUTTON:
-					text = "START GAME";
-				break;
-				case Definitions::ButtonType::EXIT_GAME_BUTTON:
-					text = "EXIT GAME";
-				break;
-				default:
-				break;
+				h = 1.5 * m_rect.h / allSpaces;
+				m_buttons.push_back(new SaveSlotButton(x, y, w, h, false, i + 1));
+				y += h;
 			}
-			double y = (2 * i + 1) * h;
-			m_buttons.push_back(new MenuButton(x, y, w, h, false, buttonTypes[i], text));
+			else
+			{
+				m_buttons.push_back(new MenuButton(x, y, w, h, false, buttonTypes[i]));
+				y += 2 * h;
+			}
 		}
 	}
 }

@@ -2,10 +2,11 @@
 
 void MainMenu::initialize()
 {
-	std::vector<Definitions::ButtonType> buttonTypes
+	std::vector<BUTTON_TYPE> buttonTypes
 	{
-		Definitions::ButtonType::START_GAME_BUTTON,
-		Definitions::ButtonType::EXIT_GAME_BUTTON
+		BUTTON_TYPE::START_GAME_BUTTON,
+		BUTTON_TYPE::SAVE_GAME_BUTTON,
+		BUTTON_TYPE::EXIT_GAME_BUTTON
 	};
 	setAndInsertButtons(buttonTypes);
 

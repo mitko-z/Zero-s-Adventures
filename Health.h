@@ -15,6 +15,8 @@ public:
 
 	double currentHealth() { return m_currentHealth; }
 
+	double maxHealth() { return m_maxHealth; }
+
 private:
 	double calculateYPosition(double y, double h);
 

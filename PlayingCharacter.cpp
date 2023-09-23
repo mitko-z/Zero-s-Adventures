@@ -102,6 +102,17 @@ bool PlayingCharacter::canMakeNextAttack()
 	return result;
 }
 
+std::ostringstream PlayingCharacter::getCurrentState()
+{
+	std::ostringstream oss = MovingCharacter::getCurrentState();
+	std::string commentBeginning = "Playing character ";
+	oss << addLineForOSS(std::to_string(m_damage), true, commentBeginning + "damage");
+	oss << addLineForOSS(std::to_string(m_attackingSpeed), true, commentBeginning + "attacking speed");
+	oss << addLineForOSS(std::to_string(m_health.currentHealth()), true, commentBeginning + "current health");
+	oss << addLineForOSS(std::to_string(m_health.maxHealth()), true, commentBeginning + "max health");
+	return oss;
+}
+
 void PlayingCharacter::setIsActive()
 {
 	if (m_health.currentHealth() <= 0)

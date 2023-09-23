@@ -27,6 +27,8 @@ public:
 
 	double getCurrentHealth() { return m_health.currentHealth(); }
 
+	std::ostringstream getCurrentState() override;
+
 protected:
 	virtual void setIsActive();
 

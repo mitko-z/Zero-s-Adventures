@@ -1,23 +1,25 @@
 #include <memory>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
+
 #include "Game.h"
-
-
 #include "ResourcesManager.h"
 #include "Definitions.h"
 #include "StateMachine.h"
 #include "BackgroundAudioPlayer.h"
-#include "FileReadTools.h"
+#include "FileReadWriteTools.h"
 
 Game::Game() :
 	m_window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Zero's Adventures", sf::Style::Fullscreen),
 	m_currentLevel(1)
 {
-	FileReadTools::writeToFile("game_is_running.inf", 1); // warn the external world that the game has been started
+	FileReadWriteTools::writeToFile("game_is_running.inf", 1); // warn the external world that the game has been started
 } 
 
 Game::~Game()
 {
-	FileReadTools::writeToFile("game_is_running.inf", 0); // say to the external world that the game has been ended
+	FileReadWriteTools::writeToFile("game_is_running.inf", 0); // say to the external world that the game has been ended
 }
 
 void Game::initialize()
@@ -119,6 +121,11 @@ void Game::eventsCapture()
 			stateMachine->initialize();
 			m_currentLevel = 1;
 			loadContent();
+		break;
+		case MODE::SAVE_GAME_MODE:
+			saveGame();
+			stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
+			stateMachine->setEventByButton(BUTTON_TYPE::BACK_TO_MAIN);
 		break;
 		default:
 		break;
@@ -268,6 +275,46 @@ void Game::playAudio()
 	default:
 		break;
 	}
+}
+
+
+std::string Game::getCurrentDateTime()
+{
+	// Get the current time
+	std::time_t currentTime;
+	std::time(&currentTime);
+
+	// Convert the time to a string
+	std::tm localTime;
+	localtime_s(&localTime, &currentTime);
+
+	char buffer[20]; // Buffer to hold the formatted time
+	std::strftime(buffer, sizeof(buffer), "%d.%m.%Y %H:%M:%S", &localTime);
+
+	return std::string(buffer);
+}
+
+void Game::appendToOSSWithNewline(std::ostringstream& oss, const std::string& data)
+{
+	oss << data << "\n";
+}
+
+
+void Game::saveGame()
+{
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	extern std::shared_ptr <ResourcesManager> resMan;
+	std::string fileName = "saveslot" + std::to_string(stateMachine->getSaveSlot()) + ".sav";
+	std::ostringstream oss;
+	std::string timeStamp = getCurrentDateTime();
+	appendToOSSWithNewline(oss, timeStamp);
+	appendToOSSWithNewline(oss, std::to_string(m_currentLevel));
+	std::vector<GameObject*> gameObjects = resMan->getGameObjects();
+	for (const auto& gameObject : gameObjects)
+	{
+		oss << gameObject->getCurrentState().str();
+	}
+	FileReadWriteTools::writeToFile(fileName, oss.str());
 }
 
 void Game::run()

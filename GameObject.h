@@ -36,11 +36,13 @@ public :
 	virtual void playAudio() {}
 	virtual const bool	isActive() const { return m_isActive; }
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
+	virtual std::ostringstream getCurrentState();
 protected :
 	virtual void updateDrawingObject();
 	virtual void updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased);
 	void scaleSpriteTo(double w, double h, const sf::Texture& texture, sf::Sprite& sprite);
 	void playSound(OBJ_TYPE gameObjType, int rangeType);
+	std::string addLineForOSS(std::string data, bool addComment = false, std::string comment = "");
 
 	// graphics
 	Rectangle m_rect;
@@ -56,7 +58,7 @@ protected :
 
 	// audio
 	SoundObject m_soundObject;
-	std::string pathToMusicBackground;
+	std::string m_pathToMusicBackground;
 
 	bool m_isActive;
 private:

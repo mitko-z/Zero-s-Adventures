@@ -24,7 +24,7 @@ public:
 	static std::shared_ptr <ResourcesManager> getInstance();
 	void		initialize();
 	void		loadResources(unsigned int level);
-	sf::Texture getTexture(OBJ_TYPE command);
+	std::pair<std::string, sf::Texture> getTexture(OBJ_TYPE command);
 	bool        getAnimation(OBJ_TYPE command, Animation& animation);
 	SoundBuffersHolder& getSoundBuffers(OBJ_TYPE type, bool& noBuffers);
 	void		setWindowDimensions(double w, double h);
@@ -89,7 +89,7 @@ private:
 	void setSpeedFactor();
 
 	// members
-	UMAP<OBJ_TYPE, sf::Texture> m_textures;
+	UMAP<OBJ_TYPE, std::pair<std::string, sf::Texture>> m_textures;
 	UMAP<OBJ_TYPE, Animation> m_animations;
 	UMAP<OBJ_TYPE, SoundBuffersHolder > m_soundBuffers;
 	Rectangle m_windowDimensions;

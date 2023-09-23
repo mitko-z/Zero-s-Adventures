@@ -44,6 +44,20 @@ void MovingCharacter::processCollisions()
 	setDirectionToMove(MovingDirection::DIRECTION_NONE);
 }
 
+std::ostringstream MovingCharacter::getCurrentState()
+{
+	std::ostringstream oss = GameObject::getCurrentState();
+	std::string commentBeginning = "Moving character ";
+	oss << addLineForOSS(
+		std::to_string(m_lastPosition.x) + "," + 
+		std::to_string(m_lastPosition.y), 
+		true, 
+		commentBeginning + "last position");
+	oss << addLineForOSS(std::to_string(m_speed), true, commentBeginning + "speed");
+	oss << addLineForOSS(std::to_string(static_cast<int>(m_flipped)), true, commentBeginning + "if flipped");
+	return oss;
+}
+
 void MovingCharacter::processWallCollision(GameObject & wall)
 {
 	moveOutsideOfObject(wall);

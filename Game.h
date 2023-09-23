@@ -42,7 +42,7 @@ public:
 
 private:
 
-#pragma region public methods
+#pragma region private methods
 	/// <summary>
 	/// eventsCapture() - capture and process events such as keyboard 
 	/// pressed, collisions between objects, timers, etc.
@@ -66,6 +66,14 @@ private:
 	/// playing sounds from various objects
 	/// </summary>
 	void playAudio();
+
+	/// <summary>
+	/// Save the state of the state of the game to a slot defined in the state machine
+	/// </summary>
+	void saveGame();
+
+	std::string getCurrentDateTime();
+	void appendToOSSWithNewline(std::ostringstream& oss, const std::string& data);
 #pragma endregion
 
 #pragma region members

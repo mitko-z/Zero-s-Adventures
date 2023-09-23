@@ -1,8 +1,10 @@
 draw a frame under the the top info; draw the game elements (background, walls, etc.) shifted/scalled down according the height of that frame; change the top info (text and images) to be scalled according only by the screen resolution but not according the game objects sizes
 
-add resume game menu
+umap -> map
 
-add save game menu
+add pragma once in all header files
+
+add resume game menu
 
 add load game menu
 
@@ -34,4 +36,4 @@ Make the ResourceManager class to not be responsible for the initialization of t
 
 Export the buttons text from Menu::setAndInsertButtons() to a text file and thus to be ensured easier switch between languages
 
-Refactor unordered_map -> map
+make separate threads for the game methods update(), draw(), etc.

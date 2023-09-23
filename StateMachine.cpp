@@ -20,6 +20,8 @@ void StateMachine::initialize()
 
 	m_toPlayAudio = true;
 	m_changeAudio = true;
+
+	m_saveSlotNumber = 0;
 }
 
 void StateMachine::addPressedKey(sf::Keyboard::Key key)
@@ -48,6 +50,15 @@ void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 		break;
 		case BUTTON_TYPE::EXIT_GAME_BUTTON:
 			m_mode = MODE::EXIT_MODE;
+		break;
+		case BUTTON_TYPE::SAVE_GAME_BUTTON:
+			m_runningMenuState = RUN_MENU_STATE::SAVE_GAME_MENU_STATE;
+		break;
+		case BUTTON_TYPE::BACK_TO_MAIN:
+			m_runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
+		break;
+		case BUTTON_TYPE::SAVE_SLOT:
+			m_mode = MODE::SAVE_GAME_MODE;
 		break;
 		default:
 		break;

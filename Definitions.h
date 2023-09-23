@@ -17,6 +17,8 @@
 #define umapTypeVecInts UMAP<OBJ_TYPE, std::vector<size_t> > 
 #define mapStrStr std::map<std::string, std::string>
 
+#define SAVE_SLOTS_NUMS 10
+
 struct SoundBuffersHolder
 {
 	std::vector<sf::SoundBuffer> soundBuffers;
@@ -29,9 +31,7 @@ struct SoundBuffersHolder
 namespace Definitions
 {
 	/// <summary>
-	/// define two modes of this game
-	/// GameMode - the game plays and shows screens between levels
-	/// MenuMode - the game is paused and menus are managed
+	/// define various modes in this game
 	/// </summary>
 	enum Mode
 	{
@@ -39,7 +39,8 @@ namespace Definitions
 		NEXT_LEVEL_MODE,
 		MENU_MODE,
 		EXIT_MODE,
-		INITIALIZE_MODE
+		INITIALIZE_MODE,
+		SAVE_GAME_MODE
 	};
 
 	/// <summary>
@@ -57,7 +58,7 @@ namespace Definitions
 	{
 		MAIN_MENU_STATE,
 		RESUME_MENU_STATE,
-		SAVE_GAME_STATE,
+		SAVE_GAME_MENU_STATE,
 		LOAD_GAME_STATE,
 		OPTIONS_STATE,
 		START_SCREEN_STATE,
@@ -105,7 +106,10 @@ namespace Definitions
 	enum ButtonType
 	{
 		START_GAME_BUTTON,
-		EXIT_GAME_BUTTON
+		EXIT_GAME_BUTTON,
+		SAVE_GAME_BUTTON,
+		SAVE_SLOT,
+		BACK_TO_MAIN,
 	};
 
 	enum Command
@@ -138,6 +142,7 @@ struct DrawingObject
 	sf::Texture texture;
 	//sf::RectangleShape rectangleShape;
 	sf::Sprite sprite;
+	std::string filePath;
 };
 
 struct SoundObject

@@ -123,10 +123,16 @@
     <ClCompile Include="StateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileReadTools.cpp">
+    <ClCompile Include="FileReadWriteTools.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelHeader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveSlotButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,10 +245,16 @@
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileReadTools.h">
+    <ClInclude Include="FileReadWriteTools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LevelHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveSlotButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

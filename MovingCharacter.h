@@ -9,8 +9,9 @@ class MovingCharacter : public GameObject
 {
 public:
 	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed);
-	virtual void update();
+	void update() override;
 	virtual void processCollisions();
+	std::ostringstream getCurrentState();
 
 protected:
 	enum MovingDirection

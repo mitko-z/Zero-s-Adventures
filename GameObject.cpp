@@ -5,6 +5,30 @@
 
 GameObject::~GameObject() {}
 
+std::ostringstream GameObject::getCurrentState()
+{
+	std::ostringstream oss;
+	std::string commentBeginning = "Game object ";
+	oss << addLineForOSS(std::to_string(getType()), true, commentBeginning + "type");
+	oss << addLineForOSS(
+		std::to_string(m_rect.x) + "," + 
+		std::to_string(m_rect.y) + "," + 
+		std::to_string(m_rect.w) + "," + 
+		std::to_string(m_rect.h), 
+		true, 
+		commentBeginning + "rectangle x, y, width, height");
+	oss << addLineForOSS(m_drawingObject.filePath ,true, commentBeginning + "path to texture file");
+	oss << addLineForOSS(
+		std::to_string(m_frames.framesAlongX) + "," + 
+		std::to_string(m_frames.framesAlongY), 
+		true, 
+		commentBeginning + "animation frames");
+	oss << addLineForOSS(std::to_string(static_cast<int>(m_isAnimating)), true, commentBeginning + "if is animated");
+	oss << addLineForOSS(m_pathToMusicBackground, true, commentBeginning + "path to music background");
+	oss << addLineForOSS(std::to_string(static_cast<int>(m_isActive)), true, commentBeginning + "if is active");
+	return oss;
+}
+
 GameObject::GameObject(GameObject &other) : 
 	m_rect(other.m_rect), 
 	m_drawingObject(other.m_drawingObject),
@@ -21,7 +45,8 @@ void GameObject::loadContent()
 	extern std::shared_ptr <ResourcesManager> resMan;
 	OBJ_TYPE gameObjType = getType();
 	resMan->getAnimation(gameObjType, m_frames);
-	m_drawingObject.texture = resMan->getTexture(gameObjType);
+	m_drawingObject.filePath = resMan->getTexture(gameObjType).first;
+	m_drawingObject.texture = resMan->getTexture(gameObjType).second;
 	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
 	m_drawingObject.sprite.setTexture(m_drawingObject.texture);
 	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
@@ -133,5 +158,14 @@ void GameObject::playSound(OBJ_TYPE gameObjType, int rangeType)
 	srand(time(NULL));
 	int index = rand() % (soundBuffersHolder->ranges[rangeType]);
 	SoundsPlayer::getInstance()->play(soundBuffersHolder->soundBuffers[index]);
+}
+
+std::string GameObject::addLineForOSS(std::string data, bool addComment, std::string comment)
+{
+	std::string buffer = "";
+	if (addComment)
+		buffer = "; " + comment + "\n";
+	buffer += data + "\n";
+	return std::string(buffer);
 }
 

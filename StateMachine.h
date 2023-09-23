@@ -28,6 +28,8 @@ public:
 	void setToPlayAudio(bool ifToPlay) { m_toPlayAudio = ifToPlay; }
 	bool toChangeAudio() { return m_changeAudio; }
 	void setToChangeAudio(bool shoudChangeAudio) { m_changeAudio = shoudChangeAudio; }
+	void setSaveSlotTo(int saveSlotNumber) { m_saveSlotNumber = saveSlotNumber; }
+	int getSaveSlot() { return m_saveSlotNumber; }
 private:
 	StateMachine();
 
@@ -43,4 +45,7 @@ private:
 	// audio
 	bool m_toPlayAudio;
 	bool m_changeAudio;
+
+	// Save Slots
+	int m_saveSlotNumber;
 };
