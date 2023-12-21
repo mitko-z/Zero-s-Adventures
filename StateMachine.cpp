@@ -54,7 +54,7 @@ void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 		case BUTTON_TYPE::SAVE_GAME_BUTTON:
 			m_runningMenuState = RUN_MENU_STATE::SAVE_GAME_MENU_STATE;
 		break;
-		case BUTTON_TYPE::BACK_TO_MAIN:
+		case BUTTON_TYPE::BACK_TO_MAIN_BUTTON:
 			m_runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
 		break;
 		case BUTTON_TYPE::SAVE_SLOT:

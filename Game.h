@@ -1,7 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
-
 #pragma once
+
 #include <string>
 #include <unordered_map>
 #include <iostream>		// std::cerr
@@ -88,5 +86,3 @@ private:
 #pragma endregion
 
 };
-
-#endif

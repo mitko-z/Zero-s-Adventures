@@ -1,5 +1,4 @@
-#ifndef RESOURCES_MANAGER_H
-#define RESOURCES_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <vector>
@@ -107,5 +106,3 @@ private:
 	UMAP<RUN_MENU_STATE, Menu *> m_menus;
 	sf::Vector2f m_speedFactor;
 };
-
-#endif

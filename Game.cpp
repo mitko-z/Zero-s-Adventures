@@ -125,7 +125,7 @@ void Game::eventsCapture()
 		case MODE::SAVE_GAME_MODE:
 			saveGame();
 			stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
-			stateMachine->setEventByButton(BUTTON_TYPE::BACK_TO_MAIN);
+			stateMachine->setEventByButton(BUTTON_TYPE::BACK_TO_MAIN_BUTTON);
 		break;
 		default:
 		break;

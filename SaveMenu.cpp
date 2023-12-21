@@ -7,7 +7,7 @@ void SaveMenu::initialize()
 	{
 		buttonTypes.push_back(BUTTON_TYPE::SAVE_SLOT);
 	}
-	buttonTypes.push_back(BUTTON_TYPE::BACK_TO_MAIN);
+	buttonTypes.push_back(BUTTON_TYPE::BACK_TO_MAIN_BUTTON);
 	setAndInsertButtons(buttonTypes);
 
 	Menu::initialize();

@@ -109,7 +109,7 @@ namespace Definitions
 		EXIT_GAME_BUTTON,
 		SAVE_GAME_BUTTON,
 		SAVE_SLOT,
-		BACK_TO_MAIN,
+		BACK_TO_MAIN_BUTTON,
 	};
 
 	enum Command
