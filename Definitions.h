@@ -17,7 +17,6 @@
 #define umapTypeVecInts UMAP<OBJ_TYPE, std::vector<size_t> > 
 #define mapStrStr std::map<std::string, std::string>
 
-#define SAVE_SLOTS_NUMS 10
 
 struct SoundBuffersHolder
 {
@@ -30,6 +29,8 @@ struct SoundBuffersHolder
 
 namespace Definitions
 {
+	constexpr int saveSlotsNums = 10;
+
 	/// <summary>
 	/// define various modes in this game
 	/// </summary>
