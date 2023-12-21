@@ -110,6 +110,7 @@ namespace Definitions
 		SAVE_GAME_BUTTON,
 		SAVE_SLOT,
 		BACK_TO_MAIN_BUTTON,
+		RESUME_GAME_BUTTON
 	};
 
 	enum Command
@@ -118,6 +119,7 @@ namespace Definitions
 		MENU_COMMAND,					// to menu mode
 		EXIT_COMMAND,					// exit the game
 		MIAN_MENU_COMMAND,				// show the main menu
+		RESUME_GAME_MENU_COMMAND,		// show the resume game menu
 		FINISHED_LEVEL_SCREEN_COMMAND,	// show the finished level screen
 		NEXT_LEVEL_COMMAND,				// go to the next level
 		FINAL_SCREEN_COMMAND,			// show the final screen

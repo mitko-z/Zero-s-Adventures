@@ -65,7 +65,7 @@ void Game::eventsCapture()
 			if (stateMachine->getMode() == MODE::GAME_MODE)
 			{
 				stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
-				stateMachine->setEventByGameCommand(COMMAND::MIAN_MENU_COMMAND);
+				stateMachine->setEventByGameCommand(COMMAND::RESUME_GAME_MENU_COMMAND);
 			}
 			else
 			{

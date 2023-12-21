@@ -45,6 +45,7 @@ void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 	switch (buttonType)
 	{
 		case BUTTON_TYPE::START_GAME_BUTTON:
+		case BUTTON_TYPE::RESUME_GAME_BUTTON:
 			m_mode = MODE::GAME_MODE;
 			setToChangeAudio(true);
 		break;
@@ -81,6 +82,9 @@ void StateMachine::setEventByGameCommand(COMMAND command)
 		break;
 		case COMMAND::MIAN_MENU_COMMAND:
 			m_runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
+		break;
+		case COMMAND::RESUME_GAME_MENU_COMMAND:
+			m_runningMenuState = RUN_MENU_STATE::RESUME_MENU_STATE;
 		break;
 		case COMMAND::FINISHED_LEVEL_SCREEN_COMMAND:
 			m_runningMenuState = RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE;

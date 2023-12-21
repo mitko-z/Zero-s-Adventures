@@ -1,11 +1,11 @@
-23.09.2023 21:10:51
-1
+21.12.2023 18:03:24
+2
 ; Game object type
 1
 ; Game object rectangle x, y, width, height
 0.000000,0.000000,1920.000000,1080.000000
 ; Game object path to texture file
-Data/Images/backgroundLv1.png
+Data/Images/grassdirt-big-faded.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -17,7 +17,7 @@ Data/Images/backgroundLv1.png
 ; Game object type
 2
 ; Game object rectangle x, y, width, height
-38.000000,21.000000,192.000000,108.000000
+664.199993,632.400004,137.000000,77.000000
 ; Game object path to texture file
 Data/Images/SmileyWalkTighter.png
 ; Game object animation frames
@@ -29,7 +29,7 @@ Data/Images/SmileyWalkTighter.png
 ; Game object if is active
 1
 ; Moving character last position
-38.000000,21.000000
+664.199993,632.400004
 ; Moving character speed
 7.000000
 ; Moving character if flipped
@@ -39,15 +39,15 @@ Data/Images/SmileyWalkTighter.png
 ; Playing character attacking speed
 1.000000
 ; Playing character current health
-100.000000
+55.000000
 ; Playing character max health
 100.000000
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-384.000000,0.000000,384.000000,216.000000
+0.000000,154.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -59,9 +59,9 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-384.000000,216.000000,384.000000,216.000000
+274.000000,154.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -73,9 +73,9 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-1152.000000,216.000000,384.000000,216.000000
+548.000000,154.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -87,9 +87,9 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-384.000000,432.000000,384.000000,216.000000
+822.000000,154.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -101,9 +101,9 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-1152.000000,432.000000,384.000000,216.000000
+1370.000000,154.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -115,9 +115,9 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-384.000000,648.000000,384.000000,216.000000
+274.000000,308.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -129,9 +129,9 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-1152.000000,648.000000,384.000000,216.000000
+1370.000000,308.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -143,9 +143,163 @@ Data/Images/stones.png
 ; Game object type
 7
 ; Game object rectangle x, y, width, height
-1152.000000,864.000000,384.000000,216.000000
+274.000000,462.000000,274.000000,154.000000
 ; Game object path to texture file
-Data/Images/stones.png
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+822.000000,462.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1096.000000,462.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1370.000000,462.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+274.000000,616.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1370.000000,616.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+274.000000,770.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+548.000000,770.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+822.000000,770.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1370.000000,770.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1370.000000,924.000000,274.000000,154.000000
+; Game object path to texture file
+Data/Images/WallIn3D.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+14
+; Game object rectangle x, y, width, height
+664.199993,632.400004,137.000000,77.000000
+; Game object path to texture file
+Data/Images/cartoon-bow-and-arrow.png
 ; Game object animation frames
 1,1
 ; Game object if is animated
@@ -157,7 +311,7 @@ Data/Images/stones.png
 ; Game object type
 8
 ; Game object rectangle x, y, width, height
-1536.000000,864.000000,384.000000,216.000000
+0.000000,308.000000,274.000000,154.000000
 ; Game object path to texture file
 Data/Images/mushroomHouse.png
 ; Game object animation frames
@@ -171,7 +325,7 @@ Data/Images/mushroomHouse.png
 ; Game object type
 23
 ; Game object rectangle x, y, width, height
-38.000000,0.000000,1882.000000,108.000000
+27.000000,0.000000,1893.000000,77.000000
 ; Game object path to texture file
 
 ; Game object animation frames

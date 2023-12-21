@@ -135,6 +135,9 @@
     <ClCompile Include="SaveSlotButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ResumeGameMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -255,6 +258,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SaveSlotButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResumeGameMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
