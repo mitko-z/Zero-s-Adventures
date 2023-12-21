@@ -4,6 +4,8 @@ add resume game menu
 
 replace #defines with usings
 
+enums -> class enums
+
 add load game menu
 
 add options menu:

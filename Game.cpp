@@ -64,12 +64,30 @@ void Game::eventsCapture()
 		{
 			if (stateMachine->getMode() == MODE::GAME_MODE)
 			{
-				stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);
-				stateMachine->setEventByGameCommand(COMMAND::RESUME_GAME_MENU_COMMAND);
+				stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);	// get the menus
+				stateMachine->setEventByGameCommand(COMMAND::RESUME_GAME_MENU_COMMAND); // go to resume game menu
 			}
-			else
+			else if (stateMachine->getMode() == MODE::MENU_MODE) 
 			{
-				stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND);
+				switch (stateMachine->getRunningMenuState())
+				{
+					case RUN_MENU_STATE::RESUME_MENU_STATE:
+						stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND); // back to game
+					break;
+					case RUN_MENU_STATE::SAVE_GAME_MENU_STATE:
+					case RUN_MENU_STATE::LOAD_GAME_STATE:
+					case RUN_MENU_STATE::OPTIONS_STATE:
+					{
+						auto command = (stateMachine->getPreviousRunningMenuState() == RUN_MENU_STATE::MAIN_MENU_STATE) ?
+							COMMAND::MAIN_MENU_COMMAND :
+							COMMAND::RESUME_GAME_MENU_COMMAND;
+						stateMachine->setEventByGameCommand(command); // back to Main menu
+					}
+					break;
+					default:
+					break;
+				}
+
 			}
 		}
 		else if (m_event.type == sf::Event::Closed)

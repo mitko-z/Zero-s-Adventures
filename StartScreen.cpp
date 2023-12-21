@@ -9,5 +9,5 @@ OBJ_TYPE StartScreen::getType()
 void StartScreen::setEvent()
 {
 	std::shared_ptr<StateMachine> eventHolder = StateMachine::getInstnce();
-	eventHolder->setEventByGameCommand(Definitions::Command::MIAN_MENU_COMMAND);
+	eventHolder->setEventByGameCommand(Definitions::Command::MAIN_MENU_COMMAND);
 }

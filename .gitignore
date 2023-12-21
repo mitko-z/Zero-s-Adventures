@@ -69,3 +69,9 @@ Zero.vcxproj
 *.filters
 Zero.vcxproj
 Zero.vcxproj.filters
+Release/vc143.pdb
+Release/Zero.iobj
+Release/Zero.ipdb
+*.pdb
+*.iobj
+*.ipdb

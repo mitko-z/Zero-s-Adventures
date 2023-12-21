@@ -53,9 +53,11 @@ void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 			m_mode = MODE::EXIT_MODE;
 		break;
 		case BUTTON_TYPE::SAVE_GAME_BUTTON:
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::SAVE_GAME_MENU_STATE;
 		break;
 		case BUTTON_TYPE::BACK_TO_MAIN_BUTTON:
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
 		break;
 		case BUTTON_TYPE::SAVE_SLOT:
@@ -80,23 +82,28 @@ void StateMachine::setEventByGameCommand(COMMAND command)
 		case COMMAND::GAME_COMMAND:
 			m_mode = MODE::GAME_MODE;
 		break;
-		case COMMAND::MIAN_MENU_COMMAND:
+		case COMMAND::MAIN_MENU_COMMAND:
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
 		break;
 		case COMMAND::RESUME_GAME_MENU_COMMAND:
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::RESUME_MENU_STATE;
 		break;
 		case COMMAND::FINISHED_LEVEL_SCREEN_COMMAND:
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE;
 		break;
 		case COMMAND::NEXT_LEVEL_COMMAND:
 			m_mode = MODE::NEXT_LEVEL_MODE;
 		break;
 		case COMMAND::FINAL_SCREEN_COMMAND:
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::FINAL_SCREEN_STATE;
 		break;
 		case COMMAND::GAME_OVER_COMMAND:
 			m_mode = MODE::MENU_MODE;
+			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::GAME_OVER_SCREEN_STATE;
 		break;
 		case COMMAND::START_SCREEN_COMMAND:
