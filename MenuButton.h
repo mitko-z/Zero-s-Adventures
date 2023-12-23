@@ -47,7 +47,9 @@ private:
 		{BUTTON_TYPE::START_GAME_BUTTON, "START GAME"},
 		{BUTTON_TYPE::EXIT_GAME_BUTTON,  "EXIT GAME"},
 		{BUTTON_TYPE::SAVE_GAME_BUTTON,  "SAVE GAME"},
-		{BUTTON_TYPE::SAVE_SLOT,         ""}, // @TODO to be defined in the Save Game?
+		{BUTTON_TYPE::LOAD_GAME_BUTTON,  "LOAD GAME"},
+		{BUTTON_TYPE::SAVE_SLOT,         ""}, // Defined in dynamically
+		{BUTTON_TYPE::LOAD_SLOT,         ""}, // Defined in dynamically
 		{BUTTON_TYPE::BACK_TO_MAIN_BUTTON,      "BACK TO MAIN MENU"},
 		{BUTTON_TYPE::RESUME_GAME_BUTTON,      "RESUME GAME"},
 	};

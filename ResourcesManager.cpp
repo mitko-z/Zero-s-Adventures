@@ -7,6 +7,7 @@
 #include "MainMenu.h"
 #include "ResumeGameMenu.h"
 #include "SaveMenu.h"
+#include "LoadMenu.h"
 #include "StartScreen.h"
 #include "Wall.h"
 #include "EndOfLevel.h"
@@ -365,6 +366,12 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeStr
 			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
 	m_menus[RUN_MENU_STATE::SAVE_GAME_MENU_STATE] =
 		new SaveMenu(
+			0, 0,
+			m_windowDimensions.w, m_windowDimensions.h,
+			false,
+			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
+	m_menus[RUN_MENU_STATE::LOAD_GAME_STATE] =
+		new LoadMenu(
 			0, 0,
 			m_windowDimensions.w, m_windowDimensions.h,
 			false,

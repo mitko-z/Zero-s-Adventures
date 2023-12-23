@@ -147,10 +147,11 @@ void Menu::setAndInsertButtons(const std::vector<BUTTON_TYPE>& buttonTypes)
 		double y = h;
 		for (size_t i = 0; i < buttonsNum; ++i)
 		{
-			if (buttonTypes[i] == BUTTON_TYPE::SAVE_SLOT)
+			if ((buttonTypes[i] == BUTTON_TYPE::SAVE_SLOT) ||
+				(buttonTypes[i] == BUTTON_TYPE::LOAD_SLOT))
 			{
 				h = 1.5 * m_rect.h / allSpaces;
-				m_buttons.push_back(new SaveSlotButton(x, y, w, h, false, i + 1));
+				m_buttons.push_back(new SaveSlotButton(x, y, w, h, false, i + 1, buttonTypes[i]));
 				y += h;
 			}
 			else

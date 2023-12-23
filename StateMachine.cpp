@@ -56,6 +56,10 @@ void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::SAVE_GAME_MENU_STATE;
 		break;
+		case BUTTON_TYPE::LOAD_GAME_BUTTON:
+			m_previousRunningMenuState = m_runningMenuState;
+			m_runningMenuState = RUN_MENU_STATE::LOAD_GAME_STATE;
+			break;
 		case BUTTON_TYPE::BACK_TO_MAIN_BUTTON:
 			m_previousRunningMenuState = m_runningMenuState;
 			m_runningMenuState = RUN_MENU_STATE::MAIN_MENU_STATE;
@@ -63,6 +67,9 @@ void StateMachine::setEventByButton(BUTTON_TYPE buttonType)
 		case BUTTON_TYPE::SAVE_SLOT:
 			m_mode = MODE::SAVE_GAME_MODE;
 		break;
+		case BUTTON_TYPE::LOAD_SLOT:
+			m_mode = MODE::LOAD_GAME_MODE;
+			break;
 		default:
 		break;
 	}

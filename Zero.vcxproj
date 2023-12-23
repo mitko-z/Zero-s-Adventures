@@ -124,6 +124,7 @@
     <ClCompile Include="EndOfLevel.cpp" />
     <ClCompile Include="FileReadWriteTools.cpp" />
     <ClCompile Include="LevelHeader.cpp" />
+    <ClCompile Include="LoadMenu.cpp" />
     <ClCompile Include="ResumeGameMenu.cpp" />
     <ClCompile Include="SaveMenu.cpp" />
     <ClCompile Include="SaveSlotButton.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="EndOfLevel.h" />
     <ClInclude Include="FileReadWriteTools.h" />
     <ClInclude Include="LevelHeader.h" />
+    <ClInclude Include="LoadMenu.h" />
     <ClInclude Include="ResumeGameMenu.h" />
     <ClInclude Include="SaveMenu.h" />
     <ClInclude Include="SaveSlotButton.h" />

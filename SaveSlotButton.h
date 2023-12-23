@@ -13,8 +13,9 @@ public:
 		double w,
 		double h,
 		bool isAnimating,
-		int slotNumber) :
-		MenuButton(x, y, w, h, isAnimating, BUTTON_TYPE::SAVE_SLOT, false),
+		int slotNumber,
+		BUTTON_TYPE slot_type) :
+		MenuButton(x, y, w, h, isAnimating, slot_type, false),
 		m_slotNumber(slotNumber)
 	{}
 
