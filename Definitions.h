@@ -114,7 +114,8 @@ namespace Definitions
 		SAVE_SLOT,
 		LOAD_SLOT,
 		BACK_TO_MAIN_BUTTON,
-		RESUME_GAME_BUTTON
+		RESUME_GAME_BUTTON,
+		BACK_TO_PREV_MENU_BUTTON
 	};
 
 	enum Command
