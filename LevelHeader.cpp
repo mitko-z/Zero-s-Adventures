@@ -31,6 +31,14 @@ void LevelHeader::draw(sf::RenderWindow &window)
 	drawZeroWeaponInfo(window);
 }
 
+std::ostringstream LevelHeader::getCurrentState()
+{
+	std::ostringstream oss = GameObject::getCurrentState();
+	oss << addLineForOSS(std::to_string(m_elapsedTime), true, "Level Header elapsed time");
+
+	return oss;
+}
+
 void LevelHeader::setFontStyleToText(sf::Text& text)
 {
 	std::string loadPath;
@@ -55,9 +63,9 @@ void LevelHeader::updateTimer()
 	}
 
 	double currentTime = m_timer.elapsedSeconds();
-	double elapsedTime = m_timerDuration - currentTime;
-	double elapsedMinutes = static_cast<int>(elapsedTime / 60);
-	double elapsedSeconds = (elapsedTime / 60 - elapsedMinutes) * 60;
+	m_elapsedTime = m_timerDuration - currentTime;
+	double elapsedMinutes = static_cast<int>(m_elapsedTime / 60);
+	double elapsedSeconds = (m_elapsedTime / 60 - elapsedMinutes) * 60;
 	int elapsedMinutes_int = static_cast<int>(elapsedMinutes);
 	int elapsedSeconds_int = static_cast<int>(elapsedSeconds);
 	std::string elapsedMinutes_str = std::to_string(elapsedMinutes_int);
@@ -75,7 +83,7 @@ void LevelHeader::updateTimer()
 	}
 	m_prevElapsedSeconds = elapsedSeconds_int;
 
-	if (static_cast<int>(elapsedTime) <= 0)
+	if (static_cast<int>(m_elapsedTime) <= 0)
 	{
 		std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
 		stateMachine->setEventByGameCommand(COMMAND::GAME_OVER_COMMAND);

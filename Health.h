@@ -14,8 +14,11 @@ public:
 	void setPosition(double parentsX, double parentsY, double parentsHeight);
 
 	double currentHealth() { return m_currentHealth; }
+	void setCurrentHealth(double currentHealth) { m_currentHealth = currentHealth; }
 
 	double maxHealth() { return m_maxHealth; }
+
+
 
 private:
 	double calculateYPosition(double y, double h);

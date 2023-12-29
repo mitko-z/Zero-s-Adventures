@@ -89,6 +89,17 @@ bool Monster::isImmuneFrom(OBJ_TYPE projectileType)
 	return isImmune;
 }
 
+std::ostringstream Monster::getCurrentState()
+{
+	std::ostringstream oss = PlayingCharacter::getCurrentState();
+	std::string commentBeginning = "Monster ";
+	oss << addLineForOSS(std::to_string(getMonsterType()), true, commentBeginning + "type");
+	oss << addLineForOSS(std::to_string(m_immuneFromProjectiles.size()), true, commentBeginning + "the number of projectile types the monster is immune from");
+	for (auto& immuneFromProjectile : m_immuneFromProjectiles)
+		oss << addLineForOSS(std::to_string(immuneFromProjectile), true, "immune from projectile type");
+	return oss;	
+}
+
 void Monster::moveTowardsTarget(int x, int y)
 {
 	if ((m_rect.x != x) || (m_rect.y != y))

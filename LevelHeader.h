@@ -18,6 +18,7 @@ public:
 	void loadContent() override;
 	void update() override;
 	void draw(sf::RenderWindow &window) override;
+	std::ostringstream getCurrentState() override;
 
 private:
 	void setFontStyleToText(sf::Text& text);
@@ -31,6 +32,7 @@ private:
 	sf::Text m_timerText;
 	Timer m_timer;
 	double m_timerDuration;
+	double m_elapsedTime;
 	int m_prevElapsedSeconds;
 	ZeroCharacter* m_zero;
 	sf::Text m_zeroHealthText;

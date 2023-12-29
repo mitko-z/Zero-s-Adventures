@@ -1,0 +1,192 @@
+29.12.2023 16:09:35
+1
+; Game object type
+1
+; Game object rectangle x, y, width, height
+0.000000,0.000000,1920.000000,1080.000000
+; Game object path to texture file
+Data/Images/backgroundLv1.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Background music
+Data/Audio/Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; Game object type
+2
+; Game object rectangle x, y, width, height
+38.000000,232.680008,192.000000,108.000000
+; Game object path to texture file
+Data/Images/SmileyWalkTighter.png
+; Game object animation frames
+4,4
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Moving character last position
+38.000000,232.680008
+; Moving character speed
+7.000000
+; Moving character if flipped
+0
+; Playing character damage
+0.000000
+; Playing character attacking speed
+1.000000
+; Playing character current health
+100.000000
+; Playing character max health
+100.000000
+; Zero character firing accuracy
+75
+; Game object type
+7
+; Game object rectangle x, y, width, height
+384.000000,0.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+384.000000,216.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1152.000000,216.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+384.000000,432.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1152.000000,432.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+384.000000,648.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1152.000000,648.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+7
+; Game object rectangle x, y, width, height
+1152.000000,864.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/stones.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Game object type
+8
+; Game object rectangle x, y, width, height
+1536.000000,864.000000,384.000000,216.000000
+; Game object path to texture file
+Data/Images/mushroomHouse.png
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; End of level if it is the last level
+0
+; Game object type
+23
+; Game object rectangle x, y, width, height
+38.000000,0.000000,1882.000000,108.000000
+; Game object path to texture file
+
+; Game object animation frames
+1,1
+; Game object if is animated
+0
+; Game object path to music background
+
+; Game object if is active
+1
+; Level Header elapsed time
+298.400000

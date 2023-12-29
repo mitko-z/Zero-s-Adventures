@@ -22,3 +22,11 @@ void EndOfLevel::processCollisions()
 		}
 	}
 }
+
+std::ostringstream EndOfLevel::getCurrentState()
+{
+	std::ostringstream oss = GameObject::getCurrentState();
+	oss << addLineForOSS(std::to_string(m_isLastLevel), true, "End of level if it is the last level");
+
+	return oss;
+}

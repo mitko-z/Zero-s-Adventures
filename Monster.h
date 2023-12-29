@@ -44,6 +44,9 @@ public:
 		const std::vector<OBJ_TYPE>& immuneFromProjectiles);
 
 	bool isImmuneFrom(OBJ_TYPE projectileType);
+	void setImmuneTo(OBJ_TYPE projectileType) { m_immuneFromProjectiles.push_back(projectileType); }
+
+	std::ostringstream getCurrentState() override;
 
 private:
 	void moveTowardsTarget(int x, int y);

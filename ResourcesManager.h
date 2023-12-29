@@ -22,7 +22,7 @@ private:
 public:
 	static std::shared_ptr <ResourcesManager> getInstance();
 	void		initialize();
-	void		loadResources(unsigned int level);
+	void		loadResources(unsigned int level, bool toLoadMenus = true);
 	std::pair<std::string, sf::Texture> getTexture(OBJ_TYPE command);
 	bool        getAnimation(OBJ_TYPE command, Animation& animation);
 	SoundBuffersHolder& getSoundBuffers(OBJ_TYPE type, bool& noBuffers);
@@ -30,11 +30,13 @@ public:
 	void		getWindowDimensions(double& w, double& h) const { w = m_windowDimensions.w; h = m_windowDimensions.h; }
 	std::vector<GameObject *>& getGameObjects() { return m_gameObjects; }
 	void		addGameObject(GameObject* gameObject);
+	void		addGameObject(std::istringstream& gameObjectData);
 	void		removeInactiveGameObjects();
 	UMAP<RUN_MENU_STATE, Menu *>& getMenus() { return m_menus; }
 	const sf::Vector2f getSpeedFactor() const { return m_speedFactor; }
 	const sf::Vector2f getLevelBlockDimensions();
 	sf::Vector2u getGameObjSize();
+	void clearGameObjects();
 private:
 	ResourcesManager() {};
 	ResourcesManager(ResourcesManager const&);
@@ -86,6 +88,9 @@ private:
 						std::vector<sf::Vector2u>& monstersCoords,
 						std::vector<sf::Vector2u>& weaponsCoords);
 	void setSpeedFactor();
+	void extractCommonFeaturesFromStream(std::istringstream& stream, double& x, double& y, double& w, double& h, bool& isAnimating, std::string& backgroundMusicFile, bool& isActive);
+	void extractMovingCharacterFeaturesFromStream(std::istringstream& stream, double& lastX, double& lastY, double& speed, bool& isFlipped);
+	void extractPlayingCharacterFeaturesFromStream(std::istringstream& stream, double& damage, double& attackingSpeed, double& currentHealth, double& maxHealth);
 
 	// members
 	UMAP<OBJ_TYPE, std::pair<std::string, sf::Texture>> m_textures;
@@ -105,4 +110,5 @@ private:
 	std::vector<GameObject *> m_gameObjects;
 	UMAP<RUN_MENU_STATE, Menu *> m_menus;
 	sf::Vector2f m_speedFactor;
+	size_t m_zeroPosition{ 0 };
 };

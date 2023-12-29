@@ -170,6 +170,7 @@
     <ClInclude Include="FileReadWriteTools.h" />
     <ClInclude Include="LevelHeader.h" />
     <ClInclude Include="LoadMenu.h" />
+    <ClInclude Include="MonsterJelly.h" />
     <ClInclude Include="ResumeGameMenu.h" />
     <ClInclude Include="SaveMenu.h" />
     <ClInclude Include="SaveSlotButton.h" />
@@ -186,7 +187,6 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="MonsterJelly.h" />
     <ClInclude Include="MonsterOneEye.h" />
     <ClInclude Include="MonsterWalkingSquare.h" />
     <ClInclude Include="MovingCharacter.h" />

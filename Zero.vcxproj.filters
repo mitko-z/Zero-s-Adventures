@@ -194,9 +194,6 @@
     <ClInclude Include="Monster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterJelly.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterOneEye.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -267,6 +264,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LoadMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterJelly.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

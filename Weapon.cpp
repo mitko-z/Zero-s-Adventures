@@ -67,3 +67,15 @@ void Weapon::draw(sf::RenderWindow & window)
 		projectile->draw(window);
 	}
 }
+
+std::ostringstream Weapon::getCurrentState()
+{
+	std::ostringstream oss = GameObject::getCurrentState();
+	std::string commentBeginning = "Weapon ";
+	oss << addLineForOSS(std::to_string(m_isOwned), true, "if is owned");
+	oss << addLineForOSS(std::to_string(m_projectilesType), true, commentBeginning + "type of projectiles it fire");
+	oss << addLineForOSS(std::to_string(m_firingRate), true, commentBeginning + "firing rate");
+	oss << addLineForOSS(std::to_string(m_projectilesDamage), true, commentBeginning + "projectiles damage");
+	oss << addLineForOSS(std::to_string(m_projectilesSpeed), true, commentBeginning + "projectiles speed");
+	return oss;
+}

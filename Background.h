@@ -13,6 +13,8 @@ public:
 	Definitions::ObjectType getType() override;
 
 	void playAudio() override;
+
+	std::ostringstream getCurrentState() override;
 private:
 	std::string m_backgroundMusicFileName;
 };

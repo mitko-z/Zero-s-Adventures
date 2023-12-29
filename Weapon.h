@@ -39,6 +39,8 @@ public:
 
 	sf::Sprite getWeaponSprite() { return m_drawingObject.sprite; }
 
+	std::ostringstream getCurrentState() override;
+
 private:
 	OBJ_TYPE m_projectilesType;
 	double m_firingRate;

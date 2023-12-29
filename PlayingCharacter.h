@@ -7,7 +7,7 @@
 class PlayingCharacter : public MovingCharacter
 {
 public:
-	PlayingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, double damage, double health, double attackingSpeed);
+	PlayingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, double damage, double health, double attackingSpeed, bool isFlipped = false);
 
 	virtual void takeDamage(double damage);
 
@@ -26,6 +26,7 @@ public:
 	bool canMakeNextAttack();
 
 	double getCurrentHealth() { return m_health.currentHealth(); }
+	void setCurrentHealth(double currentHealt) { m_health.setCurrentHealth(currentHealt); }
 
 	std::ostringstream getCurrentState() override;
 

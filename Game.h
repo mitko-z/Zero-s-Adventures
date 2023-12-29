@@ -66,9 +66,14 @@ private:
 	void playAudio();
 
 	/// <summary>
-	/// Save the state of the state of the game to a slot defined in the state machine
+	/// Save the state of the game to a slot defined in the state machine
 	/// </summary>
 	void saveGame();
+
+	/// <summary>
+	/// Load the state of the game from a slot defined in the state machine
+	/// </summary>
+	void loadGame();
 
 	std::string getCurrentDateTime();
 	void appendToOSSWithNewline(std::ostringstream& oss, const std::string& data);

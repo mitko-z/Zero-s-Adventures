@@ -10,9 +10,10 @@ PlayingCharacter::PlayingCharacter(
 	double speed,
 	double damage,
 	double health,
-	double attackingSpeed) :
+	double attackingSpeed,
+	bool isFlipped) :
 
-	MovingCharacter(x, y, w, h, isAnimating, speed),
+	MovingCharacter(x, y, w, h, isAnimating, speed, isFlipped),
 	m_damage(damage),
 	m_backgroundHealth(health, x, y, w, h, OBJ_TYPE::HEALTH_BACKGROUND_TYPE),
 	m_health(health, x, y, w, h, OBJ_TYPE::HEALTH_TYPE),

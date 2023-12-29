@@ -5,8 +5,8 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
-ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health, double attackingSpeed, double firingAccuracy) :
-	PlayingCharacter(x, y, w, h, false, speed, 0, health, attackingSpeed), // 0 for damage & attacking speed - zero cannot make damage without a weapon
+ZeroCharacter::ZeroCharacter(double x, double y, double w, double h, double speed, double health, double attackingSpeed, double firingAccuracy, bool isFlipped) :
+	PlayingCharacter(x, y, w, h, false, speed, 0, health, attackingSpeed, isFlipped), // 0 for damage & attacking speed - zero cannot make damage without a weapon
 	m_takeWeapon(false),
 	m_weapon(nullptr),
 	m_lastDirection(MovingDirection::DIRECTION_NONE),
@@ -62,6 +62,14 @@ void ZeroCharacter::setIsActive()
 	{
 		stateMachine->setEventByGameCommand(COMMAND::GAME_OVER_COMMAND);
 	}
+}
+
+std::ostringstream ZeroCharacter::getCurrentState()
+{
+	std::ostringstream oss = PlayingCharacter::getCurrentState();
+	std::string commentBeginning = "Zero character ";
+	oss << addLineForOSS(std::to_string(m_firingAccuracy), true, commentBeginning + "firing accuracy");
+	return oss;
 }
 
 void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keysReleased)

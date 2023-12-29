@@ -35,6 +35,7 @@ public :
 	virtual void draw(sf::RenderWindow &window);
 	virtual void playAudio() {}
 	virtual const bool	isActive() const { return m_isActive; }
+	virtual void setIsActive(bool isActive) { m_isActive = isActive; }
 	virtual ~GameObject() = 0;	// abstract class - cannot instanciate
 	virtual std::ostringstream getCurrentState();
 protected :

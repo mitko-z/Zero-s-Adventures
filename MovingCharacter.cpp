@@ -1,12 +1,12 @@
 #include "MovingCharacter.h"
 
 
-MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed) :
+MovingCharacter::MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, bool isFlipped) :
 	GameObject(x, y, w, h, isAnimating),
 	m_speed(speed),
 	m_lastPosition(x, y, w, h),
 	m_goOutsideOfScreen(false),
-	m_flipped(false),
+	m_flipped(isFlipped),
 	m_directionToMove(MovingDirection::DIRECTION_NONE)
 {}
 

@@ -12,6 +12,7 @@
 #include "Wall.h"
 #include "EndOfLevel.h"
 #include "FinishedLevelScreen.h"
+#include "FileReadWriteTools.h"
 #include "GameOverScreen.h"
 #include "FinalScreen.h"
 #include "Monster.h"
@@ -19,6 +20,9 @@
 #include "Weapon.h"
 #include "FileReadWriteTools.h"
 #include "LevelHeader.h"
+#include "WeaponBow.h"
+#include "WeaponFireball.h"
+#include "WeaponStar.h"
 
 // file reading defines
 #define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
@@ -65,6 +69,113 @@ void ResourcesManager::addGameObject(GameObject* gameObject)
 	m_gameObjects.push_back(gameObject);
 }
 
+void ResourcesManager::addGameObject(std::istringstream& gameObjectData)
+{
+	std::string lineRead;
+	OBJ_TYPE gameObjectType = FileReadWriteTools::readLine<OBJ_TYPE>(gameObjectData);
+	double x, y, w, h;
+	bool isAnimated{ false };
+	std::string musicBackground{};
+	bool isActive{ false };
+	extractCommonFeaturesFromStream(gameObjectData, x, y, w, h, isAnimated, musicBackground, isActive);
+	switch (gameObjectType)
+	{
+		case OBJ_TYPE::BACKGROUND_TYPE:
+		{
+			std::getline(gameObjectData, musicBackground);
+			m_gameObjects.push_back(new Background(x, y, w, h, isAnimated, musicBackground));
+			m_gameObjects[m_gameObjects.size() - 1]->setIsActive(isActive);
+		}
+		break;
+		case OBJ_TYPE::ZERO_TYPE: // Zero
+		{
+			double lastX, lastY, speed;
+			bool isFlipped;
+			extractMovingCharacterFeaturesFromStream(gameObjectData, lastX, lastY, speed, isFlipped);
+			double damage, attackingSpeed, currentHealth, maxHealth;
+			extractPlayingCharacterFeaturesFromStream(gameObjectData, damage, attackingSpeed, currentHealth, maxHealth);
+			double firingAccuracy = FileReadWriteTools::readLine<double>(gameObjectData);
+			m_gameObjects.push_back(new ZeroCharacter(x, y, w, h, speed, maxHealth, attackingSpeed, firingAccuracy, isFlipped));
+			m_zeroPosition = m_gameObjects.size() - 1;
+			m_gameObjects[m_zeroPosition]->setIsActive(isActive);
+			dynamic_cast<MovingCharacter*>(m_gameObjects[m_zeroPosition])->setLastPosition(lastX, lastY);
+			dynamic_cast<PlayingCharacter*>(m_gameObjects[m_zeroPosition])->setCurrentHealth(currentHealth);
+		}
+		break; // end Zero case
+		case OBJ_TYPE::WALL_TYPE: // Wall
+		{
+			m_gameObjects.push_back(new Wall(x, y, w, h, isAnimated));
+			m_gameObjects[m_gameObjects.size() - 1]->setIsActive(isActive);
+		}
+		break; // end Wall case
+		case OBJ_TYPE::MONSTER_TYPE: // Monster
+		{
+			double lastX, lastY, speed;
+			bool isFlipped;
+			extractMovingCharacterFeaturesFromStream(gameObjectData, lastX, lastY, speed, isFlipped);
+			double damage, attackingSpeed, currentHealth, maxHealth;
+			extractPlayingCharacterFeaturesFromStream(gameObjectData, damage, attackingSpeed, currentHealth, maxHealth);
+			MONSTERS_TYPE monsterType = FileReadWriteTools::readLine<MONSTERS_TYPE>(gameObjectData);
+			std::getline(gameObjectData, lineRead); // read nums of immune from projectiles
+			std::vector<OBJ_TYPE> projectilesTypes;
+			for (int i = 0; i < std::stoi(lineRead); ++i)
+			{
+				std::getline(gameObjectData, lineRead);
+				projectilesTypes.push_back(FileReadWriteTools::readLine<OBJ_TYPE>(gameObjectData));
+			}
+
+			m_gameObjects.push_back(Monster::createMonster(monsterType, x, y, w, h, damage, speed, maxHealth, attackingSpeed, projectilesTypes));
+			const size_t monsterPos = m_gameObjects.size() - 1;
+			m_gameObjects[monsterPos]->setIsActive(isActive);
+			dynamic_cast<MovingCharacter*>(m_gameObjects[monsterPos])->setLastPosition(lastX, lastY);
+			dynamic_cast<PlayingCharacter*>(m_gameObjects[monsterPos])->setCurrentHealth(currentHealth);
+		}
+		break; // end Monster case
+		// Weapons
+		case OBJ_TYPE::BOW_WEAPON_TYPE: 
+		case OBJ_TYPE::FIREBALL_WEAPON_TYPE: 
+		case OBJ_TYPE::STAR_WEAPON_TYPE: 
+		{
+			bool isOwned = FileReadWriteTools::readLine<bool>(gameObjectData);
+			OBJ_TYPE projectileType = FileReadWriteTools::readLine<OBJ_TYPE>(gameObjectData);
+			double firingRate = FileReadWriteTools::readLine<double>(gameObjectData);
+			double projectileDamage = FileReadWriteTools::readLine<double>(gameObjectData);
+			double projectileSpeed = FileReadWriteTools::readLine<double>(gameObjectData);
+			switch (gameObjectType)
+			{
+			case OBJ_TYPE::BOW_WEAPON_TYPE:
+				m_gameObjects.push_back(new WeaponBow(x, y, w, h, isAnimated, firingRate, projectileType, projectileDamage, projectileSpeed));
+				if (isOwned)
+					dynamic_cast<ZeroCharacter*>(m_gameObjects[m_zeroPosition])->setWeapon(dynamic_cast<WeaponBow*>(m_gameObjects[m_gameObjects.size() - 1]));
+			break;
+			case OBJ_TYPE::FIREBALL_WEAPON_TYPE:
+				m_gameObjects.push_back(new WeaponFireball(x, y, w, h, isAnimated, firingRate, projectileType, projectileDamage, projectileSpeed));
+				if (isOwned)
+					dynamic_cast<ZeroCharacter*>(m_gameObjects[m_zeroPosition])->setWeapon(dynamic_cast<WeaponFireball*>(m_gameObjects[m_gameObjects.size() - 1]));
+			break;
+			case OBJ_TYPE::STAR_WEAPON_TYPE:
+				m_gameObjects.push_back(new WeaponStar(x, y, w, h, isAnimated, firingRate, projectileType, projectileDamage, projectileSpeed));
+				if (isOwned)
+					dynamic_cast<ZeroCharacter*>(m_gameObjects[m_zeroPosition])->setWeapon(dynamic_cast<WeaponStar*>(m_gameObjects[m_gameObjects.size() - 1]));
+			break;
+			}
+		}
+		break; // end Weapons case
+		case OBJ_TYPE::END_OF_LEVEL_TYPE:
+		{
+			bool isLastLevel = FileReadWriteTools::readLine<bool>(gameObjectData);
+			m_gameObjects.push_back(new EndOfLevel(x, y, w, h, isAnimated, isLastLevel));
+		}
+		break; // end End of level case
+		case OBJ_TYPE::LEVEL_HEADER_TYPE:
+		{
+			double timerDuration = FileReadWriteTools::readLine<double>(gameObjectData);
+			m_gameObjects.push_back(new LevelHeader(x, y, w, h, timerDuration));
+		}
+		break;
+	}
+}
+
 void ResourcesManager::removeInactiveGameObjects()
 {
 	for (int i = m_gameObjects.size() - 1; i >= 0; i--)
@@ -74,7 +185,7 @@ void ResourcesManager::removeInactiveGameObjects()
 	}
 }
 
-void ResourcesManager::loadResources(unsigned int level)
+void ResourcesManager::loadResources(unsigned int level, bool toLoadMenus)
 {
 	umapTypeString imagesNames;
 	std::vector<OBJ_TYPE> resourcesTypes;
@@ -85,7 +196,7 @@ void ResourcesManager::loadResources(unsigned int level)
 	loadLevel(level, imagesNames, resourcesTypes, soundNames, soundsRanges);
 
 	// Menu load
-	if (level == 1)
+	if (level == 1 && toLoadMenus)
 	{
 		loadMenus(imagesNames, musicBackgroundNames, soundNames, soundsRanges);
 		initMenus(resourcesTypes, musicBackgroundNames);
@@ -119,7 +230,7 @@ void ResourcesManager::loadResources(unsigned int level)
 		}
 	}
 
-	for (auto& typeSoundsRanges : soundsRanges)
+		for (auto& typeSoundsRanges : soundsRanges)
 	{
 		for (auto& soundRange : typeSoundsRanges.second)
 		{
@@ -169,15 +280,10 @@ void ResourcesManager::loadLevel(unsigned int level,
 	Weapon* ZeroCurrentWeapon = nullptr;
 	if (m_gameObjects.size() >= 1 && level > 1)
 	{
-		ZeroCurrentWeapon = dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->getCurrentWeapon();
+		ZeroCurrentWeapon = dynamic_cast<ZeroCharacter*>(m_gameObjects[m_zeroPosition])->getCurrentWeapon();
 	}
 
-	// clear all objects so they can be loaded freshly
-	m_gameObjects.clear();
-	imagesNames.clear();
-	resourcesTypes.clear();
-	soundsNames.clear();
-	m_animations.clear();
+	clearGameObjects(); // clear all objects so they can be loaded freshly
 
 	/// reading infos
 	// read zero info
@@ -238,7 +344,8 @@ void ResourcesManager::loadLevel(unsigned int level,
 			zeroAttcackingSpeed, 
 			zeroFiringAccurracy));
 	resourcesTypes.push_back(OBJ_TYPE::ZERO_TYPE);
-	dynamic_cast<ZeroCharacter*>(m_gameObjects[1])->setWeapon(ZeroCurrentWeapon);
+	m_zeroPosition = m_gameObjects.size() - 1;
+	dynamic_cast<ZeroCharacter*>(m_gameObjects[m_zeroPosition])->setWeapon(ZeroCurrentWeapon);
 
 	// init walls
 	for (auto wallCoord : wallsCoords)
@@ -316,6 +423,11 @@ void ResourcesManager::loadLevel(unsigned int level,
 		m_windowDimensions.w - offsetFromTopLeft.x, 
 		getGameObjSize().y / 2, 
 		timerLevelDuration));
+}
+
+void ResourcesManager::clearGameObjects()
+{
+	m_gameObjects.clear();
 }
 
 void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
@@ -594,6 +706,39 @@ void ResourcesManager::setSpeedFactor()
 {
 	m_speedFactor.x = getLevelBlockDimensions().x / m_speedFactroDivider;
 	m_speedFactor.y = getLevelBlockDimensions().y / m_speedFactroDivider; 
+}
+
+void ResourcesManager::extractCommonFeaturesFromStream(std::istringstream& stream, double& x, double& y, double& w, double& h, bool& isAnimating, std::string& backgroundMusicFile, bool& isActive)
+{
+	std::string lineRead{};
+	std::getline(stream, lineRead); // get coordinates
+	std::istringstream ss(lineRead);
+	char comma; // to handle the commas
+	ss >> x >> comma >> y >> comma >> w >> comma >> h;
+	std::getline(stream, lineRead); // get texture - we don't need it here as it is loaded from loadResources method => we do nothing next
+	std::getline(stream, lineRead); // get animation frames - we don't need them as they are loaded from loadResources method => we do nothing next
+	isAnimating = FileReadWriteTools::readLine<bool>(stream);
+	std::getline(stream, backgroundMusicFile); // get music background file
+	isActive = FileReadWriteTools::readLine<bool>(stream);
+}
+
+void ResourcesManager::extractMovingCharacterFeaturesFromStream(std::istringstream& stream, double& lastX, double& lastY, double& speed, bool& isFlipped)
+{
+	std::string lineRead{};
+	std::getline(stream, lineRead); // get coordinates
+	std::istringstream ss(lineRead);
+	char comma; // to handle comma character
+	ss >> lastX >> comma >> lastY;
+	speed = FileReadWriteTools::readLine<double>(stream);
+	isFlipped = FileReadWriteTools::readLine<bool>(stream);
+}
+
+void ResourcesManager::extractPlayingCharacterFeaturesFromStream(std::istringstream& stream, double& damage, double& attackingSpeed, double& currentHealth, double& maxHealth)
+{
+	damage = FileReadWriteTools::readLine<double>(stream);
+	attackingSpeed = FileReadWriteTools::readLine<double>(stream);
+	currentHealth = FileReadWriteTools::readLine<double>(stream);
+	maxHealth = FileReadWriteTools::readLine<double>(stream);
 }
 
 

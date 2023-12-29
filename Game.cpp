@@ -146,7 +146,7 @@ void Game::eventsCapture()
 			stateMachine->setEventByButton(BUTTON_TYPE::BACK_TO_MAIN_BUTTON);
 		break;
 		case MODE::LOAD_GAME_MODE:
-			// @ToDo loadGame();
+			loadGame();
 			stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND);
 		default:
 		break;
@@ -298,7 +298,6 @@ void Game::playAudio()
 	}
 }
 
-
 std::string Game::getCurrentDateTime()
 {
 	// Get the current time
@@ -336,6 +335,28 @@ void Game::saveGame()
 		oss << gameObject->getCurrentState().str();
 	}
 	FileReadWriteTools::writeToFile(fileName, oss.str());
+}
+
+void Game::loadGame()
+{
+	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
+	extern std::shared_ptr<ResourcesManager> resMan;
+	std::string fileName = "saveslot" + std::to_string(stateMachine->getSaveSlot()) + ".sav";
+	
+	std::istringstream contentfileStream = FileReadWriteTools::readFromFile(fileName);
+	std::string lineRead;
+	m_currentLevel = std::stoi(FileReadWriteTools::getLine(contentfileStream, fileName));
+	resMan->loadResources(m_currentLevel, false);
+	resMan->clearGameObjects();
+	std::vector<std::istringstream> gameObjectsData = FileReadWriteTools::getGameObjectsData(contentfileStream);
+	for (auto& gameObjectData : gameObjectsData)
+	{
+		resMan->addGameObject(gameObjectData);
+	}
+	for (auto& gameObject : resMan->getGameObjects())
+	{
+		gameObject->loadContent();
+	}
 }
 
 void Game::run()

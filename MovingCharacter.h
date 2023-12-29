@@ -8,10 +8,11 @@
 class MovingCharacter : public GameObject
 {
 public:
-	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed);
+	MovingCharacter(double x, double y, double w, double h, bool isAnimating, double speed, bool isFlipped = false);
 	void update() override;
 	virtual void processCollisions();
 	std::ostringstream getCurrentState();
+	void setLastPosition(double lastX, double lastY) { m_lastPosition.x = lastX; m_lastPosition.y = lastY; }
 
 protected:
 	enum MovingDirection

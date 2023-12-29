@@ -13,7 +13,7 @@ public:
 
 	OBJ_TYPE getType() override;
 	void processCollisions() override;
-
+	std::ostringstream getCurrentState() override;
 private:
 	bool m_isLastLevel;
 };
