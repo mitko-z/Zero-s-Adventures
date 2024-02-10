@@ -1,5 +1,7 @@
 draw a frame under the the top info; draw the game elements (background, walls, etc.) shifted/scalled down according the height of that frame; change the top info (text and images) to be scalled according only by the screen resolution but not according the game objects sizes
 
+Optimization: replace where possible loops with std algorithms (ranges)
+
 add options menu:
 	- change keys controlling Zero
 	- change game screen resolutions
@@ -7,9 +9,11 @@ add options menu:
 	
 make help objects telling the player what should do
 
-Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster 
-
 Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
+
+Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster.
+
+Add more types of monsters and respectevly - more levels with them
 
 Make Zero be able to gain level: 
 	- if it reach at certain number of firings with any type of weapon then it become more accurate;
@@ -24,7 +28,7 @@ Add more explanatory comments to classes, methods, etc.
 
 Make the info files to be in xml format
 
-Make the ResourceManager class to not be responsible for the initialization of the objects but a separate class.
+Make the ResourceManager class to not be responsible for the initialization of the objects but a separate class (Initialize).
 
 Import the buttons text for Menu::setAndInsertButtons() from a text file and thus to be ensured easier switch between languages
 

@@ -123,7 +123,7 @@ public:
 		return result;
 	}*/
 private:
-	static std::ifstream getReader(std::string filePath);
+	static std::ifstream getReader(const std::string& filePath);
 };
 
 

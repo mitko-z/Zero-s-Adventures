@@ -770,10 +770,11 @@ bool ResourcesManager::getAnimation(OBJ_TYPE command, Animation& animation)
 
 SoundBuffersHolder& ResourcesManager::getSoundBuffers(OBJ_TYPE type, bool& noBuffers)
 {
+	static SoundBuffersHolder dummyBuffers; // Static dummy object
 	if (m_soundBuffers.find(type) == m_soundBuffers.end())
 	{
 		noBuffers = true;
-		return SoundBuffersHolder(); // dummy return
+		return dummyBuffers; // dummy return
 	}
 
 	noBuffers = false;

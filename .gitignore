@@ -75,3 +75,5 @@ Release/Zero.ipdb
 *.pdb
 *.iobj
 *.ipdb
+/Debug/*
+/Debug/vc143.pdb

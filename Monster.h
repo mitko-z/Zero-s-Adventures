@@ -6,7 +6,7 @@ class Monster : public PlayingCharacter
 {
 public:
 	Monster() = default;
-	Monster::Monster(
+	Monster(
 		double x, 
 		double y, 
 		double w, 

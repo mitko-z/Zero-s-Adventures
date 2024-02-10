@@ -1,7 +1,7 @@
 #include "FileReadWriteTools.h"
 
 
-std::ifstream FileReadWriteTools::getReader(std::string filePath)
+std::ifstream FileReadWriteTools::getReader(const std::string& filePath)
 {
 	std::string loadPath(filePath);
 	std::ifstream reader(loadPath);
