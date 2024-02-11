@@ -1,7 +1,5 @@
 draw a frame under the the top info; draw the game elements (background, walls, etc.) shifted/scalled down according the height of that frame; change the top info (text and images) to be scalled according only by the screen resolution but not according the game objects sizes
 
-Optimization: replace where possible loops with std algorithms (ranges)
-
 add options menu:
 	- change keys controlling Zero
 	- change game screen resolutions
