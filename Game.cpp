@@ -4,6 +4,7 @@
 #include <iomanip>
 
 #include "Game.h"
+#include "Menu.h"
 #include "ResourcesManager.h"
 #include "Definitions.h"
 #include "StateMachine.h"

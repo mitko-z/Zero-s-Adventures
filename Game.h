@@ -1,15 +1,11 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
-#include <iostream>		// std::cerr
-#include <memory>		// unique_ptr-s for game objects
-#include <vector>		// vector of game objects
 
 #include "SFML\Graphics.hpp"
 
-#include "GameObject.h"
-#include "Menu.h"
+class GameObject;
+
 
 class Game
 {
