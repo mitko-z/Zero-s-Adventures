@@ -1,0 +1,16 @@
+; level no.
+levelNum=1
+; name for the texture of walls (without the extension of the file)
+texture=stones.png
+; level no.
+levelNum=2
+; name for the texture of walls
+texture=WallIn3D.png
+; level no.
+levelNum=3
+; name for the texture of walls
+texture=WallIn3D.png
+; level no.
+levelNum=4
+; name for the texture of walls (without the extension of the file)
+texture=StoneTexture6.png

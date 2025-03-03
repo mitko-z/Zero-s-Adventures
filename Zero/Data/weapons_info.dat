@@ -1,0 +1,98 @@
+; level no.
+levelNum=1
+; index number for the type of weapon for this level
+weaponType=0
+; name for the texture of the weapon
+weaponTexture=
+; Weapon texture frames y, x
+weaponAnimFrames=0	0
+; firing rate of the weapon (in seconds)
+firingRate=0
+; index number for the type of projectile for this level
+projectileType=0
+; name for the texture of the projectile
+projectileTexture=
+; projectiles damage
+projectilesDamage=0
+; projectiles speed
+projectilesSpeed=0
+; number of sounds
+numberOfSoundsLv1=0
+; level no.
+levelNum=2
+; index number for the type of weapon for this level
+weaponType=1
+; name for the texture of the weapon
+weaponTexture=cartoon-bow-and-arrow.png
+; Weapon texture frames y, x
+weaponAnimFrames=1	1
+; firing rate of the weapon (in seconds)
+firingRate=3
+; index number for the type of projectile for this level
+projectileType=1
+; name for the texture of the projectile
+projectileTexture=arrow_239_239_thicker.png
+; projectile damage
+projectilesDamage=10
+; projectiles speed
+projectilesSpeed=10
+; number of sounds
+numberOfSoundsLv2=1
+; list of sounds file names 
+fryu.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
+; level no.
+levelNum=3
+; index number for the type of weapon for this level
+weaponType=2
+; name for the texture of the weapon
+weaponTexture=Fireball.png
+; Weapon texture frames y, x
+weaponAnimFrames=1	1
+; firing rate of the weapon (in seconds)
+firingRate=2
+; index number for the type of projectile for this level
+projectileType=2
+; name for the texture of the projectile
+projectileTexture=Fireball.png
+; projectile damage
+projectilesDamage=15
+; projectiles speed
+projectilesSpeed=15
+; number of sounds
+numberOfSoundsLv3=1
+; list of sounds file names 
+fireball.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1
+; level no.
+levelNum=4
+; index number for the type of weapon for this level
+weaponType=3
+; name for the texture of the weapon
+weaponTexture=StarsWeapon.png
+; Weapon texture frames y, x
+weaponAnimFrames=1	1
+; firing rate of the weapon (in seconds)
+firingRate=1
+; index number for the type of projectile for this level
+projectileType=3
+; name for the texture of the projectile
+projectileTexture=StarProjectile.png
+; projectile damage
+projectilesDamage=20
+; projectiles speed
+projectilesSpeed=20
+; number of sounds
+numberOfSoundsLv4=1
+; list of sounds file names 
+csynik.wav
+; list of numbers sounds ranges
+1
+; list of sounds ranges
+1

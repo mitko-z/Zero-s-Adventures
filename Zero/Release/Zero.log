@@ -1,0 +1,172 @@
+﻿  Background.cpp
+  ButtonHighlighter.cpp
+  EndOfLevel.cpp
+  FinalScreen.cpp
+  FinishedLevelScreen.cpp
+  Game.cpp
+E:\Installed\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\include\string_view(13): warning STL4038: The contents of <string_view> are available only with C++17 or later.
+  GameObject.cpp
+E:\programirane\Zero\Zero\GameObject.cpp(50,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\GameObject.cpp(50,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\GameObject.cpp(108,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\GameObject.cpp(108,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\GameObject.cpp(140,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\GameObject.cpp(141,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\GameObject.cpp(158,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  GameOverScreen.cpp
+  Health.cpp
+  LevelHeader.cpp
+E:\programirane\Zero\Zero\LevelHeader.cpp(9,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(9,35): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(12,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(12,37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(47,24): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(87,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(110,10): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\LevelHeader.cpp(109,13): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  LoadMenu.cpp
+  MainMenu.cpp
+  Menu.cpp
+E:\programirane\Zero\Zero\Menu.cpp(80,26): warning C4018: '>=': signed/unsigned mismatch
+  MenuButton.cpp
+E:\programirane\Zero\Zero\MenuButton.cpp(54,26): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+E:\programirane\Zero\Zero\MenuButton.cpp(60,27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\programirane\Zero\Zero\MenuButton.cpp(60,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Monster.cpp
+E:\programirane\Zero\Zero\Monster.cpp(34,133): warning C4244: 'argument': conversion from 'const double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(34,105): warning C4244: 'argument': conversion from 'const double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(34,77): warning C4244: 'argument': conversion from 'const double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(34,49): warning C4244: 'argument': conversion from 'const double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(38,44): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(38,29): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(97,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\programirane\Zero\Zero\Monster.cpp(98,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  MonsterJelly.cpp
+  MonsterOneEye.cpp
+  MonsterWalkingSquare.cpp
+  MovingCharacter.cpp
+E:\programirane\Zero\Zero\MovingCharacter.cpp(199,51): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  PlayingCharacter.cpp
+  Compiling...
+  PressKeyFullScreen.cpp
+  Projectile.cpp
+E:\programirane\Zero\Zero\Projectile.cpp(17,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ProjectileArrow.cpp
+  ProjectileFireball.cpp
+  ProjectileStar.cpp
+  ResourcesManager.cpp
+E:\Installed\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\include\string_view(13): warning STL4038: The contents of <string_view> are available only with C++17 or later.
+E:\programirane\Zero\Zero\ResourcesManager.cpp(170,26): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(169,26): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(175,105): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(175,60): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(244,95): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=unsigned int
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(244,61): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=unsigned int
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(486,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\programirane\Zero\Zero\ResourcesManager.cpp(619,48): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(620,48): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(626,86): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\programirane\Zero\Zero\ResourcesManager.cpp(626,43): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  ResumeGameMenu.cpp
+  SaveMenu.cpp
+  SaveSlotButton.cpp
+  StartScreen.cpp
+  Wall.cpp
+  Weapon.cpp
+  WeaponBow.cpp
+  WeaponFireball.cpp
+  WeaponStar.cpp
+  ZeroCharacter.cpp
+E:\programirane\Zero\Zero\ZeroCharacter.cpp(13,18): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\programirane\Zero\Zero\ZeroCharacter.cpp(201,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.cpp
+  Generating code
+  11 of 3406 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    73 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Zero.vcxproj -> E:\programirane\Zero\Release\Zero.exe

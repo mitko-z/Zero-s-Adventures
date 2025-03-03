@@ -1,4 +1,0 @@
-; name of texture for the health object
-healthTexture=lifeBar.png
-; name of texture for the background health object
-healthBackgroundTexture=healthBackground.png

@@ -1,0 +1,81 @@
+﻿  BackgroundAudioPlayer.cpp
+E:\programirane\Zero\Zero\BackgroundAudioPlayer.h(3,10): fatal error C1083: Cannot open include file: 'SFML\Audio.hpp': No such file or directory
+  Background.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ButtonHighlighter.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  EndOfLevel.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  FileReadTools.cpp
+E:\programirane\Zero\Zero\Definitions.h(3,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  LevelHeader.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  StateMachine.cpp
+E:\programirane\Zero\Zero\StateMachine.h(6,10): fatal error C1083: Cannot open include file: 'SFML\Window.hpp': No such file or directory
+  FinalScreen.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  FinishedLevelScreen.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Game.cpp
+E:\programirane\Zero\Zero\Game.h(11,10): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  GameObject.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  GameOverScreen.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Health.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  main.cpp
+E:\programirane\Zero\Zero\Game.h(11,10): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  MainMenu.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Menu.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  MenuButton.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Monster.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  MonsterJelly.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  MonsterOneEye.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Compiling...
+  MonsterWalkingSquare.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  MovingCharacter.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  PlayingCharacter.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  PressKeyFullScreen.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Projectile.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ProjectileArrow.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ProjectileFireball.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ProjectileStar.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ResourcesManager.cpp
+E:\programirane\Zero\Zero\ResourcesManager.h(10,10): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  SoundsPlayer.cpp
+E:\programirane\Zero\Zero\SoundsPlayer.h(5,10): fatal error C1083: Cannot open include file: 'SFML/Audio.hpp': No such file or directory
+  StartScreen.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Timer.cpp
+E:\programirane\Zero\Zero\Timer.cpp(42,91): warning C4244: 'return': conversion from '_Rep' to 'double', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+  Wall.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Weapon.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  WeaponBow.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  WeaponFireball.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  WeaponStar.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ZeroCharacter.cpp
+E:\programirane\Zero\Zero\GameObject.h(6,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
