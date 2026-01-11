@@ -25,24 +25,24 @@
 #include "WeaponStar.h"
 
 // file reading defines
-#define GENERAL_INFO_FILE_PATH		"Data/general_info.dat"
-#define WALLS_INFO_FILE_PATH		"Data/walls_info.dat"
-#define BACKGROUND_INFO_FILE_PATH	"Data/background_info.dat"
-#define ZERO_INFO_FILE_PATH			"Data/zero_info.dat"
-#define MONSTERS_INFO_FILE_PATH		"Data/monsters_info.dat"
-#define WEAPONS_INFO_FILE_PATH		"Data/weapons_info.dat"
-#define END_OF_LEVEL_INFO_FILE_PATH "Data/end_of_level_info.dat"
-#define HEALTH_INFO_FILE_PATH		"Data/health_info.dat"
-#define TIMER_LEVEL_FILE_PATH		"Data/timerLevel_info.dat"
-#define MENUS_INFO_FILE_PATH		"Data/menus_info.dat"
-#define IMAGES_FOLDER				"Data/Images/"
-#define SOUNDS_FOLDER				"Data/Audio/sounds/"
-#define AUDIO_FOLDER				"Data/Audio/"
+const std::filesystem::path gc_generalInfoFilePath = "Data/general_info.dat";
+const std::filesystem::path gc_wallsInfoFilePath = "Data/walls_info.dat";
+const std::filesystem::path gc_backgroundInfoFilePath = "Data/background_info.dat";
+const std::filesystem::path gc_zeroInfoFilePath = "Data/zero_info.dat";
+const std::filesystem::path gc_monstersInfoFilePath = "Data/monsters_info.dat";
+const std::filesystem::path gc_weaponsInfoFilePath = "Data/weapons_info.dat";
+const std::filesystem::path gc_endOfLevelInfoFilePath = "Data/end_of_level_info.dat";
+const std::filesystem::path gc_healpInfoFilePath = "Data/health_info.dat";
+const std::filesystem::path gc_timerLevelInfoFilePath = "Data/timerLevel_info.dat";
+const std::filesystem::path gc_menusInfoFilePath = "Data/menus_info.dat";
+const std::filesystem::path gc_imagesFolder = "Data/Images/";
+const std::filesystem::path gc_soundsFolder = "Data/Audio/sounds/";
+const std::filesystem::path gc_audioFolder = "Data/Audio/";
 
 // TODO - move these below to a settings file (when one is available)
-#define START_SCREEN_SECONDS_TO_WAIT			0
-#define FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT	2
-#define GAME_OVER_SCREEN_SECONDS_TO_WAIT		5
+const double gc_startScreenSecondsToWait = 0;
+const double gc_finishedLevelScreenSecondsToWait = 2;
+const double gc_gameOverScreenSecondsToWait = 5;
 
 std::shared_ptr <ResourcesManager> ResourcesManager::getInstance()
 {
@@ -205,7 +205,7 @@ void ResourcesManager::loadResources(unsigned int level, bool toLoadMenus)
 	for (auto resType : resourcesTypes)
 	{
 		sf::Texture texture;
-		std::string loadPath(IMAGES_FOLDER);
+		std::string loadPath(gc_imagesFolder.string());
 		loadPath += imagesNames[resType];
 		if (!texture.loadFromFile(loadPath))
 		{
@@ -220,7 +220,7 @@ void ResourcesManager::loadResources(unsigned int level, bool toLoadMenus)
 		for (auto& soundName : typeSoundsNames.second)
 		{
 			sf::SoundBuffer buf;
-			if (!buf.loadFromFile(SOUNDS_FOLDER + soundName))
+			if (!buf.loadFromFile(gc_soundsFolder.string() + soundName))
 			{
 				std::string throwMessage = "Cannot load sound " + soundName;
 				throw throwMessage;
@@ -326,7 +326,7 @@ void ResourcesManager::loadLevel(unsigned int level,
 	std::vector<sf::Vector2u> weaponsCoords;
 	getGeneralInfo(level, numbersOfLevels, wallsCoords, endOfLevelCoords, monstersCoords, weaponsCoords);
 
-	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, AUDIO_FOLDER + backgroundMusicFileName));
+	m_gameObjects.push_back(new Background(0, 0, m_windowDimensions.w, m_windowDimensions.h, false, gc_audioFolder.string() + backgroundMusicFileName));
 	resourcesTypes.push_back(OBJ_TYPE::BACKGROUND_TYPE);
 
 	// initialize Zero 
@@ -433,15 +433,14 @@ void ResourcesManager::clearGameObjects()
 void ResourcesManager::loadMenus(umapTypeString& imagesNames, umapTypeString& musicNames, umapTypeVecStrings& soundsNames, umapTypeVecInts& soundsRanges)
 {
 	mapStrStr fileCommandsToResources;
-	FileReadWriteTools::extractFileCommandsAndResources(MENUS_INFO_FILE_PATH, fileCommandsToResources);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_menusInfoFilePath.string(), fileCommandsToResources);
 	//// regular menu
 	imagesNames[OBJ_TYPE::MENU_BUTTON_TYPE] = fileCommandsToResources["buttonsTexture"];
-	FileReadWriteTools::extractSoundsFileNames(MENUS_INFO_FILE_PATH, OBJ_TYPE::MENU_BUTTON_TYPE, soundsNames, soundsRanges, "numOfButtonsSounds");
+	FileReadWriteTools::extractSoundsFileNames(gc_menusInfoFilePath.string(), OBJ_TYPE::MENU_BUTTON_TYPE, soundsNames, soundsRanges, "numOfButtonsSounds");
 	imagesNames[OBJ_TYPE::BUTTON_HIGHLIGHTER_TYPE] = fileCommandsToResources["highlighterTexture"];
 	imagesNames[OBJ_TYPE::MENU_TYPE] = fileCommandsToResources["menuTexture"];
 	musicNames[OBJ_TYPE::MENU_TYPE] = fileCommandsToResources["menuBackgroundMusic"];
-	FileReadWriteTools::extractSoundsFileNames(MENUS_INFO_FILE_PATH, OBJ_TYPE::MENU_TYPE, soundsNames, soundsRanges, "numOfButtonsSounds");
-
+	FileReadWriteTools::extractSoundsFileNames(gc_menusInfoFilePath.string(), OBJ_TYPE::MENU_TYPE, soundsNames, soundsRanges, "numOfButtonsSounds");
 	//// start screen
 	imagesNames[OBJ_TYPE::START_SCREEN_TYPE] = fileCommandsToResources["startScreenTexture"];
 	musicNames[OBJ_TYPE::START_SCREEN_TYPE] = fileCommandsToResources["startScreenBckgrMusic"];
@@ -469,52 +468,52 @@ void ResourcesManager::initMenus(std::vector<OBJ_TYPE>& resCommands, umapTypeStr
 			0, 0, 
 			m_windowDimensions.w, m_windowDimensions.h, 
 			false, 
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::MENU_TYPE]);
 	m_menus[RUN_MENU_STATE::RESUME_MENU_STATE] =
 		new ResumeGameMenu(
 			0, 0,
 			m_windowDimensions.w, m_windowDimensions.h,
 			false,
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::MENU_TYPE]);
 	m_menus[RUN_MENU_STATE::SAVE_GAME_MENU_STATE] =
 		new SaveMenu(
 			0, 0,
 			m_windowDimensions.w, m_windowDimensions.h,
 			false,
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::MENU_TYPE]);
 	m_menus[RUN_MENU_STATE::LOAD_GAME_STATE] =
 		new LoadMenu(
 			0, 0,
 			m_windowDimensions.w, m_windowDimensions.h,
 			false,
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::MENU_TYPE]);
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::MENU_TYPE]);
 	resCommands.push_back(OBJ_TYPE::START_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::START_SCREEN_STATE] =
 		new StartScreen(
 			0, 0, 
 			m_windowDimensions.w, m_windowDimensions.h, 
-			false, START_SCREEN_SECONDS_TO_WAIT, 
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::START_SCREEN_TYPE]);
+			false, gc_startScreenSecondsToWait, 
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::START_SCREEN_TYPE]);
 	resCommands.push_back(OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::FINISHED_LEVEL_SCREEN_STATE] =
 		new FinishedLevelScreen(
 			0, 0, 
 			m_windowDimensions.w, m_windowDimensions.h, 
-			false, FINISHED_LEVEL_SCREEN_SECONDS_TO_WAIT, 
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE]);
+			false, gc_finishedLevelScreenSecondsToWait, 
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::FINISHED_LEVEL_SCREEN_TYPE]);
 	resCommands.push_back(OBJ_TYPE::GAME_OVER_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::GAME_OVER_SCREEN_STATE] = 
 		new GameOverScreen(
 			0, 0, 
 			m_windowDimensions.w, m_windowDimensions.h, 
-			false, GAME_OVER_SCREEN_SECONDS_TO_WAIT, 
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE]);
+			false, gc_gameOverScreenSecondsToWait, 
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::GAME_OVER_SCREEN_TYPE]);
 	resCommands.push_back(OBJ_TYPE::FINAL_SCREEN_TYPE);
 	m_menus[RUN_MENU_STATE::FINAL_SCREEN_STATE] =
 		new FinalScreen(0, 0, 
 			m_windowDimensions.w, m_windowDimensions.h, 
-			false, GAME_OVER_SCREEN_SECONDS_TO_WAIT,
-			AUDIO_FOLDER + musicNames[OBJ_TYPE::FINAL_SCREEN_TYPE]);
+			false, gc_gameOverScreenSecondsToWait,
+			gc_audioFolder.string() + musicNames[OBJ_TYPE::FINAL_SCREEN_TYPE]);
 }
 
 void ResourcesManager::getZeroInfo(umapTypeString& imagesNames, 
@@ -526,20 +525,20 @@ void ResourcesManager::getZeroInfo(umapTypeString& imagesNames,
 								   double& zeroFiringAccurracy)
 {
 	mapStrStr fileCommandsAndResources;
-	FileReadWriteTools::extractFileCommandsAndResources(ZERO_INFO_FILE_PATH, fileCommandsAndResources);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_zeroInfoFilePath.string(), fileCommandsAndResources);
 	imagesNames[OBJ_TYPE::ZERO_TYPE]	=						 fileCommandsAndResources["texture"];
 	m_animations[OBJ_TYPE::ZERO_TYPE]	= getAnimationFromString(fileCommandsAndResources["animation"]);
 	zeroSpeed							=			   std::stod(fileCommandsAndResources["speed"]);
 	zeroHealth							=			   std::stod(fileCommandsAndResources["health"]);
 	zeroAttcackingSpeed					=			   std::stod(fileCommandsAndResources["attackingSpeed"]);
 	zeroFiringAccurracy					=			   std::stod(fileCommandsAndResources["firingAccuracy"]);
-	FileReadWriteTools::extractSoundsFileNames(ZERO_INFO_FILE_PATH, OBJ_TYPE::ZERO_TYPE, soundsNames, soundsRanges);
+	FileReadWriteTools::extractSoundsFileNames(gc_zeroInfoFilePath.string(), OBJ_TYPE::ZERO_TYPE, soundsNames, soundsRanges);
 }
 
 void ResourcesManager::getBackgroundInfo(const unsigned int & level, umapTypeString& imagesNames, std::string& backgroundMusicFileName)
 {
 	mapStrStr fileCommandsAndResources;
-	FileReadWriteTools::extractFileCommandsAndResources(BACKGROUND_INFO_FILE_PATH, fileCommandsAndResources, level);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_backgroundInfoFilePath.string(), fileCommandsAndResources, level);
 	imagesNames[OBJ_TYPE::BACKGROUND_TYPE]	= fileCommandsAndResources["texture"];
 	backgroundMusicFileName					= fileCommandsAndResources["backgroundMusic"];
 }
@@ -547,7 +546,7 @@ void ResourcesManager::getBackgroundInfo(const unsigned int & level, umapTypeStr
 void ResourcesManager::getWallsInfo(const unsigned int & level, umapTypeString& imagesNames)
 {
 	mapStrStr fileCommandsAndResources;
-	FileReadWriteTools::extractFileCommandsAndResources(WALLS_INFO_FILE_PATH, fileCommandsAndResources, level);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_wallsInfoFilePath.string(), fileCommandsAndResources, level);
 	imagesNames[OBJ_TYPE::WALL_TYPE] = fileCommandsAndResources["texture"];
 }
 
@@ -563,7 +562,7 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 									   std::vector<OBJ_TYPE>& monsterImmuneFrom)
 {
 	mapStrStr fileCommandsToResources;
-	FileReadWriteTools::extractFileCommandsAndResources(MONSTERS_INFO_FILE_PATH, fileCommandsToResources, level);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_monstersInfoFilePath.string(), fileCommandsToResources, level);
 	monsterType								= static_cast<MONSTERS_TYPE>(std::stoi(fileCommandsToResources["monsterType"]));
 	imagesNames[OBJ_TYPE::MONSTER_TYPE]		=									   fileCommandsToResources["texture"];
 	m_animations[OBJ_TYPE::MONSTER_TYPE]	=			    getAnimationFromString(fileCommandsToResources["animationFrames"]);
@@ -584,7 +583,7 @@ void ResourcesManager::getMonstersInfo(const unsigned int & level,
 			monsterImmuneFrom.push_back(static_cast<OBJ_TYPE>(std::stoi(projectileTypeAsStr)));
 		}
 	}
-	FileReadWriteTools::extractSoundsFileNames(MONSTERS_INFO_FILE_PATH, OBJ_TYPE::MONSTER_TYPE, soundsNames, soundsRanges, "numberOfSoundsLv" + std::to_string(level));
+	FileReadWriteTools::extractSoundsFileNames(gc_monstersInfoFilePath.string(), OBJ_TYPE::MONSTER_TYPE, soundsNames, soundsRanges, "numberOfSoundsLv" + std::to_string(level));
 }
 
 void ResourcesManager::getWeaponsInfo(const unsigned int & level,
@@ -598,7 +597,7 @@ void ResourcesManager::getWeaponsInfo(const unsigned int & level,
 									   double& projectilesSpeed)
 {
 	mapStrStr filesCommandsToResources;
-	FileReadWriteTools::extractFileCommandsAndResources(WEAPONS_INFO_FILE_PATH, filesCommandsToResources, level);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_weaponsInfoFilePath.string(), filesCommandsToResources, level);
 	OBJ_TYPE weaponType = 
 		static_cast<OBJ_TYPE>(
 			std::stoi(filesCommandsToResources["weaponType"]) + 
@@ -618,21 +617,21 @@ void ResourcesManager::getWeaponsInfo(const unsigned int & level,
 		imagesNames[projectilesType]	=			filesCommandsToResources["projectileTexture"];
 		projectilesDamage				= std::stod(filesCommandsToResources["projectilesDamage"]);
 		projectilesSpeed				= std::stod(filesCommandsToResources["projectilesSpeed"]);
-		FileReadWriteTools::extractSoundsFileNames(WEAPONS_INFO_FILE_PATH, weaponType, soundsNames, soundsRanges, "numberOfSoundsLv" + std::to_string(level));
+		FileReadWriteTools::extractSoundsFileNames(gc_weaponsInfoFilePath.string(), weaponType, soundsNames, soundsRanges, "numberOfSoundsLv" + std::to_string(level));
 	}
 }
 
 void ResourcesManager::getEndOfLevelInfo(const unsigned int & level, umapTypeString& imagesNames)
 {
 	mapStrStr filesCommandsToResources;
-	FileReadWriteTools::extractFileCommandsAndResources(END_OF_LEVEL_INFO_FILE_PATH, filesCommandsToResources);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_endOfLevelInfoFilePath.string(), filesCommandsToResources);
 	imagesNames[OBJ_TYPE::END_OF_LEVEL_TYPE] = filesCommandsToResources["texture"];
 }
 
 void ResourcesManager::getHealthInfo(const unsigned int & level, umapTypeString& imagesNames)
 {
 	mapStrStr filesCommandsToResources;
-	FileReadWriteTools::extractFileCommandsAndResources(HEALTH_INFO_FILE_PATH, filesCommandsToResources);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_healpInfoFilePath.string(), filesCommandsToResources);
 	imagesNames[OBJ_TYPE::HEALTH_TYPE]				= filesCommandsToResources["healthTexture"];
 	imagesNames[OBJ_TYPE::HEALTH_BACKGROUND_TYPE]	= filesCommandsToResources["healthBackgroundTexture"];
 }
@@ -640,9 +639,9 @@ void ResourcesManager::getHealthInfo(const unsigned int & level, umapTypeString&
 void ResourcesManager::getTimerLevelInfo(const unsigned int& level, double& timeDuration, umapTypeVecStrings& soundNames, umapTypeVecInts& soundRanges)
 {
 	mapStrStr filesCommandsToResources;
-	FileReadWriteTools::extractFileCommandsAndResources(TIMER_LEVEL_FILE_PATH, filesCommandsToResources, level);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_timerLevelInfoFilePath.string(), filesCommandsToResources, level);
 	timeDuration = std::stod(filesCommandsToResources["timeDuration"]);
-	FileReadWriteTools::extractSoundsFileNames(TIMER_LEVEL_FILE_PATH, OBJ_TYPE::LEVEL_HEADER_TYPE, soundNames, soundRanges);
+	FileReadWriteTools::extractSoundsFileNames(gc_timerLevelInfoFilePath.string(), OBJ_TYPE::LEVEL_HEADER_TYPE, soundNames, soundRanges);
 }
 
 void ResourcesManager::getGeneralInfo(const unsigned int & level, 
@@ -654,11 +653,11 @@ void ResourcesManager::getGeneralInfo(const unsigned int & level,
 {
 	mapStrStr fileCommandsToResources;
 	// 1. get the whole info because numbersOfLevels is out of any level
-	FileReadWriteTools::extractFileCommandsAndResources(GENERAL_INFO_FILE_PATH, fileCommandsToResources); 
+	FileReadWriteTools::extractFileCommandsAndResources(gc_generalInfoFilePath.string(), fileCommandsToResources); 
 	numbersOfLevels = std::stoi(fileCommandsToResources["numOfLevels"]);
 	// 2. get level specific info
 	fileCommandsToResources.clear();
-	FileReadWriteTools::extractFileCommandsAndResources(GENERAL_INFO_FILE_PATH, fileCommandsToResources, level);
+	FileReadWriteTools::extractFileCommandsAndResources(gc_generalInfoFilePath.string(), fileCommandsToResources, level);
 	
 	// clear the coordinates form the previous level if there were any
 	wallsCoords.clear();
