@@ -6,7 +6,7 @@
 #include <sstream>				// a string line read from file to be converted to ints
 #include <memory>
 
-#include <SFML\Graphics.hpp>	// sf::Texture, sf::Sprite
+#include <SFML/Graphics.hpp>	// sf::Texture, sf::Sprite
 
 #include "Definitions.h"		// ObjectType, Animations
 

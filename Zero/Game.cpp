@@ -307,12 +307,15 @@ std::string Game::getCurrentDateTime()
 
 	// Convert the time to a string
 	std::tm localTime;
-	localtime_s(&localTime, &currentTime);
+#ifdef _WIN32
+    localtime_s(&localTime, &currentTime);  // Windows
+#else
+    localtime_r(&currentTime, &localTime);  // Unix/Linux/macOS
+#endif
 
-	char buffer[20]; // Buffer to hold the formatted time
-	std::strftime(buffer, sizeof(buffer), "%d.%m.%Y %H:%M:%S", &localTime);
-
-	return std::string(buffer);
+    char buffer[20];
+    std::strftime(buffer, sizeof(buffer), "%d.%m.%Y %H:%M:%S", &localTime);
+    return std::string(buffer);
 }
 
 void Game::appendToOSSWithNewline(std::ostringstream& oss, const std::string& data)

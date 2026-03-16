@@ -3,7 +3,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include <SFML\Window.hpp>
+#include <SFML/Window.hpp>
 
 #include "Definitions.h"
 

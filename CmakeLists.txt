@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.22)
+project(ZeroAdventures VERSION 1.0 LANGUAGES CXX)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Include SFML as subdirectory (builds it with the project)
+add_subdirectory(external/SFML)
+
+# Include SFML headers
+target_include_directories(Zero PRIVATE external/SFML/include)
+
+# Link SFML libraries
+target_link_libraries(Zero PRIVATE
+    sfml-graphics
+    sfml-window
+    sfml-system
+    sfml-audio
+)
+
+# Copy resources (e.g., Data/ folder) to build dir
+file(COPY Zero/Data DESTINATION ${CMAKE_BINARY_DIR})
