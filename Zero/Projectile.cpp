@@ -14,9 +14,14 @@ Projectile::Projectile(double x, double y, double w, double h, double speed, dou
 	m_damage(damage)
 {
 	m_goOutsideOfScreen = true;
+}
+
+void Projectile::loadContent()
+{
+	MovingCharacter::loadContent();
 	if (this->m_drawingObject.sprite.has_value())
 	{
-		this->m_drawingObject.sprite.value().rotate(sf::degrees(static_cast<float>(angleDirection + 180)));
+		this->m_drawingObject.sprite.value().setRotation(sf::degrees(static_cast<float>(m_angleDirection + 180)));
 	}
 }
 

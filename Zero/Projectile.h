@@ -10,6 +10,7 @@ public:
 
 	static Projectile* createProjectile(OBJ_TYPE type, double x, double y, double w, double h, double damage, double speed, double angle);
 
+	void loadContent() override;
 	void update() override;
 
 	void updateDirectionToMove() override;

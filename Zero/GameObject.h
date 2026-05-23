@@ -52,7 +52,7 @@ protected :
 	std::map<sf::Keyboard::Key, bool> m_controllingKeys;
 	Animation m_frames;
 	bool m_isAnimating;
-	int m_animationFrame;
+	int m_animationFrame{ 0 };
 
 	// collisions
 	bool m_hasCollisions;
