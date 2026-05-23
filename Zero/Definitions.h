@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <optional>
 
 #define OBJ_TYPE Definitions::ObjectType
 #define MODE Definitions::Mode
@@ -148,7 +149,7 @@ struct DrawingObject
 {
 	sf::Texture texture;
 	//sf::RectangleShape rectangleShape;
-	sf::Sprite sprite;
+	std::optional<sf::Sprite> sprite;
 	std::string filePath;
 };
 

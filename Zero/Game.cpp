@@ -12,7 +12,7 @@
 #include "FileReadWriteTools.h"
 
 Game::Game() :
-	m_window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Zero's Adventures", sf::Style::Fullscreen),
+	m_window(sf::VideoMode(sf::VideoMode::getDesktopMode()), "Zero's Adventures", sf::State::Fullscreen),
 	m_currentLevel(1)
 {
 	FileReadWriteTools::writeToFile("game_is_running.inf", 1); // warn the external world that the game has been started
@@ -59,55 +59,51 @@ void Game::eventsCapture()
 {
 #pragma region capture gameplay events
 	std::shared_ptr<StateMachine> stateMachine = StateMachine::getInstnce();
-	while (m_window.pollEvent(m_event))
+	while (const auto event = m_window.pollEvent())
 	{
-		if (m_event.type == sf::Event::KeyPressed && m_event.key.code == sf::Keyboard::Escape)
-		{
-			if (stateMachine->getMode() == MODE::GAME_MODE)
-			{
-				stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);	// get the menus
-				stateMachine->setEventByGameCommand(COMMAND::RESUME_GAME_MENU_COMMAND); // go to resume game menu
-			}
-			else if (stateMachine->getMode() == MODE::MENU_MODE) 
-			{
-				switch (stateMachine->getRunningMenuState())
-				{
-					case RUN_MENU_STATE::RESUME_MENU_STATE:
-						stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND); // back to game
-					break;
-					case RUN_MENU_STATE::SAVE_GAME_MENU_STATE:
-					case RUN_MENU_STATE::LOAD_GAME_STATE:
-					case RUN_MENU_STATE::OPTIONS_STATE:
-					{
-						auto command = (stateMachine->getPreviousRunningMenuState() == RUN_MENU_STATE::MAIN_MENU_STATE) ?
-							COMMAND::MAIN_MENU_COMMAND :
-							COMMAND::RESUME_GAME_MENU_COMMAND;
-						stateMachine->setEventByGameCommand(command); // back to Main menu
-					}
-					break;
-					default:
-					break;
-				}
-
-			}
-		}
-		else if (m_event.type == sf::Event::Closed)
+		if (event->is<sf::Event::Closed>())
 		{
 			stateMachine->setEventByGameCommand(COMMAND::EXIT_COMMAND);
 		}
-		else
+		else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
 		{
-			switch (m_event.type)
+			if (keyPressed->code == sf::Keyboard::Key::Escape)
 			{
-				case sf::Event::KeyPressed:
-					stateMachine->addPressedKey(m_event.key.code);
-				break;
-				case sf::Event::KeyReleased:
-					stateMachine->addReleasedKey(m_event.key.code);
-				break;
-				default:
-				break;
+				if (stateMachine->getMode() == MODE::GAME_MODE)
+				{
+					stateMachine->setEventByGameCommand(COMMAND::MENU_COMMAND);	// get the menus
+					stateMachine->setEventByGameCommand(COMMAND::RESUME_GAME_MENU_COMMAND); // go to resume game menu
+				}
+				else if (stateMachine->getMode() == MODE::MENU_MODE) 
+				{
+					switch (stateMachine->getRunningMenuState())
+					{
+						case RUN_MENU_STATE::RESUME_MENU_STATE:
+							stateMachine->setEventByGameCommand(COMMAND::GAME_COMMAND); // back to game
+						break;
+						case RUN_MENU_STATE::SAVE_GAME_MENU_STATE:
+						case RUN_MENU_STATE::LOAD_GAME_STATE:
+						case RUN_MENU_STATE::OPTIONS_STATE:
+						{
+							auto command = (stateMachine->getPreviousRunningMenuState() == RUN_MENU_STATE::MAIN_MENU_STATE) ?
+								COMMAND::MAIN_MENU_COMMAND :
+								COMMAND::RESUME_GAME_MENU_COMMAND;
+							stateMachine->setEventByGameCommand(command); // back to Main menu
+						}
+						break;
+						default:
+						break;
+					}
+				}
 			}
+			else
+			{
+				stateMachine->addPressedKey(keyPressed->code);
+			}
+		}
+		else if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
+		{
+			stateMachine->addReleasedKey(keyReleased->code);
 		}
 	}
 #pragma endregion

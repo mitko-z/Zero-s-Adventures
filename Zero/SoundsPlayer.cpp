@@ -22,7 +22,8 @@ void SoundsPlayer::play(const sf::SoundBuffer& buffer)
 	}
 	if (!soundPlayed) // no sounds available
 	{
-		sf::Sound sound;
+		sf::SoundBuffer emptyBuffer;
+		sf::Sound sound(emptyBuffer);
 		m_sounds.push_back(sound);
 		size_t last = m_sounds.size() - 1;
 		m_sounds[last].setBuffer(buffer);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>	// map of controlling keys
+#include <map>
 #include <vector>			// set of textures
 
 #include <SFML/Graphics.hpp>	// Keyboard::Key type

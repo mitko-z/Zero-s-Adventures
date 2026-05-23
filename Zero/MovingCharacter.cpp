@@ -195,17 +195,17 @@ void MovingCharacter::updateDrawingObject()
 		case MovingDirection::DIRECTION_LEFT:
 			if (!m_flipped)
 			{
-				int width = m_drawingObject.sprite.getTextureRect().width;
-				m_drawingObject.sprite.setOrigin(sf::Vector2f(width, 0));
-				m_drawingObject.sprite.scale(-1.f, 1.f);
+				int width = m_drawingObject.sprite.value().getTextureRect().size.x;
+				m_drawingObject.sprite.value().setOrigin(sf::Vector2f(width, 0));
+				m_drawingObject.sprite.value().scale(sf::Vector2f(- 1.f, 1.f));
 				m_flipped = true;
 			}
 		break;
 		case MovingDirection::DIRECTION_RIGHT:
 			if (m_flipped)
 			{
-				m_drawingObject.sprite.setOrigin(sf::Vector2f(0, 0));
-				m_drawingObject.sprite.scale(-1.f, 1.f);
+				m_drawingObject.sprite.value().setOrigin(sf::Vector2f(0, 0));
+				m_drawingObject.sprite.value().scale(sf::Vector2f(-1.f, 1.f));
 				m_flipped = false;
 			}
 		break;

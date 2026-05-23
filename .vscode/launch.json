@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Zero (CMake)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/Zero.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/Debug",
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "CMake: build",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        }
+    ]
+}

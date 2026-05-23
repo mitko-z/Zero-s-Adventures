@@ -5,14 +5,14 @@
 void LevelHeader::loadContent()
 {
 		// timer
-	setFontStyleToText(m_timerText);
-	m_timerText.setPosition(m_rect.w / 2, m_rect.y);
+	setFontStyleToText(*m_timerText);
+	setTextPosition(*m_timerText, m_rect.w / 2, m_rect.y);
 		// Zero health info
-	setFontStyleToText(m_zeroHealthText);
-	m_zeroHealthText.setPosition(m_rect.x, m_rect.y);
+	setFontStyleToText(*m_zeroHealthText);
+	setTextPosition(*m_zeroHealthText, m_rect.x, m_rect.y);
 		// Zero weapon info
-	setFontStyleToText(m_zeroWeaponText);
-	m_zeroWeaponText.setString("Weapon: ");
+	setFontStyleToText(*m_zeroWeaponText);
+	m_zeroWeaponText->setString("Weapon: ");
 }
 
 void LevelHeader::update()
@@ -26,8 +26,8 @@ void LevelHeader::update()
 
 void LevelHeader::draw(sf::RenderWindow &window)
 {
-	window.draw(m_timerText);
-	window.draw(m_zeroHealthText);
+	window.draw(*m_timerText);
+	window.draw(*m_zeroHealthText);
 	drawZeroWeaponInfo(window);
 }
 
@@ -41,18 +41,21 @@ std::ostringstream LevelHeader::getCurrentState()
 
 void LevelHeader::setFontStyleToText(sf::Text& text)
 {
-	std::string loadPath;
-	loadPath = "Data/Fonts/SMARC___.TTF";
-	if (m_font.loadFromFile(loadPath) == 0)
-	{
-		std::string throwMessage = "Cannot load font " + loadPath;
-		throw throwMessage;
-	}
 	text.setFont(m_font);
 	sf::Color textColor(70, 255, 0);
 	text.setFillColor(textColor);
 	double fontSize = m_rect.h * 0.6;
-	text.setCharacterSize(fontSize);
+	text.setCharacterSize(static_cast<unsigned int>(fontSize));
+}
+
+void LevelHeader::setTextPosition(sf::Text& text, double x, double y)
+{
+	text.setPosition(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)));
+}
+
+void LevelHeader::setSpritePosition(sf::Sprite& sprite, double x, double y)
+{
+	sprite.setPosition(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)));
 }
 
 void LevelHeader::updateTimer()
@@ -71,11 +74,11 @@ void LevelHeader::updateTimer()
 	std::string elapsedMinutes_str = std::to_string(elapsedMinutes_int);
 	std::string elapsedSeconds_str = std::to_string(elapsedSeconds_int);
 	std::string leadingZero = elapsedSeconds_int < 10 ? "0" : "";
-	m_timerText.setString(elapsedMinutes_str + ":" + leadingZero + elapsedSeconds_str);
+	m_timerText->setString(elapsedMinutes_str + ":" + leadingZero + elapsedSeconds_str);
 
 	if (elapsedMinutes_int == 0 && elapsedSeconds_int < 15)
 	{
-		m_timerText.setFillColor(sf::Color(255, 70, 0));
+		m_timerText->setFillColor(sf::Color(255, 70, 0));
 	}
 	if (elapsedMinutes_int == 0 && elapsedSeconds_int <= 10 && elapsedSeconds_int != m_prevElapsedSeconds)
 	{
@@ -93,7 +96,7 @@ void LevelHeader::updateTimer()
 void LevelHeader::updateZeroHealth()
 {
 	int zeroHealth = m_zero->getCurrentHealth();
-	m_zeroHealthText.setString("Health: " + std::to_string(zeroHealth));
+	m_zeroHealthText->setString("Health: " + std::to_string(zeroHealth));
 }
 
 void LevelHeader::updateZeroWeapon()
@@ -107,25 +110,40 @@ void LevelHeader::updateZeroWeapon()
 		Animation frames;
 		resMan->getAnimation(weaponType, frames);
 		sf::Texture weaponTexture = resMan->getTexture(weaponType).second;
-		m_zeroWeaponSprite = m_zero->getCurrentWeapon()->getWeaponSprite();
-		scaleSpriteTo(
-			resMan->getGameObjSize().x / 4,
-			resMan->getGameObjSize().y / 4,
-			*m_zeroWeaponSprite.getTexture(),
-			m_zeroWeaponSprite);
-		m_zeroWeaponSprite.setPosition(
-			m_rect.w - (m_zeroWeaponSprite.getTexture()->getSize().x * m_zeroWeaponSprite.getScale().x), 
-			m_rect.y);
+		
+		// Create new sprite if needed or update existing one
+		const sf::Sprite* weaponSpritePtr = m_zero->getCurrentWeapon()->getWeaponSprite();
+		
+		if (weaponSpritePtr)
+		{
+			sf::Sprite weaponSprite(*weaponSpritePtr);
+			
+			scaleSpriteTo(
+				resMan->getGameObjSize().x / 4,
+				resMan->getGameObjSize().y / 4,
+				weaponSprite.getTexture(),
+				weaponSprite);
+			setSpritePosition(
+				weaponSprite, 
+				m_rect.w - (weaponSprite.getTexture().getSize().x * weaponSprite.getScale().x), 
+				m_rect.y);
+			
+			// Update or create the member sprite using smart pointer
+			m_zeroWeaponSprite = std::make_unique<sf::Sprite>(weaponSprite);
+		}
+		
 			// set text
-		m_zeroWeaponText.setString("Weapon: ");
-		m_zeroWeaponText.setPosition(
-			m_zeroWeaponSprite.getPosition().x - m_zeroWeaponText.getLocalBounds().width, 
-			m_zeroWeaponSprite.getPosition().y);
+		m_zeroWeaponText->setString("Weapon: ");
+		setTextPosition(
+			*m_zeroWeaponText,
+			m_zeroWeaponSprite->getPosition().x - m_zeroWeaponText->getLocalBounds().size.x, 
+			m_zeroWeaponSprite->getPosition().y);
 	}
 	else
 	{
-		m_zeroWeaponSprite = sf::Sprite();
-		m_zeroWeaponText.setString("");
+		// No weapon - clean up sprite (smart pointer handles cleanup automatically)
+		m_zeroWeaponSprite = nullptr;
+		m_zeroWeaponText->setString("");
 	}
 }
 
@@ -146,6 +164,9 @@ void LevelHeader::setZeroGameObject()
 void LevelHeader::drawZeroWeaponInfo(sf::RenderWindow & window)
 {
 	extern std::shared_ptr<ResourcesManager> resMan;
-	window.draw(m_zeroWeaponSprite);
-	window.draw(m_zeroWeaponText);
+	if (m_zeroWeaponSprite != nullptr)
+	{
+		window.draw(*m_zeroWeaponSprite);
+	}
+	window.draw(*m_zeroWeaponText);
 }

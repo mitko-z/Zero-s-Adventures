@@ -17,12 +17,15 @@ void BackgroundAudioPlayer::initialize(const std::string& pathToFile, bool loope
 		std::string throwMessage = "Could not open audio file " + pathToFile;
 		throw(throwMessage);
 	}
-	player.setLoop(looped);
+	if (looped)
+	{
+		player.setLoopPoints(sf::Music::TimeSpan{sf::Time::Zero, player.getDuration()});
+	}
 }
 
 void BackgroundAudioPlayer::play()
 {
-	if(player.getStatus() != sf::SoundSource::Playing)
+	if(player.getStatus() != sf::SoundSource::Status::Playing)
 		player.play();
 }
 
@@ -31,7 +34,7 @@ void BackgroundAudioPlayer::play(const std::string& pathToFile, bool looped)
 	auto stateMachine = StateMachine::getInstnce();
 	if (stateMachine->toChangeAudio())
 	{
-		if (player.getStatus() == sf::SoundSource::Playing)
+		if (player.getStatus() == sf::SoundSource::Status::Playing)
 		{
 			stop();
 		}

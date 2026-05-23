@@ -25,7 +25,7 @@ void Health::substractHealth(double substractWith)
 	if (m_currentHealth < 0.0)
 		m_currentHealth = 0;
 	double newWidth = m_maxWidth * (m_currentHealth / m_maxHealth);
-	scaleSpriteTo(newWidth, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
+	scaleSpriteTo(newWidth, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite.value());
 }
 
 void Health::setPosition(double parentsX, double parentsY, double parentsHeight)

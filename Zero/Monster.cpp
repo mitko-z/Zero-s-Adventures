@@ -31,11 +31,17 @@ void Monster::update()
 	{
 		throw "Couldn't find the Zero character at index 1 in the gameObjects list.";
 	}
-	sf::FloatRect zeroRect(zeroCharacter->getRect().x, zeroCharacter->getRect().y, zeroCharacter->getRect().w, zeroCharacter->getRect().h);
+	float x = zeroCharacter->getRect().x;
+	float y = zeroCharacter->getRect().y;
+	float w = zeroCharacter->getRect().w;
+	float h = zeroCharacter->getRect().h;
+	sf::Vector2f top = sf::Vector2f(x, y);
+	sf::Vector2f size = sf::Vector2f(w, h);
+	sf::FloatRect zeroRect(top, size);
 	double distanceInPixels = MAX_DISTANCE_TO_LOOK_FOR_ZERO * (resMan->getLevelBlockDimensions().x + resMan->getLevelBlockDimensions().y) / 2;
 	if (distanceToTarget(zeroRect) < distanceInPixels)
 	{
-		moveTowardsTarget(zeroRect.left, zeroRect.top);
+		moveTowardsTarget(zeroRect.position.x, zeroRect.position.y);
 	}
 
 	PlayingCharacter::update();
@@ -120,6 +126,6 @@ void Monster::moveTowardsTarget(int x, int y)
 
 double Monster::distanceToTarget(sf::FloatRect target)
 {
-	sf::Vector2f targetCenter(target.left + target.width / 2, target.top + target.height / 2);
+	sf::Vector2f targetCenter(target.position.x + target.size.x / 2, target.position.y + target.size.y / 2);
 	return sqrt((m_rect.x - targetCenter.x)*(m_rect.x - targetCenter.x) + (m_rect.y - targetCenter.y)*(m_rect.y - targetCenter.y));
 }

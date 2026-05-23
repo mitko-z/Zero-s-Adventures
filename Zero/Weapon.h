@@ -37,7 +37,13 @@ public:
 
 	void draw(sf::RenderWindow &window) override;
 
-	sf::Sprite getWeaponSprite() { return m_drawingObject.sprite; }
+	const sf::Sprite* getWeaponSprite() { 
+		if (m_drawingObject.sprite.has_value())
+		{
+			return &m_drawingObject.sprite.value();
+		}
+		return nullptr;
+	}
 
 	std::ostringstream getCurrentState() override;
 

@@ -31,20 +31,20 @@ void ZeroCharacter::initialize()
 	// 8, 9 - fire
 	// 10, 11 - take item from the ground (which is not owned by anyone else)
 	// 12, 13 - leaves the item
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::W, false));		// move up
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Up, false));		// move up
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::S, false));		// move down
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Down, false));	// move down
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::A, false));		// move left
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Left, false));	// move left
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::D, false));		// move right
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Right, false));	// move right
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Space, false));	// fire
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::LControl, false));// fire
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::F, false));		// take weapon/item
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Return, false));	// take weapon/item
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::R, false));		// drop weapon
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::BackSpace, false));// drop weapon
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::W, false));		// move up
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Up, false));		// move up
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::S, false));		// move down
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Down, false));	// move down
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::A, false));		// move left
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Left, false));	// move left
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::D, false));		// move right
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Right, false));	// move right
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Space, false));	// fire
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::LControl, false));// fire
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::F, false));		// take weapon/item
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Enter, false));	// take weapon/item
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::R, false));		// drop weapon
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Backspace, false));// drop weapon
 #pragma endregion
 }
 
@@ -99,23 +99,23 @@ void ZeroCharacter::updateKeys(const MAP_KEYS& keysPressed, const MAP_KEYS& keys
 
 void ZeroCharacter::update()
 {
-	if (m_controllingKeys[sf::Keyboard::S] || m_controllingKeys[sf::Keyboard::Down])
+	if (m_controllingKeys[sf::Keyboard::Key::S] || m_controllingKeys[sf::Keyboard::Key::Down])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_DOWN);
 	}
-	if (m_controllingKeys[sf::Keyboard::W] || m_controllingKeys[sf::Keyboard::Up])
+	if (m_controllingKeys[sf::Keyboard::Key::W] || m_controllingKeys[sf::Keyboard::Key::Up])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_UP);
 	}
-	if (m_controllingKeys[sf::Keyboard::A] || m_controllingKeys[sf::Keyboard::Left])
+	if (m_controllingKeys[sf::Keyboard::Key::A] || m_controllingKeys[sf::Keyboard::Key::Left])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_LEFT);
 	}
-	if (m_controllingKeys[sf::Keyboard::D] || m_controllingKeys[sf::Keyboard::Right])
+	if (m_controllingKeys[sf::Keyboard::Key::D] || m_controllingKeys[sf::Keyboard::Key::Right])
 	{
 		setDirectionToMove(MovingDirection::DIRECTION_RIGHT);
 	}
-	if (m_controllingKeys[sf::Keyboard::F] || m_controllingKeys[sf::Keyboard::Return])
+	if (m_controllingKeys[sf::Keyboard::Key::F] || m_controllingKeys[sf::Keyboard::Key::Enter])
 	{
 		m_takeWeapon = true;
 	}
@@ -123,7 +123,7 @@ void ZeroCharacter::update()
 	{
 		m_takeWeapon = false;
 	}
-	if (m_controllingKeys[sf::Keyboard::R] || m_controllingKeys[sf::Keyboard::BackSpace])
+	if (m_controllingKeys[sf::Keyboard::Key::R] || m_controllingKeys[sf::Keyboard::Key::Backspace])
 	{
 		if (m_weapon)
 		{
@@ -132,7 +132,7 @@ void ZeroCharacter::update()
 			m_weapon = nullptr;
 		}
 	}
-	if (m_controllingKeys[sf::Keyboard::LControl] || m_controllingKeys[sf::Keyboard::Space])
+	if (m_controllingKeys[sf::Keyboard::Key::LControl] || m_controllingKeys[sf::Keyboard::Key::Space])
 	{
 		if (m_weapon)
 		{

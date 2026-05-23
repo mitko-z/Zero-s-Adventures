@@ -79,9 +79,6 @@ private:
 	// windows
 	sf::RenderWindow m_window;
 
-	// events
-	sf::Event m_event;
-
 	unsigned int m_currentLevel;
 
 #pragma endregion

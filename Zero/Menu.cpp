@@ -8,13 +8,13 @@
 
 void Menu::initialize()
 {
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::W, false));		// move up
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Up, false));		// move up
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::S, false));		// move down
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Down, false));	// move down
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Space, false));	// Choice
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Return, false));	// Choice
-	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Escape, false));	// Return to previous
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::W, false));		// move up
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Up, false));		// move up
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::S, false));		// move down
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Down, false));	// move down
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Space, false));	// Choice
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Enter, false));	// Choice
+	this->m_controllingKeys.insert(std::make_pair(sf::Keyboard::Key::Escape, false));	// Return to previous
 	m_activeButtonIndex = 0;
 	if (m_buttons.size() > 0)
 	{
@@ -32,24 +32,24 @@ Definitions::ObjectType Menu::getType()
 
 void Menu::update()
 {
-	if (m_controllingKeys[sf::Keyboard::Up] || m_controllingKeys[sf::Keyboard::W])
+	if (m_controllingKeys[sf::Keyboard::Key::Up] || m_controllingKeys[sf::Keyboard::Key::W])
 	{
 		activatePrevButton();
 		// unregister the event
-		m_controllingKeys[sf::Keyboard::Up] = false; 
-		m_controllingKeys[sf::Keyboard::W] = false;
+		m_controllingKeys[sf::Keyboard::Key::Up] = false; 
+		m_controllingKeys[sf::Keyboard::Key::W] = false;
 	}
-	if (m_controllingKeys[sf::Keyboard::Down] || m_controllingKeys[sf::Keyboard::S])
+	if (m_controllingKeys[sf::Keyboard::Key::Down] || m_controllingKeys[sf::Keyboard::Key::S])
 	{
 		activateNextButton();
-		m_controllingKeys[sf::Keyboard::Down] = false;
-		m_controllingKeys[sf::Keyboard::S] = false;
+		m_controllingKeys[sf::Keyboard::Key::Down] = false;
+		m_controllingKeys[sf::Keyboard::Key::S] = false;
 	}
-	if (m_controllingKeys[sf::Keyboard::Space] || m_controllingKeys[sf::Keyboard::Return])
+	if (m_controllingKeys[sf::Keyboard::Key::Space] || m_controllingKeys[sf::Keyboard::Key::Enter])
 	{
 		m_buttons[m_activeButtonIndex]->press();
-		m_controllingKeys[sf::Keyboard::Space] = false;
-		m_controllingKeys[sf::Keyboard::Return] = false;
+		m_controllingKeys[sf::Keyboard::Key::Space] = false;
+		m_controllingKeys[sf::Keyboard::Key::Enter] = false;
 	}
 
 	for (auto button : m_buttons)

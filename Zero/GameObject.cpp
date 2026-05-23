@@ -35,7 +35,7 @@ GameObject::GameObject(GameObject &other) :
 	m_controllingKeys(other.m_controllingKeys),
 	m_isAnimating(other.m_isAnimating)
 {
-	m_drawingObject.sprite.setTexture(*other.m_drawingObject.sprite.getTexture());
+	m_drawingObject.sprite.value().setTexture(other.m_drawingObject.sprite.value().getTexture());
 }
 
 void GameObject::initialize() {}
@@ -47,9 +47,12 @@ void GameObject::loadContent()
 	resMan->getAnimation(gameObjType, m_frames);
 	m_drawingObject.filePath = resMan->getTexture(gameObjType).first;
 	m_drawingObject.texture = resMan->getTexture(gameObjType).second;
-	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
-	m_drawingObject.sprite.setTexture(m_drawingObject.texture);
-	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite);
+	
+	// Initialize the sprite with the texture
+	m_drawingObject.sprite.emplace(m_drawingObject.texture);
+	
+	m_drawingObject.sprite.value().setPosition(sf::Vector2f(m_rect.x, m_rect.y));
+	scaleSpriteTo(m_rect.w, m_rect.h, m_drawingObject.texture, m_drawingObject.sprite.value());
 }
 
 OBJ_TYPE GameObject::getType()
@@ -100,17 +103,23 @@ void GameObject::update()
 void GameObject::draw(sf::RenderWindow &window) 
 {
 	extern std::shared_ptr <ResourcesManager> resMan;
-	window.draw(m_drawingObject.sprite);
+	window.draw(m_drawingObject.sprite.value());
 }
 
 void GameObject::updateDrawingObject()
 {
-	m_drawingObject.sprite.setPosition(m_rect.x, m_rect.y);
-	updateAnimFrame();
+	if (m_drawingObject.sprite.has_value())
+	{
+		m_drawingObject.sprite.value().setPosition(sf::Vector2f(m_rect.x, m_rect.y));
+		updateAnimFrame();
+	}
 }
 
 void GameObject::updateAnimFrame()
 {
+	if (!m_drawingObject.sprite.has_value())
+		return;
+
 	if (!m_isAnimating)
 	{
 		m_animationFrame = 0;
@@ -127,11 +136,9 @@ void GameObject::updateAnimFrame()
 	int height = m_drawingObject.texture.getSize().y / m_frames.framesAlongX;
 	int x = (m_animationFrame % m_frames.framesAlongY) * width;
 	int y = (m_animationFrame / m_frames.framesAlongY) * height;
-	m_drawingObject.sprite.setTextureRect(sf::IntRect{
-		x,
-		y,
-		width,
-		height
+	m_drawingObject.sprite.value().setTextureRect(sf::IntRect{
+		sf::Vector2<int>(x, y),
+		sf::Vector2<int>(width, height)
 	});
 }
 

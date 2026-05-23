@@ -16,7 +16,9 @@ MenuButton::MenuButton(	double x,
 	m_isActiveButton(false),
 	m_runningGameState(RUN_GAME_STATE::PLAYING_STATE),
 	m_textToDisplay(""),
-	m_centerHorisontal(centerHorisontal)
+	m_centerHorisontal(centerHorisontal),
+	m_font(std::filesystem::path("Data/Fonts/SMARC___.TTF")),
+	m_text(m_font)
 {
 }
 
@@ -25,17 +27,7 @@ void MenuButton::loadContent()
 
 	GameObject::loadContent();
 
-	std::string loadPath;
-	// fonts
-	loadPath = "Data/Fonts/SMARC___.TTF";
-	if (m_font.loadFromFile(loadPath) == 0)
-	{
-		std::string throwMessage = "Cannot load font " + loadPath;
-		throw throwMessage;
-	}
-
 	// texts
-	m_text.setFont(m_font);
 	m_text.setFillColor(sf::Color(70, 255, 0));
 	auto it = m_buttonTypeToText.find(m_type);
 	if (m_textToDisplay == "") // set to default
@@ -57,7 +49,7 @@ void MenuButton::loadContent()
 		m_rect.x + (m_rect.w / 50); // align at 10% from left of the button
 	// ... and along y
 	double posY = m_rect.y + (m_rect.h / 2) - m_text.getCharacterSize() * 0.7;
-	m_text.setPosition(posX, posY);
+	m_text.setPosition(sf::Vector2f(posX, posY));
 }
 
 Definitions::ObjectType MenuButton::getType()
