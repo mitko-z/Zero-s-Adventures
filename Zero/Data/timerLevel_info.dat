@@ -5,13 +5,37 @@ timeDuration=300
 ; level number
 levelNum=2
 ; time duration in seconds
-timeDuration=300
+timeDuration=240
 ; level number
 levelNum=3
 ; time duration in seconds
-timeDuration=300
+timeDuration=280
 ; level number
 levelNum=4
+; time duration in seconds
+timeDuration=300
+; level number
+levelNum=5
+; time duration in seconds
+timeDuration=260
+; level number
+levelNum=6
+; time duration in seconds
+timeDuration=280
+; level number
+levelNum=7
+; time duration in seconds
+timeDuration=300
+; level number
+levelNum=8
+; time duration in seconds
+timeDuration=300
+; level number
+levelNum=9
+; time duration in seconds
+timeDuration=260
+; level number
+levelNum=10
 ; time duration in seconds
 timeDuration=300
 ; number of sounds

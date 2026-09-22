@@ -13,11 +13,47 @@ backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
 ; level no.
 levelNum=3
 ; name for the texture of the background
-texture=grassdirt-big-faded.png
+texture=GrassTopView.png
 ; name of the background music
 backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
 ; level no.
 levelNum=4
+; name for the texture of the background
+texture=grassdirt-big-faded.png
+; name of the background music
+backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; level no.
+levelNum=5
+; name for the texture of the background
+texture=grassdirt-big.png
+; name of the background music
+backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; level no.
+levelNum=6
+; name for the texture of the background
+texture=Ground_Sandy_3D_p.png
+; name of the background music
+backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; level no.
+levelNum=7
+; name for the texture of the background
+texture=GrassTopView2.png
+; name of the background music
+backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; level no.
+levelNum=8
+; name for the texture of the background
+texture=grassdirt-big-faded.png
+; name of the background music
+backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; level no.
+levelNum=9
+; name for the texture of the background
+texture=grassdirt-big.png
+; name of the background music
+backgroundMusic=Robot Boogie - Quincas Moreira [midle-loop ready].wav
+; level no.
+levelNum=10
 ; name for the texture of the background
 texture=GrassTopView2.png
 ; name of the background music

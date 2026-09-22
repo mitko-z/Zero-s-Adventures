@@ -9,7 +9,7 @@ make help objects telling the player what should do
 
 Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
 
-Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster.
+DONE (10-level intro arc, Sep 2026) - Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster.
 
 Add more types of monsters and respectevly - more levels with them
 
