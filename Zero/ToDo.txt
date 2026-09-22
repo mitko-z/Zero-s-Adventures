@@ -1,3 +1,5 @@
+fix bug: sometimes the image of a moving character, either Zero or monster, is displayed (shifted) to the left, but the game logic still account its actual coordinates. The bug is observed after loading the game from file.
+
 draw a frame under the the top info; draw the game elements (background, walls, etc.) shifted/scalled down according the height of that frame; change the top info (text and images) to be scalled according only by the screen resolution but not according the game objects sizes
 
 add options menu:
@@ -7,9 +9,11 @@ add options menu:
 	
 make help objects telling the player what should do
 
-Separate monsters info in two files: one for which type of monster is on which level and other with charactersistics of each specific type of monster
-
-DONE (10-level intro arc, Sep 2026) - Make more levels - introduce gradually bigger number of monsters of one type before introducing the next type of monster.
+Separate the .dat files infos: 
+- the game object types info files (monsters, walls, etc.) contains info about the various types and their characteristics only, but not also which type on which level is
+- the general info file contains the game types objects needed for each level only
+- make the dat files to be in either xml or json format
+- re-organize the game logic reflecting this new type of info
 
 Add more types of monsters and respectevly - more levels with them
 
@@ -24,13 +28,11 @@ Make the same font on the PressKeyFullScreen screes as the one on the main menu 
 
 Add more explanatory comments to classes, methods, etc.
 
-Make the info files to be in xml format
-
 Make the ResourceManager class to not be responsible for the initialization of the objects but a separate class (Initialize).
 
 Import the buttons text for Menu::setAndInsertButtons() from a text file and thus to be ensured easier switch between languages
 
-Import all of the texts from file(s)
+Import all of the texts from file(s) but not hardcoded in code
 
 add in the options menu languages switch
 
